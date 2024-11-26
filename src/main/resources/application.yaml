@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: techchallenge01
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    operationsSorter: method
+
