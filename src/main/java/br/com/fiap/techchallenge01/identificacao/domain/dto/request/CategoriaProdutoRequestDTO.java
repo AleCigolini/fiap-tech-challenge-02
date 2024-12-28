@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-public class AcompanhamentoRequestDTO {
+public class CategoriaProdutoRequestDTO {
 
     @Schema(description = "Nome do acompanhamento", example = "Nome do Acompanhamento", maxLength = 40)
     private String nome;
