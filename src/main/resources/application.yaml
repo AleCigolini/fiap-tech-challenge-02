@@ -1,11 +1,8 @@
 spring:
+  profiles:
+    active: dev
   application:
     name: techchallenge01
-  datasource:
-    url: jdbc:postgresql://localhost:5432/techchallenge
-    username: "root"
-    password: "m@_ssq@HJ7<h(+"
-    driver-class-name: org.postgresql.Driver
   jpa:
     properties:
       hibernate:
