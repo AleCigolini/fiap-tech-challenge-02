@@ -5,13 +5,9 @@ import lombok.Data;
 import java.time.OffsetDateTime;
 
 @Data
-public class Produto {
-
+public class CategoriaProduto {
     private Long id;
     private String nome;
-    private String descricao;
-    private Long idCategoria;
-    private Double preco;
     private OffsetDateTime dataCriacao;
     private Boolean eAtivo;
 }

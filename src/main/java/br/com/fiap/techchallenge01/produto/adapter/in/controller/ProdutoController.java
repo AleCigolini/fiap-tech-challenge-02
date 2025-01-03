@@ -1,16 +1,18 @@
 package br.com.fiap.techchallenge01.produto.adapter.in.controller;
 
 import br.com.fiap.techchallenge01.produto.adapter.in.controller.api.ProdutoApi;
+import br.com.fiap.techchallenge01.produto.adapter.out.exception.ProdutoNaoEncontradoException;
 import br.com.fiap.techchallenge01.produto.application.service.ProdutoService;
 import br.com.fiap.techchallenge01.produto.domain.Produto;
+import br.com.fiap.techchallenge01.produto.domain.dto.request.ProdutoRequestDTO;
 import br.com.fiap.techchallenge01.produto.domain.dto.response.ProdutoResponseDTO;
 import br.com.fiap.techchallenge01.produto.utils.mapper.ProdutoMapper;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -39,5 +41,13 @@ public class ProdutoController implements ProdutoApi {
         Produto produto = produtoService.buscarProdutoPorId(id);
 
         return ResponseEntity.ok(produtoMapper.toResponse(produto));
+    }
+
+    @Override
+    @PostMapping
+    public ResponseEntity<ProdutoResponseDTO> criarProduto(@RequestBody @Valid ProdutoRequestDTO produtoRequestDTO) throws URISyntaxException {
+        ProdutoResponseDTO produtoResponse = produtoService.criarProduto(produtoRequestDTO);
+
+        return ResponseEntity.created(new URI(STR."/produtos/\{produtoResponse.getId()}")).body(produtoResponse);
     }
 }

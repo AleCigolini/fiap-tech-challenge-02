@@ -1,10 +1,16 @@
 package br.com.fiap.techchallenge01.produto.application.service;
 
+import br.com.fiap.techchallenge01.produto.adapter.out.entity.JpaProdutoEntity;
 import br.com.fiap.techchallenge01.produto.adapter.out.exception.ProdutoNaoEncontradoException;
 import br.com.fiap.techchallenge01.produto.application.usecase.ProdutoUseCase;
+import br.com.fiap.techchallenge01.produto.domain.CategoriaProduto;
 import br.com.fiap.techchallenge01.produto.domain.Produto;
+import br.com.fiap.techchallenge01.produto.domain.dto.request.ProdutoRequestDTO;
+import br.com.fiap.techchallenge01.produto.domain.dto.response.ProdutoResponseDTO;
 import br.com.fiap.techchallenge01.produto.domain.repository.ProdutoRepository;
+import br.com.fiap.techchallenge01.produto.utils.mapper.ProdutoMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,19 +18,37 @@ import java.util.List;
 public class ProdutoService implements ProdutoUseCase {
 
     private final ProdutoRepository produtoRepository;
+    private final ProdutoMapper produtoMapper;
+    private final CategoriaProdutoService categoriaProdutoService;
 
-    public ProdutoService(ProdutoRepository produtoRepository) {
+    public ProdutoService(ProdutoRepository produtoRepository, ProdutoMapper produtoMapper, CategoriaProdutoService categoriaProdutoService) {
         this.produtoRepository = produtoRepository;
+        this.produtoMapper = produtoMapper;
+        this.categoriaProdutoService = categoriaProdutoService;
     }
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<Produto> buscarProdutos() {
         return produtoRepository.buscarProdutos();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Produto buscarProdutoPorId(Long id) {
         return produtoRepository.buscarProdutoPorId(id).orElseThrow(() -> new ProdutoNaoEncontradoException(id));
+    }
+
+    @Override
+    public ProdutoResponseDTO criarProduto(ProdutoRequestDTO produtoRequestDTO) {
+        JpaProdutoEntity jpaProdutoEntity = produtoMapper.toJpaProdutoEntity(produtoRequestDTO);
+        CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(jpaProdutoEntity.getIdCategoria());
+
+        Produto produto = produtoRepository.criarProduto(jpaProdutoEntity);
+        ProdutoResponseDTO produtoResponseDTO = produtoMapper.toResponse(produto);
+        produtoResponseDTO.setCategoriaProduto(categoriaProduto);
+
+        return produtoResponseDTO;
     }
 }

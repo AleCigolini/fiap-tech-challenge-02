@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "produto")
-public class JpaProdutoEntity {
+@Table(name = "categoria_produto")
+public class JpaCategoriaProdutoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +18,4 @@ public class JpaProdutoEntity {
 
     @Column(name = "nome")
     private String nome;
-
-    @Column(name = "descricao")
-    private String descricao;
-
-    @Column(name = "id_categoria")
-    private Long idCategoria;
-
-    @Column(name = "preco")
-    private Double preco;
 }
