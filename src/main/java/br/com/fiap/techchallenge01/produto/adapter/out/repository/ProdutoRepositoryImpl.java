@@ -33,4 +33,11 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
     public Optional<Produto> buscarProdutoPorId(Long id) {
         return jpaProdutoRepository.findById(id).map(jpaProdutoEntity -> modelMapper.map(jpaProdutoEntity, Produto.class));
     }
+
+    @Override
+    public Produto criarProduto(JpaProdutoEntity jpaProdutoEntity) {
+        JpaProdutoEntity jpaProdutoEntitySaved = jpaProdutoRepository.save(jpaProdutoEntity);
+
+        return modelMapper.map(jpaProdutoEntitySaved, Produto.class);
+    }
 }

@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge01.produto.domain.dto.response;
 
+import br.com.fiap.techchallenge01.produto.domain.CategoriaProduto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -14,5 +15,11 @@ public class ProdutoResponseDTO {
 
     @Schema(description = "Descrição do produto")
     private String descricao;
+
+    @Schema(description = "Categoria do produto (Lanche, Acompanhamento, Bebida, Sobremesa)")
+    private CategoriaProduto categoriaProduto;
+
+    @Schema(description = "Preço do produto")
+    private Double preco;
 
 }

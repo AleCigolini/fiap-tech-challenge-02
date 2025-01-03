@@ -1,6 +1,8 @@
 package br.com.fiap.techchallenge01.produto.utils.mapper;
 
+import br.com.fiap.techchallenge01.produto.adapter.out.entity.JpaProdutoEntity;
 import br.com.fiap.techchallenge01.produto.domain.Produto;
+import br.com.fiap.techchallenge01.produto.domain.dto.request.ProdutoRequestDTO;
 import br.com.fiap.techchallenge01.produto.domain.dto.response.ProdutoResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -27,4 +29,7 @@ public class ProdutoMapper {
                 .collect(Collectors.toList());
     }
 
+    public JpaProdutoEntity toJpaProdutoEntity(ProdutoRequestDTO produtoRequestDTO) {
+        return modelMapper.map(produtoRequestDTO, JpaProdutoEntity.class);
+    }
 }
