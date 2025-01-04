@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class ProdutoService implements ProdutoUseCase {
 
     private final ProdutoRepository produtoRepository;
@@ -47,6 +48,21 @@ public class ProdutoService implements ProdutoUseCase {
 
         Produto produto = produtoRepository.criarProduto(jpaProdutoEntity);
         ProdutoResponseDTO produtoResponseDTO = produtoMapper.toResponse(produto);
+        produtoResponseDTO.setCategoriaProduto(categoriaProduto);
+
+        return produtoResponseDTO;
+    }
+
+    @Override
+    public ProdutoResponseDTO atualizarProduto(ProdutoRequestDTO produtoRequestDTO, Long idProduto) {
+        Produto produto = buscarProdutoPorId(idProduto);
+        JpaProdutoEntity jpaProdutoEntity = produtoMapper.toJpaProdutoEntity(produtoRequestDTO);
+        jpaProdutoEntity.setId(produto.getId());
+
+        Produto produtoSalvo = produtoRepository.atualizarProduto(jpaProdutoEntity);
+
+        CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(jpaProdutoEntity.getIdCategoria());
+        ProdutoResponseDTO produtoResponseDTO = produtoMapper.toResponse(produtoSalvo);
         produtoResponseDTO.setCategoriaProduto(categoriaProduto);
 
         return produtoResponseDTO;

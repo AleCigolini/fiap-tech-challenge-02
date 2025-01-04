@@ -13,4 +13,6 @@ public interface ProdutoUseCase {
     Produto buscarProdutoPorId(Long id);
 
     ProdutoResponseDTO criarProduto(ProdutoRequestDTO produtoRequestDTO);
+
+    ProdutoResponseDTO atualizarProduto(ProdutoRequestDTO produtoRequestDTO, Long idProduto);
 }

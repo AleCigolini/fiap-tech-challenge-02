@@ -13,4 +13,6 @@ public interface ProdutoRepository {
     Optional<Produto> buscarProdutoPorId(Long id);
 
     Produto criarProduto(JpaProdutoEntity jpaProdutoEntity);
+
+    Produto atualizarProduto(JpaProdutoEntity jpaProdutoEntity);
 }

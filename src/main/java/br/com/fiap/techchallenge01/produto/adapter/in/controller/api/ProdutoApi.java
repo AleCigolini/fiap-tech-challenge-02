@@ -39,4 +39,14 @@ public interface ProdutoApi {
      */
     @Operation(summary = "Criar novo produto")
     ResponseEntity<ProdutoResponseDTO> criarProduto(ProdutoRequestDTO produtoRequestDTO) throws URISyntaxException;
+
+    /**
+     * Atualizar produto
+     *
+     * @param produtoRequestDTO DTO para atualização de produto
+     * @param idProduto ID do produto a ser atualizado
+     * @return {@link ProdutoResponseDTO}
+     */
+    @Operation(summary = "Atualizar um produto")
+    ResponseEntity<ProdutoResponseDTO> atualizarProduto(ProdutoRequestDTO produtoRequestDTO, Long idProduto) throws URISyntaxException;
 }
