@@ -17,4 +17,6 @@ public interface ProdutoRepository {
     Produto atualizarProduto(JpaProdutoEntity jpaProdutoEntity);
 
     void excluirProduto(Long idProduto);
+
+    List<Produto> buscarProdutosPorCategoria(Long idCategoriaProduto);
 }

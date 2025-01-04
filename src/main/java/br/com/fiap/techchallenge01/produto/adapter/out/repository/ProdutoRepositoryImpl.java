@@ -51,4 +51,12 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
     public void excluirProduto(Long idProduto) {
         jpaProdutoRepository.deleteById(idProduto);
     }
+
+    @Override
+    public List<Produto> buscarProdutosPorCategoria(Long idCategoriaProduto) {
+        return jpaProdutoRepository.findAllByIdCategoria(idCategoriaProduto)
+                .stream()
+                .map(jpaProdutoEntity -> modelMapper.map(jpaProdutoEntity, Produto.class))
+                .collect(Collectors.toList());
+    }
 }

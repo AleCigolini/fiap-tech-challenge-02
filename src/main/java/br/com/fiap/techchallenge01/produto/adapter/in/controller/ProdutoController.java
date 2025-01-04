@@ -36,6 +36,14 @@ public class ProdutoController implements ProdutoApi {
     }
 
     @Override
+    @GetMapping("/categoria/{idCategoriaProduto}")
+    public ResponseEntity<List<ProdutoResponseDTO>> buscarProdutosPorCategoria(@PathVariable Long idCategoriaProduto) {
+        List<ProdutoResponseDTO> produtosResponse = produtoService.buscarProdutosPorCategoria(idCategoriaProduto);
+
+        return ResponseEntity.ok(produtosResponse);
+    }
+
+    @Override
     @GetMapping("/{id}")
     public ResponseEntity<ProdutoResponseDTO> buscarProdutoPorId(@PathVariable Long id) {
         Produto produto = produtoService.buscarProdutoPorId(id);

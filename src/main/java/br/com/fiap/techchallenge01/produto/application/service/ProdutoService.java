@@ -72,4 +72,18 @@ public class ProdutoService implements ProdutoUseCase {
     public void excluirProduto(Long idProduto) {
         produtoRepository.excluirProduto(idProduto);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProdutoResponseDTO> buscarProdutosPorCategoria(Long idCategoriaProduto) {
+        List<Produto> produtos = produtoRepository.buscarProdutosPorCategoria(idCategoriaProduto);
+        List<ProdutoResponseDTO> produtosResponseDTO = produtoMapper.toCollectionResponse(produtos);
+
+        produtosResponseDTO.forEach(produtoResponseDTO -> {
+            CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(produtoResponseDTO.getCategoriaProduto().getId());
+            produtoResponseDTO.setCategoriaProduto(categoriaProduto);
+        });
+
+        return produtosResponseDTO;
+    }
 }
