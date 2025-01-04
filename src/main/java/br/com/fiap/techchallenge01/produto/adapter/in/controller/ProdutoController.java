@@ -50,4 +50,12 @@ public class ProdutoController implements ProdutoApi {
 
         return ResponseEntity.created(new URI(STR."/produtos/\{produtoResponse.getId()}")).body(produtoResponse);
     }
+
+    @Override
+    @PutMapping("/{idProduto}")
+    public ResponseEntity<ProdutoResponseDTO> atualizarProduto(@RequestBody @Valid ProdutoRequestDTO produtoRequestDTO, @PathVariable Long idProduto) {
+        ProdutoResponseDTO produtoResponse = produtoService.atualizarProduto(produtoRequestDTO, idProduto);
+
+        return ResponseEntity.ok(produtoResponse);
+    }
 }

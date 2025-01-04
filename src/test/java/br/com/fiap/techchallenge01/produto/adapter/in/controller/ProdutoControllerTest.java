@@ -14,8 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static java.lang.StringTemplate.STR;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -161,6 +160,110 @@ class ProdutoControllerTest {
                 .andExpect(
                         status().isBadRequest()
                 );
+    }
+
+    @Test
+    @Transactional
+    void deveAtualizarOProduto() throws Exception {
+        Long idProduto = 1L;
+        ProdutoRequestDTO produtoRequestDTO = montarProdutoRequestDTO();
+        produtoRequestDTO.setNome("Nome atualizado");
+        produtoRequestDTO.setPreco(40.00);
+
+        MockHttpServletResponse response = mockMvc.perform(
+                        put(STR."\{PRODUTOS_URL_PADRAO}/\{idProduto}")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(JsonHelper.toJson(produtoRequestDTO))
+                )
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+
+        ProdutoResponseDTO produtoResponse = JsonHelper.toObject(response.getContentAsByteArray(), ProdutoResponseDTO.class);
+
+        assertThat(produtoResponse).isNotNull();
+        assertThat(produtoResponse.getId()).isNotNull();
+        assertThat(produtoResponse.getId()).isEqualTo(idProduto);
+        assertThat(produtoResponse.getNome()).isEqualTo(produtoRequestDTO.getNome());
+        assertThat(produtoResponse.getDescricao()).isEqualTo(produtoRequestDTO.getDescricao());
+        assertThat(produtoResponse.getCategoriaProduto()).isNotNull();
+        assertThat(produtoResponse.getCategoriaProduto().getId()).isEqualTo(produtoRequestDTO.getIdCategoria());
+        assertThat(produtoResponse.getCategoriaProduto().getNome()).isEqualTo("Acompanhamento");
+    }
+
+    @Test
+    @Transactional
+    void naoDeveAtualizarOProdutoQuandoNaoEncontrarOProduto() throws Exception {
+        Long idProduto = 9999L;
+        ProdutoRequestDTO produtoRequestDTO = montarProdutoRequestDTO();
+        produtoRequestDTO.setNome("Nome atualizado");
+        produtoRequestDTO.setPreco(40.00);
+
+        mockMvc.perform(
+                        put(STR."\{PRODUTOS_URL_PADRAO}/\{idProduto}")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(JsonHelper.toJson(produtoRequestDTO))
+                )
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @Transactional
+    void naoDeveAtualizarOProdutoQuandoONomeDoProdutoEstiverVazio() throws Exception {
+        Long idProduto = 9999L;
+        ProdutoRequestDTO produtoRequestDTO = montarProdutoRequestDTO();
+        produtoRequestDTO.setNome("");
+
+        mockMvc.perform(
+                        put(STR."\{PRODUTOS_URL_PADRAO}/\{idProduto}")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(JsonHelper.toJson(produtoRequestDTO))
+                )
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    void naoDeveAtualizarOProdutoQuandoADescricaoDoProdutoEstiverVazia() throws Exception {
+        Long idProduto = 9999L;
+        ProdutoRequestDTO produtoRequestDTO = montarProdutoRequestDTO();
+        produtoRequestDTO.setDescricao("");
+
+        mockMvc.perform(
+                        put(STR."\{PRODUTOS_URL_PADRAO}/\{idProduto}")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(JsonHelper.toJson(produtoRequestDTO))
+                )
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    void naoDeveAtualizarOProdutoQuandoOIdCategoriaDoProdutoEstiverNulo() throws Exception {
+        Long idProduto = 9999L;
+        ProdutoRequestDTO produtoRequestDTO = montarProdutoRequestDTO();
+        produtoRequestDTO.setIdCategoria(null);
+
+        mockMvc.perform(
+                        put(STR."\{PRODUTOS_URL_PADRAO}/\{idProduto}")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(JsonHelper.toJson(produtoRequestDTO))
+                )
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    void naoDeveAtualizarOProdutoQuandoOPrecoDoProdutoEstiverNulo() throws Exception {
+        Long idProduto = 9999L;
+        ProdutoRequestDTO produtoRequestDTO = montarProdutoRequestDTO();
+        produtoRequestDTO.setPreco(null);
+
+        mockMvc.perform(
+                        put(STR."\{PRODUTOS_URL_PADRAO}/\{idProduto}")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(JsonHelper.toJson(produtoRequestDTO))
+                )
+                .andExpect(status().isBadRequest());
     }
 
     private ProdutoRequestDTO montarProdutoRequestDTO() {
