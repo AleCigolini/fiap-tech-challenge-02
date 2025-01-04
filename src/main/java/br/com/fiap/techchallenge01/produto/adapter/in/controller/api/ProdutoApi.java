@@ -23,6 +23,15 @@ public interface ProdutoApi {
     ResponseEntity<List<ProdutoResponseDTO>> buscarProdutos();
 
     /**
+     * Busca os produtos por categoria
+     *
+     * @param idCategoriaProduto Long da categoria produto
+     * @return {@link ProdutoResponseDTO}
+     */
+    @Operation(summary = "Buscar os produtos por categoria")
+    ResponseEntity<List<ProdutoResponseDTO>> buscarProdutosPorCategoria(Long idCategoriaProduto);
+
+    /**
      * Busca produto por ID
      *
      * @param id Long do produto

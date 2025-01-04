@@ -17,4 +17,6 @@ public interface ProdutoUseCase {
     ProdutoResponseDTO atualizarProduto(ProdutoRequestDTO produtoRequestDTO, Long idProduto);
 
     void excluirProduto(Long idProduto);
+
+    List<ProdutoResponseDTO> buscarProdutosPorCategoria(Long idCategoriaProduto);
 }

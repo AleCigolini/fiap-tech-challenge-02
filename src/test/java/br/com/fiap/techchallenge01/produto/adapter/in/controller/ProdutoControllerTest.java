@@ -41,6 +41,24 @@ class ProdutoControllerTest {
 
     @Test
     @Transactional
+    void deveBuscarProdutosPorCategoria() throws Exception {
+        long idCategoriaProduto = 1L;
+
+        MockHttpServletResponse response = mockMvc.perform(
+                        get(PRODUTOS_URL_PADRAO + "/categoria/" + idCategoriaProduto)
+                )
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+
+        ProdutoResponseDTO[] produtosResponse = JsonHelper.toObject(response.getContentAsByteArray(), ProdutoResponseDTO[].class);
+
+        assertThat(produtosResponse).isNotNull();
+        assertThat(produtosResponse)
+                .allMatch(produtoResponse -> produtoResponse.getCategoriaProduto().getId().equals(idCategoriaProduto));
+    }
+
+    @Test
+    @Transactional
     void deveBuscarProdutoPorId() throws Exception {
         long idProduto = 1L;
 
