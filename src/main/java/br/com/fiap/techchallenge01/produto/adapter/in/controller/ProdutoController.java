@@ -58,4 +58,11 @@ public class ProdutoController implements ProdutoApi {
 
         return ResponseEntity.ok(produtoResponse);
     }
+
+    @Override
+    @DeleteMapping("/{idProduto}")
+    public ResponseEntity<Void> excluirProduto(@PathVariable Long idProduto) {
+        produtoService.excluirProduto(idProduto);
+        return ResponseEntity.ok().build();
+    }
 }

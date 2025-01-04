@@ -15,4 +15,6 @@ public interface ProdutoRepository {
     Produto criarProduto(JpaProdutoEntity jpaProdutoEntity);
 
     Produto atualizarProduto(JpaProdutoEntity jpaProdutoEntity);
+
+    void excluirProduto(Long idProduto);
 }

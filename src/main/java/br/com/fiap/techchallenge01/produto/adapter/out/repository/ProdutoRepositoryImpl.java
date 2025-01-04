@@ -46,4 +46,9 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
         JpaProdutoEntity jpaProdutoEntitySalvo = jpaProdutoRepository.save(jpaProdutoEntity);
         return modelMapper.map(jpaProdutoEntitySalvo, Produto.class);
     }
+
+    @Override
+    public void excluirProduto(Long idProduto) {
+        jpaProdutoRepository.deleteById(idProduto);
+    }
 }
