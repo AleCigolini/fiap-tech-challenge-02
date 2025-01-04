@@ -12,10 +12,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import static java.lang.StringTemplate.STR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -164,7 +162,7 @@ class ProdutoControllerTest {
 
     @Test
     @Transactional
-    void deveAtualizarOProduto() throws Exception {
+    void deveAtualizarProduto() throws Exception {
         Long idProduto = 1L;
         ProdutoRequestDTO produtoRequestDTO = montarProdutoRequestDTO();
         produtoRequestDTO.setNome("Nome atualizado");
@@ -264,6 +262,18 @@ class ProdutoControllerTest {
                                 .content(JsonHelper.toJson(produtoRequestDTO))
                 )
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    void deveExcluirProduto() throws Exception {
+        Long idProduto = 1L;
+
+        mockMvc.perform(
+                        delete(STR."\{PRODUTOS_URL_PADRAO}/\{idProduto}")
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk());
     }
 
     private ProdutoRequestDTO montarProdutoRequestDTO() {

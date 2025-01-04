@@ -67,4 +67,9 @@ public class ProdutoService implements ProdutoUseCase {
 
         return produtoResponseDTO;
     }
+
+    @Override
+    public void excluirProduto(Long idProduto) {
+        produtoRepository.excluirProduto(idProduto);
+    }
 }

@@ -15,4 +15,6 @@ public interface ProdutoUseCase {
     ProdutoResponseDTO criarProduto(ProdutoRequestDTO produtoRequestDTO);
 
     ProdutoResponseDTO atualizarProduto(ProdutoRequestDTO produtoRequestDTO, Long idProduto);
+
+    void excluirProduto(Long idProduto);
 }

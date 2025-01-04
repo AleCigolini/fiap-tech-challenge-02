@@ -48,5 +48,14 @@ public interface ProdutoApi {
      * @return {@link ProdutoResponseDTO}
      */
     @Operation(summary = "Atualizar um produto")
-    ResponseEntity<ProdutoResponseDTO> atualizarProduto(ProdutoRequestDTO produtoRequestDTO, Long idProduto) throws URISyntaxException;
+    ResponseEntity<ProdutoResponseDTO> atualizarProduto(ProdutoRequestDTO produtoRequestDTO, Long idProduto);
+
+    /**
+     * Excluir um produto
+     *
+     * @param idProduto ID do produto a ser excluído
+     * @return void
+     */
+    @Operation(summary = "Excluir um produto")
+    ResponseEntity<Void> excluirProduto(Long idProduto);
 }
