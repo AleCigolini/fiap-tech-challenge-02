@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.config;
+package br.com.fiap.techchallenge01.config.modelmapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

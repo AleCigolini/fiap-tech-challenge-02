@@ -10,4 +10,6 @@ public interface CategoriaProdutoRepository {
     CategoriaProduto salvarCategoriaProduto(CategoriaProduto categoriaProduto);
     Optional<CategoriaProduto> buscarCategoriaProdutoPorId(Long id);
     List<CategoriaProduto> buscarCategoriasProduto();
+    CategoriaProduto alterarNomeCategoriaProduto(Long id, CategoriaProduto categoriaProduto);
+    void desativarCategoriaProduto(CategoriaProduto categoriaProduto);
 }

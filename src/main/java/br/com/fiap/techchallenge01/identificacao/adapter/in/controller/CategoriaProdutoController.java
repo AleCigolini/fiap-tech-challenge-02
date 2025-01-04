@@ -45,4 +45,23 @@ public class CategoriaProdutoController implements CategoriaProdutoApi {
 
         return categoriaProdutoMapper.toResponse(acompanhamentoService.salvarCategoriaProduto(categoriaProduto));
     }
+
+    @Override
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CategoriaProdutoResponseDTO alterarNomeCategoriaProduto(@PathVariable Long id, @RequestBody CategoriaProdutoRequestDTO categoriaProdutoRequestDto) {
+
+        CategoriaProduto categoriaProduto = acompanhamentoService.buscarCategoriaProdutoPorId(id);
+        categoriaProduto.setNome(categoriaProdutoRequestDto.getNome());
+
+        return categoriaProdutoMapper.toResponse(acompanhamentoService.alterarNomeCategoriaProduto(id, categoriaProduto));
+    }
+
+    @Override
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void desativarCategoriaProduto(@PathVariable Long id) {
+        CategoriaProduto categoriaProduto = acompanhamentoService.buscarCategoriaProdutoPorId(id);
+        acompanhamentoService.desativarCategoriaProduto(categoriaProduto);
+    }
 }
