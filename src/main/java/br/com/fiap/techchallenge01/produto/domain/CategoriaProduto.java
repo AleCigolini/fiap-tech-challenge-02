@@ -1,13 +1,64 @@
 package br.com.fiap.techchallenge01.produto.domain;
 
-import lombok.Data;
-
 import java.time.OffsetDateTime;
 
-@Data
 public class CategoriaProduto {
+
     private Long id;
     private String nome;
     private OffsetDateTime dataCriacao;
-    private Boolean eAtivo;
+    private OffsetDateTime dataAtualizacao;
+    private Boolean ativo;
+
+    public CategoriaProduto() {
+
+    }
+
+    public CategoriaProduto(Long id, String nome, OffsetDateTime dataCriacao, OffsetDateTime dataAtualizacao, Boolean ativo) {
+        this.id = id;
+        this.nome = nome;
+        this.dataCriacao = dataCriacao;
+        this.dataAtualizacao = dataAtualizacao;
+        this.ativo = ativo;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public OffsetDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(OffsetDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public OffsetDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(OffsetDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
 }

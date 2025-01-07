@@ -1,11 +1,11 @@
-package br.com.fiap.techchallenge01.identificacao.adapter.in.controller;
+package br.com.fiap.techchallenge01.produto.adapter.in.controller;
 
 import br.com.fiap.techchallenge01.identificacao.adapter.in.controller.api.CategoriaProdutoApi;
-import br.com.fiap.techchallenge01.identificacao.application.service.CategoriaProdutoService;
-import br.com.fiap.techchallenge01.identificacao.domain.CategoriaProduto;
-import br.com.fiap.techchallenge01.identificacao.domain.dto.request.CategoriaProdutoRequestDTO;
-import br.com.fiap.techchallenge01.identificacao.domain.dto.response.CategoriaProdutoResponseDTO;
-import br.com.fiap.techchallenge01.identificacao.utils.mapper.CategoriaProdutoMapper;
+import br.com.fiap.techchallenge01.produto.application.service.CategoriaProdutoService;
+import br.com.fiap.techchallenge01.produto.domain.CategoriaProduto;
+import br.com.fiap.techchallenge01.produto.domain.dto.request.CategoriaProdutoRequestDTO;
+import br.com.fiap.techchallenge01.produto.domain.dto.response.CategoriaProdutoResponseDTO;
+import br.com.fiap.techchallenge01.produto.utils.mapper.CategoriaProdutoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

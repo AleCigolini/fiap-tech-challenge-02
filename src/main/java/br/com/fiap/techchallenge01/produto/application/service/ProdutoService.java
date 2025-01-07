@@ -1,7 +1,7 @@
 package br.com.fiap.techchallenge01.produto.application.service;
 
 import br.com.fiap.techchallenge01.produto.adapter.out.entity.JpaProdutoEntity;
-import br.com.fiap.techchallenge01.produto.adapter.out.exception.ProdutoNaoEncontradoException;
+import br.com.fiap.techchallenge01.produto.application.exception.ProdutoNaoEncontradoException;
 import br.com.fiap.techchallenge01.produto.application.usecase.ProdutoUseCase;
 import br.com.fiap.techchallenge01.produto.domain.CategoriaProduto;
 import br.com.fiap.techchallenge01.produto.domain.Produto;

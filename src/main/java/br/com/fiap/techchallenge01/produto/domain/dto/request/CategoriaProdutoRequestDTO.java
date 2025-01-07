@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.identificacao.domain.dto.request;
+package br.com.fiap.techchallenge01.produto.domain.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

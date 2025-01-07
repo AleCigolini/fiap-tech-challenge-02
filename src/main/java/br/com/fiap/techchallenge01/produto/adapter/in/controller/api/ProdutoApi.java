@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.net.URISyntaxException;
 import java.util.List;
 
-@Tag(name = "API de produtos")
+@Tag(name = "Produtos")
 public interface ProdutoApi {
 
     /**
