@@ -1,7 +1,6 @@
 package br.com.fiap.techchallenge01.produto.adapter.in.controller;
 
 import br.com.fiap.techchallenge01.produto.adapter.in.controller.api.ProdutoApi;
-import br.com.fiap.techchallenge01.produto.adapter.out.exception.ProdutoNaoEncontradoException;
 import br.com.fiap.techchallenge01.produto.application.service.ProdutoService;
 import br.com.fiap.techchallenge01.produto.domain.Produto;
 import br.com.fiap.techchallenge01.produto.domain.dto.request.ProdutoRequestDTO;

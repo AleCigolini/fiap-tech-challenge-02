@@ -47,7 +47,8 @@ public class SpringDocConfig {
                         .description("Fiap Tech Challenge")
                         .url("https://techchallenge.com")
                 ).tags(Arrays.asList(
-                        new Tag().name("Categorias de Produto").description("API de categorias de produto")
+                        new Tag().name("Categorias de Produto").description("API de categorias de produto"),
+                        new Tag().name("Produtos").description("API de produtos")
                 )).components(new Components()
                         .schemas(gerarSchemas())
                         .responses(gerarResponses())

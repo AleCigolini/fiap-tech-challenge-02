@@ -1,4 +1,6 @@
-package br.com.fiap.techchallenge01.identificacao.application.exception;
+package br.com.fiap.techchallenge01.produto.application.exception;
+
+import br.com.fiap.techchallenge01.identificacao.application.exception.EntidadeNaoEncontradaException;
 
 public class CategoriaProdutoNaoEncontradaException extends EntidadeNaoEncontradaException {
 

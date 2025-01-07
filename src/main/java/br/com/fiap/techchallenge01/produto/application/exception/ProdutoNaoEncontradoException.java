@@ -1,6 +1,7 @@
-package br.com.fiap.techchallenge01.produto.adapter.out.exception;
+package br.com.fiap.techchallenge01.produto.application.exception;
 
-import br.com.fiap.techchallenge01.identificacao.adapter.out.exception.EntidadeNaoEncontradaException;
+
+import br.com.fiap.techchallenge01.identificacao.application.exception.EntidadeNaoEncontradaException;
 
 import static java.lang.StringTemplate.STR;
 
