@@ -6,7 +6,8 @@ CREATE TABLE produto (
     preco DECIMAL(10,2) NOT NULL DEFAULT 00.00,
     data_criacao TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     data_atualizacao TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    e_ativo BOOL NOT NULL DEFAULT TRUE
+    e_ativo BOOL NOT NULL DEFAULT TRUE,
+    CONSTRAINT fk_produto_id_categoria_produto FOREIGN KEY (id_categoria) REFERENCES categoria_produto(id)
 );
 
 CREATE INDEX ik_produto_nome ON produto(nome);
