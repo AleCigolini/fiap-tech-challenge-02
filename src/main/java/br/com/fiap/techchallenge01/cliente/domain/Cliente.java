@@ -1,13 +1,10 @@
-package br.com.fiap.techchallenge01.usuario.domain;
+package br.com.fiap.techchallenge01.cliente.domain;
 
-public class Usuario {
+public class Cliente {
 
     private String id;
-
     private String nome;
-
     private String email;
-
     private String cpf;
 
     public String getId() {

@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.usuario.adapter.out.entity;
+package br.com.fiap.techchallenge01.cliente.adapter.out.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "usuario")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class JpaUsuarioEntity {
+public class JpaClienteEntity {
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.AUTO)
