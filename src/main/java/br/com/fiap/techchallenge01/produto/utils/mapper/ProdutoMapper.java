@@ -1,6 +1,5 @@
 package br.com.fiap.techchallenge01.produto.utils.mapper;
 
-import br.com.fiap.techchallenge01.produto.adapter.out.entity.JpaProdutoEntity;
 import br.com.fiap.techchallenge01.produto.domain.Produto;
 import br.com.fiap.techchallenge01.produto.domain.dto.request.ProdutoRequestDTO;
 import br.com.fiap.techchallenge01.produto.domain.dto.response.ProdutoResponseDTO;
@@ -29,7 +28,14 @@ public class ProdutoMapper {
                 .collect(Collectors.toList());
     }
 
-    public JpaProdutoEntity toJpaProdutoEntity(ProdutoRequestDTO produtoRequestDTO) {
-        return modelMapper.map(produtoRequestDTO, JpaProdutoEntity.class);
+    public Produto toProduto(ProdutoRequestDTO produtoRequestDTO) {
+        modelMapper.typeMap(ProdutoRequestDTO.class, Produto.class).addMappings(mapper -> {
+            mapper.skip(Produto::setId);
+        });
+
+        Produto produto = modelMapper.map(produtoRequestDTO, Produto.class);
+
+
+        return produto;
     }
 }
