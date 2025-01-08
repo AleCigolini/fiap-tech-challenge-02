@@ -23,7 +23,7 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
 
     @Override
     public List<Produto> buscarProdutos() {
-        return jpaProdutoRepository.findAll()
+        return jpaProdutoRepository.findAllByOrderByNomeAsc()
                 .stream()
                 .map(jpaProdutoEntity -> modelMapper.map(jpaProdutoEntity, Produto.class))
                 .collect(Collectors.toList());
@@ -35,15 +35,20 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
     }
 
     @Override
-    public Produto criarProduto(JpaProdutoEntity jpaProdutoEntity) {
-        JpaProdutoEntity jpaProdutoEntitySaved = jpaProdutoRepository.save(jpaProdutoEntity);
+    public Produto criarProduto(Produto produto) {
+        JpaProdutoEntity jpaProdutoEntity = modelMapper.map(produto, JpaProdutoEntity.class);
 
-        return modelMapper.map(jpaProdutoEntitySaved, Produto.class);
+        JpaProdutoEntity jpaProdutoEntitySalvo = jpaProdutoRepository.save(jpaProdutoEntity);
+
+        return modelMapper.map(jpaProdutoEntitySalvo, Produto.class);
     }
 
     @Override
-    public Produto atualizarProduto(JpaProdutoEntity jpaProdutoEntity) {
+    public Produto atualizarProduto(Produto produto) {
+        JpaProdutoEntity jpaProdutoEntity = modelMapper.map(produto, JpaProdutoEntity.class);
+
         JpaProdutoEntity jpaProdutoEntitySalvo = jpaProdutoRepository.save(jpaProdutoEntity);
+
         return modelMapper.map(jpaProdutoEntitySalvo, Produto.class);
     }
 
@@ -54,7 +59,7 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
 
     @Override
     public List<Produto> buscarProdutosPorCategoria(Long idCategoriaProduto) {
-        return jpaProdutoRepository.findAllByIdCategoria(idCategoriaProduto)
+        return jpaProdutoRepository.findAllByIdCategoriaOrderByNomeAsc(idCategoriaProduto)
                 .stream()
                 .map(jpaProdutoEntity -> modelMapper.map(jpaProdutoEntity, Produto.class))
                 .collect(Collectors.toList());

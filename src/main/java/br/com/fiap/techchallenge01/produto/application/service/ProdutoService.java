@@ -1,6 +1,5 @@
 package br.com.fiap.techchallenge01.produto.application.service;
 
-import br.com.fiap.techchallenge01.produto.adapter.out.entity.JpaProdutoEntity;
 import br.com.fiap.techchallenge01.produto.application.exception.ProdutoNaoEncontradoException;
 import br.com.fiap.techchallenge01.produto.application.usecase.ProdutoUseCase;
 import br.com.fiap.techchallenge01.produto.domain.CategoriaProduto;
@@ -31,22 +30,38 @@ public class ProdutoService implements ProdutoUseCase {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Produto> buscarProdutos() {
-        return produtoRepository.buscarProdutos();
+    public List<ProdutoResponseDTO> buscarProdutos() {
+        List<Produto> produtos = produtoRepository.buscarProdutos();
+
+        List<ProdutoResponseDTO> produtosResponseDTO = produtoMapper.toCollectionResponse(produtos);
+        produtosResponseDTO.forEach(produtoResponseDTO -> {
+            CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(produtoResponseDTO.getCategoriaProduto().getId());
+            produtoResponseDTO.setCategoriaProduto(categoriaProduto);
+        });
+
+        return produtosResponseDTO;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Produto buscarProdutoPorId(Long id) {
-        return produtoRepository.buscarProdutoPorId(id).orElseThrow(() -> new ProdutoNaoEncontradoException(id));
+    public ProdutoResponseDTO buscarProdutoPorId(Long id) {
+        Produto produto = produtoRepository.buscarProdutoPorId(id).orElseThrow(() -> new ProdutoNaoEncontradoException(id));
+        ProdutoResponseDTO produtoResponseDTO = produtoMapper.toResponse(produto);
+
+        CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(produtoResponseDTO.getCategoriaProduto().getId());
+        produtoResponseDTO.setCategoriaProduto(categoriaProduto);
+
+        return produtoResponseDTO;
     }
 
     @Override
     public ProdutoResponseDTO criarProduto(ProdutoRequestDTO produtoRequestDTO) {
-        JpaProdutoEntity jpaProdutoEntity = produtoMapper.toJpaProdutoEntity(produtoRequestDTO);
-        CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(jpaProdutoEntity.getIdCategoria());
+        CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(produtoRequestDTO.getIdCategoria());
 
-        Produto produto = produtoRepository.criarProduto(jpaProdutoEntity);
+        Produto produto = produtoMapper.toProduto(produtoRequestDTO);
+
+        produto = produtoRepository.criarProduto(produto);
+
         ProdutoResponseDTO produtoResponseDTO = produtoMapper.toResponse(produto);
         produtoResponseDTO.setCategoriaProduto(categoriaProduto);
 
@@ -55,14 +70,15 @@ public class ProdutoService implements ProdutoUseCase {
 
     @Override
     public ProdutoResponseDTO atualizarProduto(ProdutoRequestDTO produtoRequestDTO, Long idProduto) {
-        Produto produto = buscarProdutoPorId(idProduto);
-        JpaProdutoEntity jpaProdutoEntity = produtoMapper.toJpaProdutoEntity(produtoRequestDTO);
-        jpaProdutoEntity.setId(produto.getId());
+        ProdutoResponseDTO produtoResponseDTO = buscarProdutoPorId(idProduto);
+        CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(produtoRequestDTO.getIdCategoria());
 
-        Produto produtoSalvo = produtoRepository.atualizarProduto(jpaProdutoEntity);
+        Produto produtoParaAtualizar = produtoMapper.toProduto(produtoRequestDTO);
+        produtoParaAtualizar.setId(produtoResponseDTO.getId());
 
-        CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(jpaProdutoEntity.getIdCategoria());
-        ProdutoResponseDTO produtoResponseDTO = produtoMapper.toResponse(produtoSalvo);
+        Produto produtoSalvo = produtoRepository.atualizarProduto(produtoParaAtualizar);
+
+        produtoResponseDTO = produtoMapper.toResponse(produtoSalvo);
         produtoResponseDTO.setCategoriaProduto(categoriaProduto);
 
         return produtoResponseDTO;
