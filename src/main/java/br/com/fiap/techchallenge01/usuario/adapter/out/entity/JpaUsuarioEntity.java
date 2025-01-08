@@ -16,11 +16,8 @@ public class JpaUsuarioEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(length = 60, name = "primeiro_nome")
-    private String primeiroNome;
-
-    @Column(length = 60)
-    private String sobrenome;
+    @Column
+    private String nome;
 
     @Column(unique = true, length = 254)
     private String email;
@@ -28,6 +25,4 @@ public class JpaUsuarioEntity {
     @Column(unique = true, length = 11)
     private String cpf;
 
-    @Column(nullable = false)
-    private String senha;
 }

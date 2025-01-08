@@ -14,7 +14,6 @@ import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.oas.models.tags.Tag;
 import org.springdoc.core.customizers.OpenApiCustomizer;
-import org.springdoc.core.properties.SwaggerUiConfigParameters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -47,7 +46,8 @@ public class SpringDocConfig {
                         .description("Fiap Tech Challenge")
                         .url("https://techchallenge.com")
                 ).tags(Arrays.asList(
-                        new Tag().name("Categorias de Produto").description("API de categorias de produto")
+                        new Tag().name("Categorias de Produto").description("API de categorias de produto"),
+                        new Tag().name("API de usuários").description("API de usuários")
                 )).components(new Components()
                         .schemas(gerarSchemas())
                         .responses(gerarResponses())

@@ -4,15 +4,11 @@ public class Usuario {
 
     private String id;
 
-    private String primeiroNome;
-
-    private String sobrenome;
+    private String nome;
 
     private String email;
 
     private String cpf;
-
-    private String senha;
 
     public String getId() {
         return id;
@@ -22,12 +18,12 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getPrimeiroNome() {
-        return primeiroNome;
+    public String getNome() {
+        return nome;
     }
 
-    public void setPrimeiroNome(String primeiroNome) {
-        this.primeiroNome = primeiroNome;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {
@@ -38,29 +34,12 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getSobrenome() {
-        return sobrenome;
-    }
-
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
-    }
-
     public String getCpf() {
         return cpf;
     }
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 }
 
