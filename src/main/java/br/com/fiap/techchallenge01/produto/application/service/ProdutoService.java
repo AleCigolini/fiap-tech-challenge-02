@@ -44,8 +44,14 @@ public class ProdutoService implements ProdutoUseCase {
 
     @Override
     @Transactional(readOnly = true)
-    public Produto buscarProdutoPorId(Long id) {
-        return produtoRepository.buscarProdutoPorId(id).orElseThrow(() -> new ProdutoNaoEncontradoException(id));
+    public ProdutoResponseDTO buscarProdutoPorId(Long id) {
+        Produto produto = produtoRepository.buscarProdutoPorId(id).orElseThrow(() -> new ProdutoNaoEncontradoException(id));
+        ProdutoResponseDTO produtoResponseDTO = produtoMapper.toResponse(produto);
+
+        CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(produtoResponseDTO.getCategoriaProduto().getId());
+        produtoResponseDTO.setCategoriaProduto(categoriaProduto);
+
+        return produtoResponseDTO;
     }
 
     @Override
@@ -64,15 +70,15 @@ public class ProdutoService implements ProdutoUseCase {
 
     @Override
     public ProdutoResponseDTO atualizarProduto(ProdutoRequestDTO produtoRequestDTO, Long idProduto) {
-        Produto produto = buscarProdutoPorId(idProduto);
+        ProdutoResponseDTO produtoResponseDTO = buscarProdutoPorId(idProduto);
         CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(produtoRequestDTO.getIdCategoria());
 
         Produto produtoParaAtualizar = produtoMapper.toProduto(produtoRequestDTO);
-        produtoParaAtualizar.setId(produto.getId());
+        produtoParaAtualizar.setId(produtoResponseDTO.getId());
 
         Produto produtoSalvo = produtoRepository.atualizarProduto(produtoParaAtualizar);
 
-        ProdutoResponseDTO produtoResponseDTO = produtoMapper.toResponse(produtoSalvo);
+        produtoResponseDTO = produtoMapper.toResponse(produtoSalvo);
         produtoResponseDTO.setCategoriaProduto(categoriaProduto);
 
         return produtoResponseDTO;
