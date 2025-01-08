@@ -23,7 +23,7 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
 
     @Override
     public List<Produto> buscarProdutos() {
-        return jpaProdutoRepository.findAll()
+        return jpaProdutoRepository.findAllByOrderByNomeAsc()
                 .stream()
                 .map(jpaProdutoEntity -> modelMapper.map(jpaProdutoEntity, Produto.class))
                 .collect(Collectors.toList());

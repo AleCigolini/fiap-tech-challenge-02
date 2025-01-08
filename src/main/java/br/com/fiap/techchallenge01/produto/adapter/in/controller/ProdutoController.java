@@ -45,9 +45,9 @@ public class ProdutoController implements ProdutoApi {
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<ProdutoResponseDTO> buscarProdutoPorId(@PathVariable Long id) {
-        Produto produto = produtoService.buscarProdutoPorId(id);
+        ProdutoResponseDTO produtoResponseDTO = produtoService.buscarProdutoPorId(id);
 
-        return ResponseEntity.ok(produtoMapper.toResponse(produto));
+        return ResponseEntity.ok(produtoResponseDTO);
     }
 
     @Override
