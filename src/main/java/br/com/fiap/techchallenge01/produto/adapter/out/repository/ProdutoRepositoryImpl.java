@@ -35,15 +35,20 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
     }
 
     @Override
-    public Produto criarProduto(JpaProdutoEntity jpaProdutoEntity) {
-        JpaProdutoEntity jpaProdutoEntitySaved = jpaProdutoRepository.save(jpaProdutoEntity);
+    public Produto criarProduto(Produto produto) {
+        JpaProdutoEntity jpaProdutoEntity = modelMapper.map(produto, JpaProdutoEntity.class);
 
-        return modelMapper.map(jpaProdutoEntitySaved, Produto.class);
+        JpaProdutoEntity jpaProdutoEntitySalvo = jpaProdutoRepository.save(jpaProdutoEntity);
+
+        return modelMapper.map(jpaProdutoEntitySalvo, Produto.class);
     }
 
     @Override
-    public Produto atualizarProduto(JpaProdutoEntity jpaProdutoEntity) {
+    public Produto atualizarProduto(Produto produto) {
+        JpaProdutoEntity jpaProdutoEntity = modelMapper.map(produto, JpaProdutoEntity.class);
+
         JpaProdutoEntity jpaProdutoEntitySalvo = jpaProdutoRepository.save(jpaProdutoEntity);
+
         return modelMapper.map(jpaProdutoEntitySalvo, Produto.class);
     }
 
