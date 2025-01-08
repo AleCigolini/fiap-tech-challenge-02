@@ -29,9 +29,9 @@ public class ProdutoController implements ProdutoApi {
     @Override
     @GetMapping
     public ResponseEntity<List<ProdutoResponseDTO>> buscarProdutos() {
-        List<Produto> produtos = produtoService.buscarProdutos();
+        List<ProdutoResponseDTO> produtosResponseDTO = produtoService.buscarProdutos();
 
-        return ResponseEntity.ok(produtoMapper.toCollectionResponse(produtos));
+        return ResponseEntity.ok(produtosResponseDTO);
     }
 
     @Override
