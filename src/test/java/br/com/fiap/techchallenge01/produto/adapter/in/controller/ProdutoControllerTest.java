@@ -62,7 +62,7 @@ class ProdutoControllerTest {
     void deveBuscarProdutoPorId() throws Exception {
         long idProduto = 1L;
 
-        MockHttpServletResponse response = mockMvc.perform(get(STR."\{PRODUTOS_URL_PADRAO}/\{idProduto}"))
+        MockHttpServletResponse response = mockMvc.perform(get(PRODUTOS_URL_PADRAO + "/" + idProduto))
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
 
@@ -187,7 +187,7 @@ class ProdutoControllerTest {
         produtoRequestDTO.setPreco(40.00);
 
         MockHttpServletResponse response = mockMvc.perform(
-                        put(STR."\{PRODUTOS_URL_PADRAO}/\{idProduto}")
+                        put(PRODUTOS_URL_PADRAO + "/" + idProduto)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(JsonHelper.toJson(produtoRequestDTO))
                 )
@@ -215,7 +215,7 @@ class ProdutoControllerTest {
         produtoRequestDTO.setPreco(40.00);
 
         mockMvc.perform(
-                        put(STR."\{PRODUTOS_URL_PADRAO}/\{idProduto}")
+                        put(PRODUTOS_URL_PADRAO + "/" + idProduto)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(JsonHelper.toJson(produtoRequestDTO))
                 )
@@ -230,7 +230,7 @@ class ProdutoControllerTest {
         produtoRequestDTO.setNome("");
 
         mockMvc.perform(
-                        put(STR."\{PRODUTOS_URL_PADRAO}/\{idProduto}")
+                        put(PRODUTOS_URL_PADRAO + "/" + idProduto)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(JsonHelper.toJson(produtoRequestDTO))
                 )
@@ -245,7 +245,7 @@ class ProdutoControllerTest {
         produtoRequestDTO.setDescricao("");
 
         mockMvc.perform(
-                        put(STR."\{PRODUTOS_URL_PADRAO}/\{idProduto}")
+                        put(PRODUTOS_URL_PADRAO + "/" + idProduto)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(JsonHelper.toJson(produtoRequestDTO))
                 )
@@ -260,7 +260,7 @@ class ProdutoControllerTest {
         produtoRequestDTO.setIdCategoria(null);
 
         mockMvc.perform(
-                        put(STR."\{PRODUTOS_URL_PADRAO}/\{idProduto}")
+                        put(PRODUTOS_URL_PADRAO + "/" + idProduto)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(JsonHelper.toJson(produtoRequestDTO))
                 )
@@ -275,7 +275,7 @@ class ProdutoControllerTest {
         produtoRequestDTO.setPreco(null);
 
         mockMvc.perform(
-                        put(STR."\{PRODUTOS_URL_PADRAO}/\{idProduto}")
+                        put(PRODUTOS_URL_PADRAO + "/" + idProduto)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(JsonHelper.toJson(produtoRequestDTO))
                 )
@@ -288,7 +288,7 @@ class ProdutoControllerTest {
         Long idProduto = 1L;
 
         mockMvc.perform(
-                        delete(STR."\{PRODUTOS_URL_PADRAO}/\{idProduto}")
+                        delete(PRODUTOS_URL_PADRAO + "/" + idProduto)
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk());
