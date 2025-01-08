@@ -32,4 +32,15 @@ public class CategoriaProdutoService implements CategoriaProdutoUseCase {
     public List<CategoriaProduto> buscarCategoriasProduto() {
         return categoriaProdutoRepository.buscarCategoriasProduto();
     }
+
+    @Override
+    public CategoriaProduto alterarNomeCategoriaProduto(Long id, CategoriaProduto categoriaProduto) {
+        return categoriaProdutoRepository.alterarNomeCategoriaProduto(id, categoriaProduto);
+    }
+
+    @Override
+    public void desativarCategoriaProduto(CategoriaProduto categoriaProduto) {
+        categoriaProduto.setAtivo(false);
+        categoriaProdutoRepository.desativarCategoriaProduto(categoriaProduto);
+    }
 }

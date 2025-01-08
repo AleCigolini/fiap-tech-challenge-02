@@ -6,6 +6,7 @@ import lombok.Data;
 import java.time.OffsetDateTime;
 
 @Data
+@Schema(description = "Representação da resposta de uma categoria de produto")
 public class CategoriaProdutoResponseDTO {
 
     @Schema(description = "Identificador único da categoria de produto", example = "1")

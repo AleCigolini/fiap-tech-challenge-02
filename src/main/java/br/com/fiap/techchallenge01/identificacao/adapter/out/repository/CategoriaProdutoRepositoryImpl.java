@@ -32,6 +32,7 @@ public class CategoriaProdutoRepositoryImpl implements CategoriaProdutoRepositor
     public Optional<CategoriaProduto> buscarCategoriaProdutoPorId(Long id) {
 
         return jpaCategoriaProdutoRepository.findById(id)
+                .filter(JpaCategoriaProdutoEntity::getAtivo)
                 .map(jpaAcompanhamentoEntity -> modelMapper.map(jpaAcompanhamentoEntity, CategoriaProduto.class));
 
     }
@@ -42,5 +43,15 @@ public class CategoriaProdutoRepositoryImpl implements CategoriaProdutoRepositor
                 .stream()
                 .map(jpaAcompanhamentoEntity -> modelMapper.map(jpaAcompanhamentoEntity, CategoriaProduto.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public CategoriaProduto alterarNomeCategoriaProduto(Long id, CategoriaProduto categoriaProduto) {
+        return salvarCategoriaProduto(categoriaProduto);
+    }
+
+    @Override
+    public void desativarCategoriaProduto(CategoriaProduto categoriaProduto) {
+        salvarCategoriaProduto(categoriaProduto);
     }
 }
