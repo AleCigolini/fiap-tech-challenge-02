@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProdutoUseCase {
 
-    List<Produto> buscarProdutos();
+    List<ProdutoResponseDTO> buscarProdutos();
 
     Produto buscarProdutoPorId(Long id);
 
