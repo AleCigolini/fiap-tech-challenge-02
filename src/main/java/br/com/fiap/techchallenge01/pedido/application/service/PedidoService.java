@@ -25,19 +25,15 @@ public class PedidoService implements PedidoUseCase {
     private final PedidoRepository pedidoRepository;
     private final PedidoMapper pedidoMapper;
     private final ProdutoService produtoService;
-    private final ProdutoMapper produtoMapper;
 
     public PedidoService(
             PedidoRepository pedidoRepository,
             PedidoMapper pedidoMapper,
-            ProdutoService produtoService,
-            ProdutoMapper produtoMapper) {
+            ProdutoService produtoService) {
         this.pedidoRepository = pedidoRepository;
         this.pedidoMapper = pedidoMapper;
         this.produtoService = produtoService;
-        this.produtoMapper = produtoMapper;
     }
-
 
     @Override
     @Transactional(readOnly = true)

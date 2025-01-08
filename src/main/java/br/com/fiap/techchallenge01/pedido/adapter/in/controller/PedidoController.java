@@ -19,11 +19,9 @@ import java.util.List;
 public class PedidoController implements PedidoApi {
 
     private final PedidoService pedidoService;
-    private final PedidoMapper pedidoMapper;
 
-    public PedidoController(PedidoService pedidoService, PedidoMapper pedidoMapper) {
+    public PedidoController(PedidoService pedidoService) {
         this.pedidoService = pedidoService;
-        this.pedidoMapper = pedidoMapper;
     }
 
     @Override
