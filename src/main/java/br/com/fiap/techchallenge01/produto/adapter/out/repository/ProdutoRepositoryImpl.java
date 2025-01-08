@@ -59,7 +59,7 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
 
     @Override
     public List<Produto> buscarProdutosPorCategoria(Long idCategoriaProduto) {
-        return jpaProdutoRepository.findAllByIdCategoria(idCategoriaProduto)
+        return jpaProdutoRepository.findAllByIdCategoriaOrderByNomeAsc(idCategoriaProduto)
                 .stream()
                 .map(jpaProdutoEntity -> modelMapper.map(jpaProdutoEntity, Produto.class))
                 .collect(Collectors.toList());
