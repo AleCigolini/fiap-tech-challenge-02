@@ -1,0 +1,17 @@
+package br.com.fiap.techchallenge01.pedido.application.exception;
+
+import br.com.fiap.techchallenge01.identificacao.application.exception.EntidadeNaoEncontradaException;
+
+public class PedidoNaoEncontradoException extends EntidadeNaoEncontradaException {
+
+    private static final long serialVersionUID = 1L;
+
+    public PedidoNaoEncontradoException(String mensagem) {
+        super(mensagem);
+    }
+
+    public PedidoNaoEncontradoException(Long idPedido) {
+        this(STR."Não existe um pedido com ID: \{idPedido}");
+    }
+
+}
