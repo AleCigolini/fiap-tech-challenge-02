@@ -2,25 +2,18 @@ package br.com.fiap.techchallenge01.pedido.utils.mapper;
 
 import br.com.fiap.techchallenge01.pedido.adapter.out.entity.JpaPedidoEntity;
 import br.com.fiap.techchallenge01.pedido.domain.Pedido;
-import br.com.fiap.techchallenge01.pedido.domain.dto.request.PedidoRequestDTO;
 import br.com.fiap.techchallenge01.pedido.domain.dto.response.PedidoResponseDTO;
 import br.com.fiap.techchallenge01.produto.adapter.out.entity.JpaProdutoEntity;
 import br.com.fiap.techchallenge01.produto.domain.Produto;
-import br.com.fiap.techchallenge01.produto.domain.repository.ProdutoRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
 public class PedidoMapper {
-
-    @Autowired
-    private ProdutoRepository produtoRepository;
 
     private final ModelMapper modelMapper;
 

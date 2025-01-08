@@ -12,6 +12,7 @@ import br.com.fiap.techchallenge01.pedido.domain.repository.PedidoRepository;
 import br.com.fiap.techchallenge01.pedido.utils.mapper.PedidoMapper;
 import br.com.fiap.techchallenge01.produto.application.service.ProdutoService;
 import br.com.fiap.techchallenge01.produto.domain.Produto;
+import br.com.fiap.techchallenge01.produto.domain.dto.response.ProdutoResponseDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,8 +44,13 @@ public class PedidoService implements PedidoUseCase {
     public PedidoResponseDTO criarPedido(PedidoRequestDTO pedidoRequestDTO) {
 
         List<Produto> produtos = new ArrayList<>();
-        for (PedidoProdutoRequestDTO produto : pedidoRequestDTO.getProdutos()) {
-            produtos.add(produtoService.buscarProdutoPorId(produto.getId()));
+        Produto produto;
+        for (PedidoProdutoRequestDTO pedidoProdutoRequestDTO : pedidoRequestDTO.getProdutos()) {
+            ProdutoResponseDTO produtoResponseDTO = produtoService.buscarProdutoPorId(pedidoProdutoRequestDTO.getId());
+            produto = new Produto();
+            produto.setId(produtoResponseDTO.getId());
+            produto.setPreco(produtoResponseDTO.getPreco());
+            produtos.add(produto);
         }
 
         JpaPedidoEntity jpaPedidoEntity = pedidoMapper.toJpaPedidoEntity(produtos);
