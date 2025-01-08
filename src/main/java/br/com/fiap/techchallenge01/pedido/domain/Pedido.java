@@ -12,8 +12,8 @@ public class Pedido {
     private Long id;
     private String codigoPedido;
     private String status; // TODO: CONVERTER EM ENUM? "ABERTO", APROVADO, "EM_ANDAMENTO", "ENTREGUE", "FINALIZADO", "CANCELADO"
-    private Double valorTotal;
-    private List<Produto> itensProduto;
+    private Double preco;
+    private List<Produto> produtos;
     private OffsetDateTime dataCriacao;
     private OffsetDateTime dataAlteracao;
     private Boolean eAtivo;

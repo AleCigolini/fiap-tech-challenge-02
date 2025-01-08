@@ -10,5 +10,5 @@ public interface PedidoRepository {
 
     List<Pedido> buscarPedidos();
 
-    Pedido criarPedido(JpaPedidoEntity jpaPedidoEntity);
+    Pedido criarPedido(Pedido pedido);
 }

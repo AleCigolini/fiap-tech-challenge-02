@@ -29,9 +29,9 @@ public class PedidoController implements PedidoApi {
     @Override
     @GetMapping
     public ResponseEntity<List<PedidoResponseDTO>> buscarPedidos() {
-        List<Pedido> pedidos = pedidoService.buscarPedidos();
+        List<PedidoResponseDTO> pedidosResponseDTO = pedidoService.buscarPedidos();
 
-        return ResponseEntity.ok(pedidoMapper.toCollectionResponse(pedidos));
+        return ResponseEntity.ok(pedidosResponseDTO);
     }
 
     @Override

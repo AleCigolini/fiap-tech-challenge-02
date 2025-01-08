@@ -1,9 +1,10 @@
 package br.com.fiap.techchallenge01.pedido.domain.dto.response;
 
+import br.com.fiap.techchallenge01.produto.domain.dto.response.ProdutoResponseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class PedidoResponseDTO {
@@ -15,9 +16,8 @@ public class PedidoResponseDTO {
     private String codigo;
 
     @Schema(description = "Valor total do pedido")
-    private Double valor;
+    private Double preco;
 
     @Schema(description = "Itens do pedido (Lanche, Acompanhamento, Bebida, Sobremesa)")
-    private ArrayList<PedidoProdutoResponseDTO> itensPedido;
-
+    private List<ProdutoResponseDTO> produtos;
 }

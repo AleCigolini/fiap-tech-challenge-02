@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PedidoUseCase {
 
-    List<Pedido> buscarPedidos();
+    List<PedidoResponseDTO> buscarPedidos();
 
     PedidoResponseDTO criarPedido(PedidoRequestDTO pedidoRequestDTO);
 }

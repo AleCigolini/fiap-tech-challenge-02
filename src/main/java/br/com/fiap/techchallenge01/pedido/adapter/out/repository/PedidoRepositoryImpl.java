@@ -29,9 +29,11 @@ public class PedidoRepositoryImpl implements PedidoRepository {
     }
 
     @Override
-    public Pedido criarPedido(JpaPedidoEntity jpaPedidoEntity) {
-        JpaPedidoEntity jpaPedidoEntitySaved = jpaPedidoRepository.save(jpaPedidoEntity);
+    public Pedido criarPedido(Pedido pedido) {
+        JpaPedidoEntity jpaPedidoEntity = modelMapper.map(pedido, JpaPedidoEntity.class);
+        // TODO: RESOLVER O PROBLEMA MUITOS:MUITOS ENTRE PEDIDO E PRODUTO
+        JpaPedidoEntity jpaPedidoEntitySalvo = jpaPedidoRepository.save(jpaPedidoEntity);
 
-        return modelMapper.map(jpaPedidoEntitySaved, Pedido.class);
+        return modelMapper.map(jpaPedidoEntitySalvo, Pedido.class);
     }
 }

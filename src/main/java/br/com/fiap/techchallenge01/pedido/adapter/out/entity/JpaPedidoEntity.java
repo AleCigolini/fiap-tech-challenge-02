@@ -26,6 +26,6 @@ public class JpaPedidoEntity {
 //    // TODO: CORRIGIR FORMATO PARA SALVAR PRODUTOS NO BD
 //    private List<JpaProdutoEntity> produtos;
 
-    @Column(name = "valor")
-    private Double valor;
+    @Column(name = "preco")
+    private Double preco;
 }
