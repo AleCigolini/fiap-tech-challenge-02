@@ -2,7 +2,6 @@ package br.com.fiap.techchallenge01.produto.adapter.in.controller;
 
 import br.com.fiap.techchallenge01.produto.adapter.in.controller.api.ProdutoApi;
 import br.com.fiap.techchallenge01.produto.application.service.ProdutoService;
-import br.com.fiap.techchallenge01.produto.domain.Produto;
 import br.com.fiap.techchallenge01.produto.domain.dto.request.ProdutoRequestDTO;
 import br.com.fiap.techchallenge01.produto.domain.dto.response.ProdutoResponseDTO;
 import br.com.fiap.techchallenge01.produto.utils.mapper.ProdutoMapper;
@@ -55,7 +54,7 @@ public class ProdutoController implements ProdutoApi {
     public ResponseEntity<ProdutoResponseDTO> criarProduto(@RequestBody @Valid ProdutoRequestDTO produtoRequestDTO) throws URISyntaxException {
         ProdutoResponseDTO produtoResponse = produtoService.criarProduto(produtoRequestDTO);
 
-        return ResponseEntity.created(new URI(STR."/produtos/\{produtoResponse.getId()}")).body(produtoResponse);
+        return ResponseEntity.created(new URI("/produtos/" + produtoResponse.getId())).body(produtoResponse);
     }
 
     @Override
