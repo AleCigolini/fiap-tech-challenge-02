@@ -9,13 +9,13 @@ public interface ProdutoUseCase {
 
     List<ProdutoResponseDTO> buscarProdutos();
 
-    ProdutoResponseDTO buscarProdutoPorId(Long id);
+    ProdutoResponseDTO buscarProdutoPorId(String id);
 
     ProdutoResponseDTO criarProduto(ProdutoRequestDTO produtoRequestDTO);
 
-    ProdutoResponseDTO atualizarProduto(ProdutoRequestDTO produtoRequestDTO, Long idProduto);
+    ProdutoResponseDTO atualizarProduto(ProdutoRequestDTO produtoRequestDTO, String idProduto);
 
-    void excluirProduto(Long idProduto);
+    void excluirProduto(String idProduto);
 
-    List<ProdutoResponseDTO> buscarProdutosPorCategoria(Long idCategoriaProduto);
+    List<ProdutoResponseDTO> buscarProdutosPorCategoria(String idCategoriaProduto);
 }

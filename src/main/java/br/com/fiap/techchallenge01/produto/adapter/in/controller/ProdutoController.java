@@ -4,7 +4,6 @@ import br.com.fiap.techchallenge01.produto.adapter.in.controller.api.ProdutoApi;
 import br.com.fiap.techchallenge01.produto.application.service.ProdutoService;
 import br.com.fiap.techchallenge01.produto.domain.dto.request.ProdutoRequestDTO;
 import br.com.fiap.techchallenge01.produto.domain.dto.response.ProdutoResponseDTO;
-import br.com.fiap.techchallenge01.produto.utils.mapper.ProdutoMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +17,9 @@ import java.util.List;
 public class ProdutoController implements ProdutoApi {
 
     private final ProdutoService produtoService;
-    private final ProdutoMapper produtoMapper;
 
-    public ProdutoController(ProdutoService produtoService, ProdutoMapper produtoMapper) {
+    public ProdutoController(ProdutoService produtoService) {
         this.produtoService = produtoService;
-        this.produtoMapper = produtoMapper;
     }
 
     @Override
@@ -35,7 +32,7 @@ public class ProdutoController implements ProdutoApi {
 
     @Override
     @GetMapping("/categoria/{idCategoriaProduto}")
-    public ResponseEntity<List<ProdutoResponseDTO>> buscarProdutosPorCategoria(@PathVariable Long idCategoriaProduto) {
+    public ResponseEntity<List<ProdutoResponseDTO>> buscarProdutosPorCategoria(@PathVariable String idCategoriaProduto) {
         List<ProdutoResponseDTO> produtosResponse = produtoService.buscarProdutosPorCategoria(idCategoriaProduto);
 
         return ResponseEntity.ok(produtosResponse);
@@ -43,7 +40,7 @@ public class ProdutoController implements ProdutoApi {
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<ProdutoResponseDTO> buscarProdutoPorId(@PathVariable Long id) {
+    public ResponseEntity<ProdutoResponseDTO> buscarProdutoPorId(@PathVariable String id) {
         ProdutoResponseDTO produtoResponseDTO = produtoService.buscarProdutoPorId(id);
 
         return ResponseEntity.ok(produtoResponseDTO);
@@ -58,16 +55,16 @@ public class ProdutoController implements ProdutoApi {
     }
 
     @Override
-    @PutMapping("/{idProduto}")
-    public ResponseEntity<ProdutoResponseDTO> atualizarProduto(@RequestBody @Valid ProdutoRequestDTO produtoRequestDTO, @PathVariable Long idProduto) {
-        ProdutoResponseDTO produtoResponse = produtoService.atualizarProduto(produtoRequestDTO, idProduto);
+    @PutMapping("/{id}")
+    public ResponseEntity<ProdutoResponseDTO> atualizarProduto(@RequestBody @Valid ProdutoRequestDTO produtoRequestDTO, @PathVariable String id) {
+        ProdutoResponseDTO produtoResponse = produtoService.atualizarProduto(produtoRequestDTO, id);
 
         return ResponseEntity.ok(produtoResponse);
     }
 
     @Override
     @DeleteMapping("/{idProduto}")
-    public ResponseEntity<Void> excluirProduto(@PathVariable Long idProduto) {
+    public ResponseEntity<Void> excluirProduto(@PathVariable String idProduto) {
         produtoService.excluirProduto(idProduto);
         return ResponseEntity.ok().build();
     }

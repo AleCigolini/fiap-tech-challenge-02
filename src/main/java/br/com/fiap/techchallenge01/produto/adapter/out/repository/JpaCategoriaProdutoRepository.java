@@ -4,8 +4,9 @@ import br.com.fiap.techchallenge01.produto.adapter.out.entity.JpaCategoriaProdut
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface JpaCategoriaProdutoRepository extends JpaRepository<JpaCategoriaProdutoEntity, Long> {
+public interface JpaCategoriaProdutoRepository extends JpaRepository<JpaCategoriaProdutoEntity, UUID> {
 
     List<JpaCategoriaProdutoEntity> findByAtivoTrue();
 }
