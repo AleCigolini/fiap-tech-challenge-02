@@ -18,5 +18,10 @@ springdoc:
   swagger-ui:
     operationsSorter: alpha
     docExpansion: none
+tag:
+  swagger:
+    cliente:
+        name: "Cliente"
+        description: "API de Clientes"
 
 

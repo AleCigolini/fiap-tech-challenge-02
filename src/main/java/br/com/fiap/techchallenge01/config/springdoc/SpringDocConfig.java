@@ -14,7 +14,7 @@ import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.oas.models.tags.Tag;
 import org.springdoc.core.customizers.OpenApiCustomizer;
-import org.springdoc.core.properties.SwaggerUiConfigParameters;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,6 +32,11 @@ public class SpringDocConfig {
     private static final String notAcceptableResponse = "NotAcceptableResponse";
     private static final String internalServerErrorResponse = "InternalServerErrorResponse";
 
+    @Value("${tag.swagger.cliente.name}")
+    private String clienteName;
+    @Value("${tag.swagger.cliente.description}")
+    private String clienteDescription;
+
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI()
@@ -48,7 +53,9 @@ public class SpringDocConfig {
                         .url("https://techchallenge.com")
                 ).tags(Arrays.asList(
                         new Tag().name("Categorias de Produto").description("API de categorias de produto"),
-                        new Tag().name("Produtos").description("API de produtos")
+                        new Tag().name("Produtos").description("API de produtos"),
+                        new Tag().name("Pedidos").description("API de pedidos"),
+                        new Tag().name(clienteName).description(clienteDescription)
                 )).components(new Components()
                         .schemas(gerarSchemas())
                         .responses(gerarResponses())
