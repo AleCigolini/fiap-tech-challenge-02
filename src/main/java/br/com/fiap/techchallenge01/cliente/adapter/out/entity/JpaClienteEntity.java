@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "usuario")
+@Table(name = "cliente")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class JpaClienteEntity {
     @Id
