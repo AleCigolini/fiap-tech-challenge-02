@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge01.pedido.adapter.out.entity;
 
+import br.com.fiap.techchallenge01.produto.adapter.out.entity.JpaProdutoEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,24 +17,23 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "pedido")
-public class JpaPedidoEntity {
+@Table(name = "produto_pedido")
+public class JpaProdutoPedidoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(name = "codigo")
-    private String codigo;
+    @Column(name = "observacao")
+    private String observacao;
 
-    @Column(name = "status")
-    private String status;
+    @ManyToOne
+    @JoinColumn(name="id_pedido", nullable=false)
+    private JpaPedidoEntity pedido;
 
-    @Column(name = "preco")
-    private Double preco;
-
-    @OneToMany(mappedBy="pedido")
-    private List<JpaProdutoPedidoEntity> produtos = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name="id_produto", nullable=false)
+    private JpaProdutoEntity produto;
 
     @Column(name = "data_criacao", nullable = false, updatable = false)
     @CreationTimestamp
@@ -45,5 +45,4 @@ public class JpaPedidoEntity {
 
     @Column(name = "e_ativo", nullable = false)
     private Boolean ativo;
-
 }

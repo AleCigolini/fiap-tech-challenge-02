@@ -1,9 +1,9 @@
 package br.com.fiap.techchallenge01.pedido.domain.dto.response;
 
-import br.com.fiap.techchallenge01.produto.domain.dto.response.ProdutoResponseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Data
@@ -18,6 +18,9 @@ public class PedidoResponseDTO {
     @Schema(description = "Valor total do pedido")
     private Double preco;
 
-    @Schema(description = "Itens do pedido (Lanche, Acompanhamento, Bebida, Sobremesa)")
-    private List<ProdutoResponseDTO> produtos;
+    @Schema(description = "Produtos do pedido")
+    private List<ProdutoPedidoResponseDTO> produtos;
+
+    @Schema(description = "Data de criação do pedido", example = "2023-01-01T10:00:00Z")
+    private OffsetDateTime dataCriacao;
 }

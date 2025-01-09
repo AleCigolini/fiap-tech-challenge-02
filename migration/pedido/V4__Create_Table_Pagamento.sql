@@ -1,3 +1,4 @@
+-- Criação da tabela pagamento
 CREATE TABLE pagamento (
     id UUID PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
     preco DECIMAL(10,2) NOT NULL DEFAULT 00.00,

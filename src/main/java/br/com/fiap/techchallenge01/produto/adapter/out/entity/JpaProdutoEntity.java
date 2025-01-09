@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge01.produto.adapter.out.entity;
 
 import br.com.fiap.techchallenge01.pedido.adapter.out.entity.JpaPedidoEntity;
+import br.com.fiap.techchallenge01.pedido.adapter.out.entity.JpaProdutoPedidoEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,7 +31,4 @@ public class JpaProdutoEntity {
 
     @Column(name = "preco")
     private Double preco;
-
-    @ManyToMany(mappedBy = "produtos")
-    private List<JpaPedidoEntity> pedidos = new ArrayList<>();
 }

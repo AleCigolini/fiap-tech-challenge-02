@@ -55,7 +55,7 @@ public class PedidoService implements PedidoUseCase {
             precoTotal += produtoEncontrado.getPreco() * pedidoProdutoRequestDTO.getQuantidade();
             produtos.add(produtoEncontrado);
         }
-        pedido.setProdutos(produtos);
+//        pedido.setProdutos(produtos);
         pedido.setCodigo(gerarCodigo());
         pedido.setStatus(StatusPedido.ABERTO.toString());
         pedido.setPreco(precoTotal);
@@ -68,8 +68,9 @@ public class PedidoService implements PedidoUseCase {
         return pedidoMapper.toResponse(pedidoSalvo);
     }
 
-    //TODO: SEMPRE ZERAR SEQUENCIA A CADA DIA, CRIAR UMA TABELA?
-    // MOVER PARA O UTILS, CRIAR BUSCA E REGISTRO NO BANCO COM SEQUENCIA DE CÓDIGO + TIMESTAMP
+    //TODO: SEMPRE ZERAR SEQUENCIA A CADA DIA
+    // CRIAR UMA TABELA BUSCANDO NO BANCO A PRÓXIMA SEQUENCIA DE CÓDIGO + TIMESTAMP
+    // MOVER PARA O UTILS
     private String gerarCodigo() {
 
         var CARACTERES = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
