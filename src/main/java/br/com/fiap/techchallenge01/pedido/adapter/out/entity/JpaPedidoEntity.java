@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,8 +15,8 @@ import lombok.NoArgsConstructor;
 public class JpaPedidoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @Column(name = "codigo")
     private String codigo;
@@ -22,10 +24,10 @@ public class JpaPedidoEntity {
     @Column(name = "status")
     private String status;
 
+    @Column(name = "preco")
+    private Double preco;
+
 //    @Column(name = "produtos")
 //    // TODO: CORRIGIR FORMATO PARA SALVAR PRODUTOS NO BD
 //    private List<JpaProdutoEntity> produtos;
-
-    @Column(name = "preco")
-    private Double preco;
 }

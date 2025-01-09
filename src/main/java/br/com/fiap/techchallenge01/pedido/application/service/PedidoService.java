@@ -41,16 +41,16 @@ public class PedidoService implements PedidoUseCase {
         List<Pedido> pedidos = pedidoRepository.buscarPedidos();
         List<PedidoResponseDTO> pedidosResponseDTO = pedidoMapper.toCollectionResponse(pedidos);
 
-        List<ProdutoResponseDTO> produtosResponseDTO;
-
-        for (PedidoResponseDTO pedidoResponseDTO : pedidosResponseDTO) {
-            produtosResponseDTO = new ArrayList<>();
-            for (ProdutoResponseDTO produtoResponseDTO : pedidoResponseDTO.getProdutos()) {
-                ProdutoResponseDTO produtoEncontrado = produtoService.buscarProdutoPorId(produtoResponseDTO.getId());
-                produtosResponseDTO.add(produtoEncontrado);
-            }
-            pedidoResponseDTO.setProdutos(produtosResponseDTO);
-        }
+//        List<ProdutoResponseDTO> produtosResponseDTO;
+//
+//        for (PedidoResponseDTO pedidoResponseDTO : pedidosResponseDTO) {
+//            produtosResponseDTO = new ArrayList<>();
+//            for (ProdutoResponseDTO produtoResponseDTO : pedidoResponseDTO.getProdutos()) {
+//                ProdutoResponseDTO produtoEncontrado = produtoService.buscarProdutoPorId(produtoResponseDTO.getId());
+//                produtosResponseDTO.add(produtoEncontrado);
+//            }
+//            pedidoResponseDTO.setProdutos(produtosResponseDTO);
+//        }
 
         return pedidosResponseDTO;
     }
@@ -72,7 +72,7 @@ public class PedidoService implements PedidoUseCase {
             precoTotal += produto.getPreco();
             produtos.add(produto);
         }
-        pedido.setProdutos(produtos);
+//        pedido.setProdutos(produtos);
 //        pedido.setCodigo("00001"); //TODO: SEMPRE GERAR UMA NOVA SEQUENCIA POR DIA
         pedido.setStatus(StatusPedido.ABERTO.toString());
         pedido.setPreco(precoTotal);
