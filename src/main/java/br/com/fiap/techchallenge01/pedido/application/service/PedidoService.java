@@ -64,7 +64,8 @@ public class PedidoService implements PedidoUseCase {
         var precoTotal = 0D;
 
         for (PedidoProdutoRequestDTO pedidoProdutoRequestDTO : pedidoRequestDTO.getProdutos()) {
-            ProdutoResponseDTO produtoResponseDTO = produtoService.buscarProdutoPorId(pedidoProdutoRequestDTO.getId());
+            // TODO: VALDIAR NULLPOINTER
+            ProdutoResponseDTO produtoResponseDTO = produtoService.buscarProdutoPorId(pedidoProdutoRequestDTO.getProduto().getId());
 
             produto = new Produto();
             produto.setId(produtoResponseDTO.getId());
