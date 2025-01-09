@@ -12,7 +12,7 @@ import java.util.List;
 public class PedidoRequestDTO {
 
     @NotEmpty
-    private List<PedidoProdutoRequestDTO> produtos;
+    private List<PedidoListaProdutoRequestDTO> produtos;
 
 //    TODO: FAZER PAGAMENTO
 //    @NotNull

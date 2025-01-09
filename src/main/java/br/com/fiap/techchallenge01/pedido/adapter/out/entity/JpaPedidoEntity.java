@@ -30,7 +30,7 @@ public class JpaPedidoEntity {
     @Column(name = "preco")
     private Double preco;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = { CascadeType.MERGE })
     @JoinTable(
             name = "pedido_produto",
             joinColumns = { @JoinColumn(name = "id_pedido") },

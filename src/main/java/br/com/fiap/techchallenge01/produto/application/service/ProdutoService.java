@@ -54,6 +54,20 @@ public class ProdutoService implements ProdutoUseCase {
         return produtoResponseDTO;
     }
 
+    // TODO: ALINHAR EM GRUPO O RETORNO DO OBJ OU DO DTO NA CAMADA DE SERVIÇO PRA SER USADO EM OUTROS SERVIÇOS DA MESMA CAMADA
+    @Override
+    @Transactional(readOnly = true)
+    public Produto obterProdutoPorId(String id) {
+        Produto produto = produtoRepository.buscarProdutoPorId(id).orElseThrow(() -> new ProdutoNaoEncontradoException(id));
+//        ProdutoResponseDTO produtoResponseDTO = produtoMapper.toResponse(produto);
+
+//        TODO: CONVERTER EM ANOTAÇÃO ONE:MANY
+//        CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(produtoResponseDTO.getCategoriaProduto().getId());
+//        produtoResponseDTO.setCategoriaProduto(categoriaProduto);
+
+        return produto;
+    }
+
     @Override
     public ProdutoResponseDTO criarProduto(ProdutoRequestDTO produtoRequestDTO) {
         CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(produtoRequestDTO.getIdCategoria());
