@@ -24,7 +24,7 @@ public class CategoriaProdutoService implements CategoriaProdutoUseCase {
     }
 
     @Override
-    public CategoriaProduto buscarCategoriaProdutoPorId(Long id) {
+    public CategoriaProduto buscarCategoriaProdutoPorId(String id) {
         return categoriaProdutoRepository.buscarCategoriaProdutoPorId(id).orElseThrow(() -> new CategoriaProdutoNaoEncontradaException(id));
     }
 
@@ -34,7 +34,7 @@ public class CategoriaProdutoService implements CategoriaProdutoUseCase {
     }
 
     @Override
-    public CategoriaProduto alterarNomeCategoriaProduto(Long id, CategoriaProduto categoriaProduto) {
+    public CategoriaProduto alterarNomeCategoriaProduto(String id, CategoriaProduto categoriaProduto) {
         return categoriaProdutoRepository.alterarNomeCategoriaProduto(id, categoriaProduto);
     }
 

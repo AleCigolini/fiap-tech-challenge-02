@@ -20,20 +20,20 @@ public class CategoriaProdutoController implements CategoriaProdutoApi {
     private CategoriaProdutoMapper categoriaProdutoMapper;
 
     @Autowired
-    private CategoriaProdutoService acompanhamentoService;
+    private CategoriaProdutoService categoriaProdutoService;
 
     @Override
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CategoriaProdutoResponseDTO buscarCategoriaProduto(@PathVariable Long id) {
-        return categoriaProdutoMapper.toResponse(acompanhamentoService.buscarCategoriaProdutoPorId(id));
+    public CategoriaProdutoResponseDTO buscarCategoriaProduto(@PathVariable String id) {
+        return categoriaProdutoMapper.toResponse(categoriaProdutoService.buscarCategoriaProdutoPorId(id));
     }
 
     @Override
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CategoriaProdutoResponseDTO> listarCategoriasProduto() {
-        return categoriaProdutoMapper.toCollectionResponse(acompanhamentoService.buscarCategoriasProduto());
+        return categoriaProdutoMapper.toCollectionResponse(categoriaProdutoService.buscarCategoriasProduto());
     }
 
     @Override
@@ -43,25 +43,25 @@ public class CategoriaProdutoController implements CategoriaProdutoApi {
 
         CategoriaProduto categoriaProduto = categoriaProdutoMapper.toDomain(categoriaProdutoRequestDto);
 
-        return categoriaProdutoMapper.toResponse(acompanhamentoService.salvarCategoriaProduto(categoriaProduto));
+        return categoriaProdutoMapper.toResponse(categoriaProdutoService.salvarCategoriaProduto(categoriaProduto));
     }
 
     @Override
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CategoriaProdutoResponseDTO alterarNomeCategoriaProduto(@PathVariable Long id, @RequestBody CategoriaProdutoRequestDTO categoriaProdutoRequestDto) {
+    public CategoriaProdutoResponseDTO alterarNomeCategoriaProduto(@PathVariable String id, @RequestBody CategoriaProdutoRequestDTO categoriaProdutoRequestDto) {
 
-        CategoriaProduto categoriaProduto = acompanhamentoService.buscarCategoriaProdutoPorId(id);
+        CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(id);
         categoriaProduto.setNome(categoriaProdutoRequestDto.getNome());
 
-        return categoriaProdutoMapper.toResponse(acompanhamentoService.alterarNomeCategoriaProduto(id, categoriaProduto));
+        return categoriaProdutoMapper.toResponse(categoriaProdutoService.alterarNomeCategoriaProduto(id, categoriaProduto));
     }
 
     @Override
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void desativarCategoriaProduto(@PathVariable Long id) {
-        CategoriaProduto categoriaProduto = acompanhamentoService.buscarCategoriaProdutoPorId(id);
-        acompanhamentoService.desativarCategoriaProduto(categoriaProduto);
+    public void desativarCategoriaProduto(@PathVariable String id) {
+        CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(id);
+        categoriaProdutoService.desativarCategoriaProduto(categoriaProduto);
     }
 }

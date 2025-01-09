@@ -13,7 +13,7 @@ public class ProdutoRequestDTO {
     private String descricao;
 
     @NotNull
-    private Long idCategoria;
+    private String idCategoria;
 
     @NotNull
     private Double preco;

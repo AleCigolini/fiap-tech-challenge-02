@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.UUID;
+
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
@@ -11,8 +13,8 @@ import lombok.EqualsAndHashCode;
 public class JpaProdutoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @Column(name = "nome")
     private String nome;
@@ -21,7 +23,7 @@ public class JpaProdutoEntity {
     private String descricao;
 
     @Column(name = "id_categoria")
-    private Long idCategoria;
+    private UUID idCategoria;
 
     @Column(name = "preco")
     private Double preco;

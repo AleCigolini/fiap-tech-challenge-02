@@ -7,10 +7,10 @@ import java.time.OffsetDateTime;
 @Data
 public class Produto {
 
-    private Long id;
+    private String id;
     private String nome;
     private String descricao;
-    private Long idCategoria;
+    private String idCategoria;
     private Double preco;
     private OffsetDateTime dataCriacao;
     private Boolean eAtivo;

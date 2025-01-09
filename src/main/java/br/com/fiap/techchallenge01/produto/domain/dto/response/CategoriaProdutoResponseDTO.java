@@ -10,7 +10,7 @@ import java.time.OffsetDateTime;
 public class CategoriaProdutoResponseDTO {
 
     @Schema(description = "Identificador único da categoria de produto", example = "1")
-    private Long id;
+    private String id;
 
     @Schema(description = "Nome da categoria de produto", example = "Nome da Categoria de Produto", maxLength = 40)
     private String nome;

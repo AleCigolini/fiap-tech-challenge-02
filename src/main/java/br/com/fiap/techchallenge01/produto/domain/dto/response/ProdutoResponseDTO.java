@@ -8,7 +8,7 @@ import lombok.Data;
 public class ProdutoResponseDTO {
 
     @Schema(description = "Identificador único do produto", example = "1")
-    private Long id;
+    private String id;
 
     @Schema(description = "Nome do produto")
     private String nome;
