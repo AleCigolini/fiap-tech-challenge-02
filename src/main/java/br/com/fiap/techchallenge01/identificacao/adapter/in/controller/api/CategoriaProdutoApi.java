@@ -30,7 +30,7 @@ public interface CategoriaProdutoApi {
                             content = @Content(schema = @Schema(ref = "Problema"))
                     )
             })
-    CategoriaProdutoResponseDTO buscarCategoriaProduto(@Parameter(description = "ID da categoria de produto", example = "1", required = true) Long id);
+    CategoriaProdutoResponseDTO buscarCategoriaProduto(@Parameter(description = "ID da categoria de produto", example = "1", required = true) String id);
 
     /**
      * Listar todas as categorias de produto.
@@ -85,7 +85,7 @@ public interface CategoriaProdutoApi {
                     )
             })
     CategoriaProdutoResponseDTO alterarNomeCategoriaProduto(
-            @Parameter(description = "ID da categoria de produto", example = "1", required = true) Long id,
+            @Parameter(description = "ID da categoria de produto", example = "1", required = true) String id,
             CategoriaProdutoRequestDTO categoriaProdutoRequestDto);
 
 
@@ -109,6 +109,6 @@ public interface CategoriaProdutoApi {
                     )
             })
     void desativarCategoriaProduto(
-            @Parameter(description = "ID da categoria de produto", example = "1", required = true) Long id);
+            @Parameter(description = "ID da categoria de produto", example = "1", required = true) String id);
 
 }

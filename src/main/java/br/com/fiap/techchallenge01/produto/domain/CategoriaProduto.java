@@ -4,7 +4,7 @@ import java.time.OffsetDateTime;
 
 public class CategoriaProduto {
 
-    private Long id;
+    private String id;
     private String nome;
     private OffsetDateTime dataCriacao;
     private OffsetDateTime dataAtualizacao;
@@ -14,7 +14,7 @@ public class CategoriaProduto {
 
     }
 
-    public CategoriaProduto(Long id, String nome, OffsetDateTime dataCriacao, OffsetDateTime dataAtualizacao, Boolean ativo) {
+    public CategoriaProduto(String id, String nome, OffsetDateTime dataCriacao, OffsetDateTime dataAtualizacao, Boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.dataCriacao = dataCriacao;
@@ -22,11 +22,11 @@ public class CategoriaProduto {
         this.ativo = ativo;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

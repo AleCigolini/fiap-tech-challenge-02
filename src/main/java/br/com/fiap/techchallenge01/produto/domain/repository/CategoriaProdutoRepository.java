@@ -8,8 +8,8 @@ import java.util.Optional;
 public interface CategoriaProdutoRepository {
 
     CategoriaProduto salvarCategoriaProduto(CategoriaProduto categoriaProduto);
-    Optional<CategoriaProduto> buscarCategoriaProdutoPorId(Long id);
+    Optional<CategoriaProduto> buscarCategoriaProdutoPorId(String id);
     List<CategoriaProduto> buscarCategoriasProduto();
-    CategoriaProduto alterarNomeCategoriaProduto(Long id, CategoriaProduto categoriaProduto);
+    CategoriaProduto alterarNomeCategoriaProduto(String id, CategoriaProduto categoriaProduto);
     void desativarCategoriaProduto(CategoriaProduto categoriaProduto);
 }

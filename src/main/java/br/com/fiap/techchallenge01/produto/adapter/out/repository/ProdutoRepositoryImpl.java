@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Repository
@@ -30,8 +31,8 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
     }
 
     @Override
-    public Optional<Produto> buscarProdutoPorId(Long id) {
-        return jpaProdutoRepository.findById(id).map(jpaProdutoEntity -> modelMapper.map(jpaProdutoEntity, Produto.class));
+    public Optional<Produto> buscarProdutoPorId(String id) {
+        return jpaProdutoRepository.findById(UUID.fromString(id)).map(jpaProdutoEntity -> modelMapper.map(jpaProdutoEntity, Produto.class));
     }
 
     @Override
@@ -53,13 +54,13 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
     }
 
     @Override
-    public void excluirProduto(Long idProduto) {
-        jpaProdutoRepository.deleteById(idProduto);
+    public void excluirProduto(String id) {
+        jpaProdutoRepository.deleteById(UUID.fromString(id));
     }
 
     @Override
-    public List<Produto> buscarProdutosPorCategoria(Long idCategoriaProduto) {
-        return jpaProdutoRepository.findAllByIdCategoriaOrderByNomeAsc(idCategoriaProduto)
+    public List<Produto> buscarProdutosPorCategoria(String idCategoriaProduto) {
+        return jpaProdutoRepository.findAllByIdCategoriaOrderByNomeAsc(UUID.fromString(idCategoriaProduto))
                 .stream()
                 .map(jpaProdutoEntity -> modelMapper.map(jpaProdutoEntity, Produto.class))
                 .collect(Collectors.toList());

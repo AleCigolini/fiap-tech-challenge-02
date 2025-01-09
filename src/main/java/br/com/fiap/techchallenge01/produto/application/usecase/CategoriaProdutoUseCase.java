@@ -7,8 +7,8 @@ import java.util.List;
 public interface CategoriaProdutoUseCase {
 
     CategoriaProduto salvarCategoriaProduto(CategoriaProduto categoriaProduto);
-    CategoriaProduto buscarCategoriaProdutoPorId(Long id);
+    CategoriaProduto buscarCategoriaProdutoPorId(String id);
     List<CategoriaProduto> buscarCategoriasProduto();
-    CategoriaProduto alterarNomeCategoriaProduto(Long id, CategoriaProduto categoriaProduto);
+    CategoriaProduto alterarNomeCategoriaProduto(String id, CategoriaProduto categoriaProduto);
     void desativarCategoriaProduto(CategoriaProduto categoriaProduto);
 }

@@ -44,7 +44,7 @@ public class ProdutoService implements ProdutoUseCase {
 
     @Override
     @Transactional(readOnly = true)
-    public ProdutoResponseDTO buscarProdutoPorId(Long id) {
+    public ProdutoResponseDTO buscarProdutoPorId(String id) {
         Produto produto = produtoRepository.buscarProdutoPorId(id).orElseThrow(() -> new ProdutoNaoEncontradoException(id));
         ProdutoResponseDTO produtoResponseDTO = produtoMapper.toResponse(produto);
 
@@ -69,7 +69,7 @@ public class ProdutoService implements ProdutoUseCase {
     }
 
     @Override
-    public ProdutoResponseDTO atualizarProduto(ProdutoRequestDTO produtoRequestDTO, Long idProduto) {
+    public ProdutoResponseDTO atualizarProduto(ProdutoRequestDTO produtoRequestDTO, String idProduto) {
         ProdutoResponseDTO produtoResponseDTO = buscarProdutoPorId(idProduto);
         CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(produtoRequestDTO.getIdCategoria());
 
@@ -85,13 +85,13 @@ public class ProdutoService implements ProdutoUseCase {
     }
 
     @Override
-    public void excluirProduto(Long idProduto) {
+    public void excluirProduto(String idProduto) {
         produtoRepository.excluirProduto(idProduto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProdutoResponseDTO> buscarProdutosPorCategoria(Long idCategoriaProduto) {
+    public List<ProdutoResponseDTO> buscarProdutosPorCategoria(String idCategoriaProduto) {
         List<Produto> produtos = produtoRepository.buscarProdutosPorCategoria(idCategoriaProduto);
         List<ProdutoResponseDTO> produtosResponseDTO = produtoMapper.toCollectionResponse(produtos);
 

@@ -29,7 +29,7 @@ public interface ProdutoApi {
      * @return {@link ProdutoResponseDTO}
      */
     @Operation(summary = "Buscar os produtos por categoria")
-    ResponseEntity<List<ProdutoResponseDTO>> buscarProdutosPorCategoria(Long idCategoriaProduto);
+    ResponseEntity<List<ProdutoResponseDTO>> buscarProdutosPorCategoria(String idCategoriaProduto);
 
     /**
      * Busca produto por ID
@@ -38,7 +38,7 @@ public interface ProdutoApi {
      * @return {@link ProdutoResponseDTO}
      */
     @Operation(summary = "Buscar produto por ID")
-    ResponseEntity<ProdutoResponseDTO> buscarProdutoPorId(Long id);
+    ResponseEntity<ProdutoResponseDTO> buscarProdutoPorId(String id);
 
     /**
      * Criar produto
@@ -53,18 +53,18 @@ public interface ProdutoApi {
      * Atualizar produto
      *
      * @param produtoRequestDTO DTO para atualização de produto
-     * @param idProduto ID do produto a ser atualizado
+     * @param id ID do produto a ser atualizado
      * @return {@link ProdutoResponseDTO}
      */
     @Operation(summary = "Atualizar um produto")
-    ResponseEntity<ProdutoResponseDTO> atualizarProduto(ProdutoRequestDTO produtoRequestDTO, Long idProduto);
+    ResponseEntity<ProdutoResponseDTO> atualizarProduto(ProdutoRequestDTO produtoRequestDTO, String id);
 
     /**
      * Excluir um produto
      *
-     * @param idProduto ID do produto a ser excluído
+     * @param id ID do produto a ser excluído
      * @return void
      */
     @Operation(summary = "Excluir um produto")
-    ResponseEntity<Void> excluirProduto(Long idProduto);
+    ResponseEntity<Void> excluirProduto(String id);
 }

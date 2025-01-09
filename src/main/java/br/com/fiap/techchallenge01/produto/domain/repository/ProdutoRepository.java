@@ -9,13 +9,13 @@ public interface ProdutoRepository {
 
     List<Produto> buscarProdutos();
 
-    Optional<Produto> buscarProdutoPorId(Long id);
+    Optional<Produto> buscarProdutoPorId(String id);
 
     Produto criarProduto(Produto produto);
 
     Produto atualizarProduto(Produto produto);
 
-    void excluirProduto(Long idProduto);
+    void excluirProduto(String idProduto);
 
-    List<Produto> buscarProdutosPorCategoria(Long idCategoriaProduto);
+    List<Produto> buscarProdutosPorCategoria(String idCategoriaProduto);
 }

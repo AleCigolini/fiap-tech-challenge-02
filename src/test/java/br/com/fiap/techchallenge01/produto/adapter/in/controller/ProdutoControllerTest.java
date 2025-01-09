@@ -12,6 +12,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -102,7 +104,7 @@ class ProdutoControllerTest {
     @Transactional
     void naoDeveCriarProdutoQuandoNaoEncontrarCategoriaProduto() throws Exception {
         ProdutoRequestDTO produtoRequestDTO = montarProdutoRequestDTO();
-        produtoRequestDTO.setIdCategoria(999L);
+        produtoRequestDTO.setIdCategoria(UUID.randomUUID().toString());
 
         mockMvc.perform(
                         post(PRODUTOS_URL_PADRAO)
@@ -298,7 +300,7 @@ class ProdutoControllerTest {
         ProdutoRequestDTO produtoRequestDTO = new ProdutoRequestDTO();
         produtoRequestDTO.setNome("Porção de batatas");
         produtoRequestDTO.setDescricao("500g de batatas fritas");
-        produtoRequestDTO.setIdCategoria(1L);
+        produtoRequestDTO.setIdCategoria(UUID.randomUUID().toString());
         produtoRequestDTO.setPreco(25.00);
 
         return produtoRequestDTO;
