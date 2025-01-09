@@ -39,20 +39,7 @@ public class PedidoService implements PedidoUseCase {
     @Transactional(readOnly = true)
     public List<PedidoResponseDTO> buscarPedidos() {
         List<Pedido> pedidos = pedidoRepository.buscarPedidos();
-        List<PedidoResponseDTO> pedidosResponseDTO = pedidoMapper.toCollectionResponse(pedidos);
-
-//        List<ProdutoResponseDTO> produtosResponseDTO;
-//
-//        for (PedidoResponseDTO pedidoResponseDTO : pedidosResponseDTO) {
-//            produtosResponseDTO = new ArrayList<>();
-//            for (ProdutoResponseDTO produtoResponseDTO : pedidoResponseDTO.getProdutos()) {
-//                ProdutoResponseDTO produtoEncontrado = produtoService.buscarProdutoPorId(produtoResponseDTO.getId());
-//                produtosResponseDTO.add(produtoEncontrado);
-//            }
-//            pedidoResponseDTO.setProdutos(produtosResponseDTO);
-//        }
-
-        return pedidosResponseDTO;
+        return pedidoMapper.toCollectionResponse(pedidos);
     }
 
     @Override

@@ -22,12 +22,9 @@ CREATE TABLE pedido (
 CREATE INDEX ik_pedido_status ON pedido(status);
 
 CREATE TABLE pedido_produto (
-    id UUID PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
     id_pedido UUID NOT NULL,
     id_produto UUID NOT NULL,
-    data_criacao TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    data_atualizacao TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    e_ativo BOOL NOT NULL DEFAULT TRUE,
+    PRIMARY KEY (id_pedido,id_produto),
     CONSTRAINT fk_pedido_produto_id_pedido FOREIGN KEY (id_pedido) REFERENCES pedido(id),
     CONSTRAINT fk_pedido_produto_id_produto FOREIGN KEY (id_produto) REFERENCES produto(id)
 );

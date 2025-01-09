@@ -18,6 +18,6 @@ public class PedidoResponseDTO {
     @Schema(description = "Valor total do pedido")
     private Double preco;
 
-//    @Schema(description = "Itens do pedido (Lanche, Acompanhamento, Bebida, Sobremesa)")
-//    private List<ProdutoResponseDTO> produtos;
+    @Schema(description = "Itens do pedido (Lanche, Acompanhamento, Bebida, Sobremesa)")
+    private List<ProdutoResponseDTO> produtos;
 }

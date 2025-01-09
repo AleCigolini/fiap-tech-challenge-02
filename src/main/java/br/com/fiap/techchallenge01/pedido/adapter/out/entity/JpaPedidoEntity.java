@@ -1,10 +1,13 @@
 package br.com.fiap.techchallenge01.pedido.adapter.out.entity;
 
+import br.com.fiap.techchallenge01.produto.adapter.out.entity.JpaProdutoEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -27,7 +30,11 @@ public class JpaPedidoEntity {
     @Column(name = "preco")
     private Double preco;
 
-//    @Column(name = "produtos")
-//    // TODO: CORRIGIR FORMATO PARA SALVAR PRODUTOS NO BD
-//    private List<JpaProdutoEntity> produtos;
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "pedido_produto",
+            joinColumns = { @JoinColumn(name = "id_pedido") },
+            inverseJoinColumns = { @JoinColumn(name = "id_produto") }
+    )
+    private List<JpaProdutoEntity> produtos = new ArrayList<>();
 }
