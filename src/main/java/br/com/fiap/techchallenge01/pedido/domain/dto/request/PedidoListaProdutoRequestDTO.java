@@ -10,5 +10,5 @@ public class PedidoListaProdutoRequestDTO {
     private PedidoProdutoRequestDTO produto;
 
     @NotNull
-    private Long quantidade;
+    private String observacao;
 }

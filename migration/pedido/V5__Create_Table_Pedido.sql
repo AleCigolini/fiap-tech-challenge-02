@@ -15,7 +15,7 @@ CREATE INDEX ik_pedido_status ON pedido(status);
 -- Criação da tabela produto_pedido
 CREATE TABLE produto_pedido (
     id UUID PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
-    observacao VARCHAR(255) NOT NULL,
+    observacao VARCHAR(255) NULL,
     id_pedido UUID NOT NULL,
     id_produto UUID NOT NULL,
     data_criacao TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -25,7 +25,7 @@ CREATE TABLE produto_pedido (
     CONSTRAINT fk_produto_pedido_id_produto FOREIGN KEY (id_produto) REFERENCES produto(id)
 );
 
--- Inserção de categorias na tabela categoria_produto
+-- Inserção de produtos para pedidos na tabela produto
 INSERT INTO produto
     (id, nome, descricao, id_categoria, preco)
 VALUES
@@ -33,15 +33,15 @@ VALUES
     ('e389406d-5531-4acf-a354-be5cc46a8ca2', 'Pizza 4 queijos', 'Queijo muçarela, gorgonzola, parmesão, catupiry.', '2ae01e62-6805-4095-9bc3-9b9081517b87', 45.00),
     ('e389406d-5531-4acf-a354-be5cc46a8ca3', 'Porção de tilápia', '500 gramas de peixe', 'e397f412-9c76-4fb5-b029-7c3a99b7e982', 35.00);
 
--- Inserção de categorias na tabela categoria_produto
+-- Inserção de pedido na tabela pedido
 INSERT INTO pedido
 (id, codigo, status, preco)
 VALUES
-    ('e389406d-5531-4acf-a354-be5cc46a8cb1', '00001', 'ABERTO.', 100.00),
+    ('e389406d-5531-4acf-a354-be5cc46a8cb1', '00001', 'ABERTO', 100.00),
     ('e389406d-5531-4acf-a354-be5cc46a8cb2', '00002', 'EM_ANDAMENTO', 110.00),
     ('e389406d-5531-4acf-a354-be5cc46a8cb3', '00003', 'CANCELADO', 120.00);
 
--- Inserção de categorias na tabela categoria_produto
+-- Inserção de produtos no pedido na tabela produto_pedido
 INSERT INTO produto_pedido
 (id, observacao, id_pedido, id_produto)
 VALUES

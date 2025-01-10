@@ -1,9 +1,12 @@
 package br.com.fiap.techchallenge01.pedido.adapter.out.repository;
 
 import br.com.fiap.techchallenge01.pedido.adapter.out.entity.JpaPedidoEntity;
+import br.com.fiap.techchallenge01.pedido.adapter.out.entity.JpaProdutoPedidoEntity;
 import br.com.fiap.techchallenge01.pedido.domain.Pedido;
+import br.com.fiap.techchallenge01.pedido.domain.ProdutoPedido;
 import br.com.fiap.techchallenge01.pedido.domain.repository.PedidoRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,13 +15,14 @@ import java.util.stream.Collectors;
 @Repository
 public class PedidoRepositoryImpl implements PedidoRepository {
 
-    private final JpaPedidoRepository jpaPedidoRepository;
-    private final ModelMapper modelMapper;
+    @Autowired
+    private JpaPedidoRepository jpaPedidoRepository;
 
-    public PedidoRepositoryImpl(JpaPedidoRepository jpaPedidoRepository, ModelMapper modelMapper) {
-        this.jpaPedidoRepository = jpaPedidoRepository;
-        this.modelMapper = modelMapper;
-    }
+    @Autowired
+    private JpaProdutoPedidoRepository jpaProdutoPedidoRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public List<Pedido> buscarPedidos() {
@@ -31,8 +35,15 @@ public class PedidoRepositoryImpl implements PedidoRepository {
     @Override
     public Pedido criarPedido(Pedido pedido) {
         JpaPedidoEntity jpaPedidoEntity = modelMapper.map(pedido, JpaPedidoEntity.class);
-        // TODO: RESOLVER O PROBLEMA MUITOS:MUITOS ENTRE PEDIDO E PRODUTO
+
         JpaPedidoEntity jpaPedidoEntitySalvo = jpaPedidoRepository.save(jpaPedidoEntity);
+
+        for (ProdutoPedido produtoPedido : pedido.getProdutos()) {
+            JpaProdutoPedidoEntity jpaProdutoPedidoEntity = modelMapper.map(produtoPedido, JpaProdutoPedidoEntity.class);
+            jpaProdutoPedidoEntity.setPedido(jpaPedidoEntitySalvo);
+            jpaProdutoPedidoEntity.setAtivo(Boolean.TRUE);
+            jpaProdutoPedidoRepository.save(jpaProdutoPedidoEntity);
+        }
 
         return modelMapper.map(jpaPedidoEntitySalvo, Pedido.class);
     }

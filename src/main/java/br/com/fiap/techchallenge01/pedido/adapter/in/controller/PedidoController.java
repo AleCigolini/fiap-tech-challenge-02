@@ -2,10 +2,8 @@ package br.com.fiap.techchallenge01.pedido.adapter.in.controller;
 
 import br.com.fiap.techchallenge01.pedido.adapter.in.controller.api.PedidoApi;
 import br.com.fiap.techchallenge01.pedido.application.service.PedidoService;
-import br.com.fiap.techchallenge01.pedido.domain.Pedido;
 import br.com.fiap.techchallenge01.pedido.domain.dto.request.PedidoRequestDTO;
 import br.com.fiap.techchallenge01.pedido.domain.dto.response.PedidoResponseDTO;
-import br.com.fiap.techchallenge01.pedido.utils.mapper.PedidoMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

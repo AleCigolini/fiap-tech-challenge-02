@@ -15,5 +15,5 @@ public class Pedido {
     private List<ProdutoPedido> produtos;
     private OffsetDateTime dataCriacao;
     private OffsetDateTime dataAlteracao;
-    private Boolean eAtivo;
+    private Boolean ativo;
 }

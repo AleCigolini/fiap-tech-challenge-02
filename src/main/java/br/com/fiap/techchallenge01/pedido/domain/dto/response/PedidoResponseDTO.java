@@ -18,9 +18,9 @@ public class PedidoResponseDTO {
     @Schema(description = "Valor total do pedido")
     private Double preco;
 
-    @Schema(description = "Produtos do pedido")
-    private List<ProdutoPedidoResponseDTO> produtos;
-
     @Schema(description = "Data de criação do pedido", example = "2023-01-01T10:00:00Z")
     private OffsetDateTime dataCriacao;
+
+    @Schema(description = "Produtos do pedido")
+    private List<ProdutoPedidoResponseDTO> produtos;
 }

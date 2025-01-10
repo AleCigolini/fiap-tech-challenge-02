@@ -13,5 +13,5 @@ public class Produto {
     private String idCategoria;
     private Double preco;
     private OffsetDateTime dataCriacao;
-    private Boolean eAtivo;
+    private Boolean ativo;
 }
