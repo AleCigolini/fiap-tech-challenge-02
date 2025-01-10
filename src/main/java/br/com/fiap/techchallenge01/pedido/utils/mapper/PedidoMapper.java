@@ -36,7 +36,6 @@ public class PedidoMapper {
         var precoTotal = 0D;
 
         for (PedidoListaProdutoRequestDTO pedidoProdutoRequestDTO : pedidoRequestDTO.getProdutos()) {
-            // TODO: VALIDAR NULLPOINTER
             produtoEncontrado = produtoService.obterProdutoPorId(pedidoProdutoRequestDTO.getProduto().getId());
             precoTotal += produtoEncontrado.getPreco();
 
@@ -59,11 +58,8 @@ public class PedidoMapper {
                 .collect(Collectors.toList());
     }
 
-    //TODO: SEMPRE ZERAR SEQUENCIA A CADA DIA
-    // CRIAR UMA TABELA BUSCANDO NO BANCO A PRÓXIMA SEQUENCIA DE CÓDIGO + TIMESTAMP
-    // MOVER PARA O UTILS
     private String gerarCodigo() {
-
+        // TODO: CONVERTER REGRA: SEQUENCIA DE NÚMEROS QUE ZERA A CADA DIA
         var CARACTERES = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         var TAMANHO_CODIGO = 5;
 
@@ -74,7 +70,6 @@ public class PedidoMapper {
             int indice = random.nextInt(CARACTERES.length());
             codigo.append(CARACTERES.charAt(indice));
         }
-
         return codigo.toString();
     }
 }

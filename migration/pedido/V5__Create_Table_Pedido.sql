@@ -37,9 +37,9 @@ VALUES
 INSERT INTO pedido
 (id, codigo, status, preco)
 VALUES
-    ('e389406d-5531-4acf-a354-be5cc46a8cb1', '00001', 'ABERTO', 100.00),
-    ('e389406d-5531-4acf-a354-be5cc46a8cb2', '00002', 'EM_ANDAMENTO', 110.00),
-    ('e389406d-5531-4acf-a354-be5cc46a8cb3', '00003', 'CANCELADO', 120.00);
+    ('e389406d-5531-4acf-a354-be5cc46a8cb1', 'XK8JL', 'ABERTO', 100.00),
+    ('e389406d-5531-4acf-a354-be5cc46a8cb2', 'I7LXA', 'EM_ANDAMENTO', 110.00),
+    ('e389406d-5531-4acf-a354-be5cc46a8cb3', 'M0I2W', 'CANCELADO', 120.00);
 
 -- Inserção de produtos no pedido na tabela produto_pedido
 INSERT INTO produto_pedido
