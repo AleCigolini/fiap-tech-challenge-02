@@ -1,5 +1,7 @@
 package br.com.fiap.techchallenge01.pedido.utils.mapper;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum StatusPedido {
 
     ABERTO("Aberto"),
@@ -15,6 +17,7 @@ public enum StatusPedido {
         this.status = status;
     }
 
+    @JsonValue
     public String getStatus() {
         return status;
     }
