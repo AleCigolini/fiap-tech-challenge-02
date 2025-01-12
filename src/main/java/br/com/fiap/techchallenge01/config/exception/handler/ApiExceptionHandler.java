@@ -1,7 +1,9 @@
-package br.com.fiap.techchallenge01.identificacao.adapter.in.exceptionHandler;
+package br.com.fiap.techchallenge01.config.exception.handler;
 
-import br.com.fiap.techchallenge01.identificacao.application.exception.EntidadeNaoEncontradaException;
-import br.com.fiap.techchallenge01.identificacao.application.exception.NegocioException;
+import br.com.fiap.techchallenge01.config.exception.exceptions.EntidadeNaoEncontradaException;
+import br.com.fiap.techchallenge01.config.exception.exceptions.NegocioException;
+import br.com.fiap.techchallenge01.config.exception.domain.Problem;
+import br.com.fiap.techchallenge01.config.exception.domain.ProblemType;
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
@@ -18,6 +20,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -25,6 +28,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -97,6 +101,33 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         String detail = String.format("O recurso [ %s ], que você tentou acessar, é inexistente.", requestUri);
 
         Problem problem = createProblemBuilder(status, problemType, detail).userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
+                .build();
+
+        return handleExceptionInternal(ex, problem, headers, status, request);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        List<String> fieldErrors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
+                .collect(Collectors.toList());
+
+        List<String> globalErrors = ex.getBindingResult()
+                .getGlobalErrors()
+                .stream()
+                .map(objectError -> objectError.getObjectName() + ": " + objectError.getDefaultMessage())
+                .collect(Collectors.toList());
+
+        List<String> allErrors = new ArrayList<>();
+        allErrors.addAll(fieldErrors);
+        allErrors.addAll(globalErrors);
+
+        // Cria o problema com base nos erros encontrados
+        Problem problem = createProblemBuilder(HttpStatus.BAD_REQUEST, ProblemType.DADOS_INVALIDOS, "Erro na validação")
+                .userMessage(allErrors.isEmpty() ? "Erro de validação." : String.join(", ", allErrors))
                 .build();
 
         return handleExceptionInternal(ex, problem, headers, status, request);

@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.identificacao.adapter.in.exceptionHandler;
+package br.com.fiap.techchallenge01.config.exception.domain;
 
 import lombok.Getter;
 
@@ -14,8 +14,8 @@ public enum ProblemType {
     VIOLACAO_REGRAS_NEGOCIO("/violacao-regras-negocio", "Uma regra de negócio foi violada."),
     METODO_NAO_PERMITIDO("/metodo-nao-permitido", "O método HTTP utilizado não é permitido para este recurso.");
 
-    private String title;
-    private String uri;
+    private final String title;
+    private final String uri;
 
     ProblemType(String path, String title) {
         this.uri = "https://techchallenge" + path;

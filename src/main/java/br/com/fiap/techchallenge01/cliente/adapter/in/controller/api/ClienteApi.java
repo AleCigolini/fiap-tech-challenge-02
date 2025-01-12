@@ -4,6 +4,7 @@ import br.com.fiap.techchallenge01.cliente.domain.ClienteRequestDto;
 import br.com.fiap.techchallenge01.cliente.domain.ClienteResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 
 @Tag(name = "${tag.swagger.cliente.name}")
@@ -21,10 +22,10 @@ public interface ClienteApi {
     /**
      * Cadastrar um novo usuário.
      *
-     * @param clienteRequestDto objeto contendo os dados para cadastro do usuário
+     * @param clienteRequestDto objeto contendo os dados para cadastro do usuário, possuindo cpf ou e-mail obrigatóriamente e de maneira válida
      * @return {@link ResponseEntity< ClienteResponseDto >}
      */
     @Operation(summary = "Cadastrar usuário")
-    ResponseEntity<ClienteResponseDto> cadastrarCliente(ClienteRequestDto clienteRequestDto);
+    ResponseEntity<ClienteResponseDto> cadastrarCliente(@Valid ClienteRequestDto clienteRequestDto);
 
 }

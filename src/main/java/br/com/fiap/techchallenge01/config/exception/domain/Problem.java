@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.identificacao.adapter.in.exceptionHandler;
+package br.com.fiap.techchallenge01.config.exception.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
