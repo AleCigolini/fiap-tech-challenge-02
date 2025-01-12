@@ -7,4 +7,4 @@ CREATE TABLE cliente (
 );
 
 INSERT INTO cliente (id, nome, email, cpf)
-    VALUES ('e389406d-5531-4acf-a354-be5cc46a8cd4', 'Teste Usuário', 'teste.usuario@email.com', '12345678900');
+    VALUES ('e389406d-5531-4acf-a354-be5cc46a8cd4', 'Teste Usuário', 'teste.usuario@email.com', '12022425022');
