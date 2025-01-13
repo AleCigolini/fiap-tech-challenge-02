@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.config.exception.domain;
+package br.com.fiap.techchallenge01.core.config.exception.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -13,39 +13,39 @@ import java.util.List;
 @Builder
 @Getter
 @Schema(name = "Problema", description = "Detalhes sobre o problema ocorrido")
-public class Problem {
+public class Problema {
 
 	@Schema(description = "Código de status HTTP", example = "400")
 	private Integer status;
 
 	@Schema(description = "Tipo do problema", example = "https://techchallenge.com/dados-invalidos")
-	private String type;
+	private String tipo;
 
 	@Schema(description = "Título do problema", example = "Dados inválidos")
-	private String title;
+	private String titulo;
 
 	@Schema(description = "Detalhes sobre o problema", example = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.")
-	private String detail;
+	private String detalhe;
 
 	@Schema(description = "Mensagem de erro para o usuário", example = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.")
-	private String userMessage;
+	private String mensagemUsuario;
 
 	@Schema(description = "Data e hora em que o problema ocorreu", example = "2022-07-15T11:21:50.902245498Z")
-	private OffsetDateTime timestamp;
+	private OffsetDateTime dataHora;
 
 	@Schema(description = "Lista de objetos ou campos que geraram o erro")
-	private List<Object> objects;
+	private List<ErroAtributo> listaErroAtributos;
 
 	@Builder
 	@Getter
-	@Schema(name = "ObjetoProblema", description = "Detalhes sobre o objeto ou campo que gerou o erro")
-	public static class Object {
+	@Schema(name = "ErroAtributo", description = "Detalhes sobre os erros na validação de atributos")
+	public static class ErroAtributo {
 
 		@Schema(description = "Nome do objeto ou campo", example = "categoria")
-		private String name;
+		private String nomeAtributo;
 
 		@Schema(description = "Mensagem de erro para o usuário sobre o objeto ou campo", example = "A categoria é inválida")
-		private String userMessage;
+		private String mensagemErro;
 	}
 
 }

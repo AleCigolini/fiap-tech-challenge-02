@@ -1,8 +1,8 @@
 package br.com.fiap.techchallenge01.cliente.adapter.in.controller.api;
 
-import br.com.fiap.techchallenge01.cliente.domain.ClienteRequestDto;
-import br.com.fiap.techchallenge01.cliente.domain.ClienteResponseDto;
-import br.com.fiap.techchallenge01.cliente.domain.validator.Cpf;
+import br.com.fiap.techchallenge01.cliente.domain.dto.request.ClienteRequestDto;
+import br.com.fiap.techchallenge01.cliente.domain.dto.response.ClienteResponseDto;
+import br.com.fiap.techchallenge01.core.utils.validators.cpf.Cpf;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 
-@Tag(name = "${tag.swagger.cliente.name}")
+@Tag(name = "${tag.swagger.cliente.name}", description = "${tag.swagger.cliente.description}")
 public interface ClienteApi {
 
     /**

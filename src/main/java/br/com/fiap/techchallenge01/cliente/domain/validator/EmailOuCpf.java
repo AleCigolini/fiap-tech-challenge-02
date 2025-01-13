@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EmailOuCpf {
-    String message() default "É necessário fornecer pelo menos um dos campos: email ou cpf";
+    String message() default "É necessário fornecer pelo menos um dos campos: e-mail ou cpf";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

@@ -1,6 +1,6 @@
-package br.com.fiap.techchallenge01.cliente.domain.validator;
+package br.com.fiap.techchallenge01.core.utils.validators.cpf;
 
-import br.com.fiap.techchallenge01.cliente.utils.validadores.cpf.ValidadorCpf;
+import br.com.fiap.techchallenge01.core.utils.validators.cpf.helper.ValidadorCpf;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

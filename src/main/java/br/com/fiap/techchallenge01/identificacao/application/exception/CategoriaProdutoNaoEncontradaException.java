@@ -1,6 +1,6 @@
 package br.com.fiap.techchallenge01.identificacao.application.exception;
 
-import br.com.fiap.techchallenge01.config.exception.exceptions.EntidadeNaoEncontradaException;
+import br.com.fiap.techchallenge01.core.config.exception.exceptions.EntidadeNaoEncontradaException;
 
 public class CategoriaProdutoNaoEncontradaException extends EntidadeNaoEncontradaException {
 

@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.cliente.domain;
+package br.com.fiap.techchallenge01.cliente.domain.dto.response;
 
 import lombok.Data;
 

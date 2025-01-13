@@ -4,13 +4,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import br.com.fiap.techchallenge01.core.utils.entity.JpaBaseEntity;
+
 import java.util.UUID;
 
 @Data
 @Entity
 @Table(name = "cliente")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class JpaClienteEntity {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+public class JpaClienteEntity extends JpaBaseEntity {
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,6 +1,6 @@
-package br.com.fiap.techchallenge01.cliente.domain;
+package br.com.fiap.techchallenge01.cliente.domain.dto.request;
 
-import br.com.fiap.techchallenge01.cliente.domain.validator.Cpf;
+import br.com.fiap.techchallenge01.core.utils.validators.cpf.Cpf;
 import br.com.fiap.techchallenge01.cliente.domain.validator.EmailOuCpf;
 import jakarta.validation.constraints.Email;
 import lombok.Data;

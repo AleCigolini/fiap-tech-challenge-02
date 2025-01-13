@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.cliente.utils.validadores.cpf;
+package br.com.fiap.techchallenge01.core.utils.validators.cpf.helper;
 
 import java.util.InputMismatchException;
 

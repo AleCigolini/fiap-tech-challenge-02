@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Repository
 public class ClienteRepositoryImpl implements ClienteRepository {
     @Autowired
-    private JpaClienteRepository jpaClienteRepository;
+    private br.com.fiap.techchallenge01.cliente.adapter.out.repository.JpaClienteRepository jpaClienteRepository;
 
     @Autowired
     private ModelMapper modelMapper;

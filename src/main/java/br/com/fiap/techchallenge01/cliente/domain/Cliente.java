@@ -1,6 +1,8 @@
 package br.com.fiap.techchallenge01.cliente.domain;
 
-public class Cliente {
+import br.com.fiap.techchallenge01.core.utils.domain.DominioBase;
+
+public class Cliente extends DominioBase {
 
     private String id;
     private String nome;

@@ -1,6 +1,6 @@
 package br.com.fiap.techchallenge01.cliente.domain.validator;
 
-import br.com.fiap.techchallenge01.cliente.domain.ClienteRequestDto;
+import br.com.fiap.techchallenge01.cliente.domain.dto.request.ClienteRequestDto;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
