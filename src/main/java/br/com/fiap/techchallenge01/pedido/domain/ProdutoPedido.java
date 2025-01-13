@@ -14,5 +14,4 @@ public class ProdutoPedido {
     private Produto produto;
     private OffsetDateTime dataCriacao;
     private OffsetDateTime dataAlteracao;
-    private Boolean ativo;
 }

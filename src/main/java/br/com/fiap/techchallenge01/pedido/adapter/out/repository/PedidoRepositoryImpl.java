@@ -41,7 +41,6 @@ public class PedidoRepositoryImpl implements PedidoRepository {
         for (ProdutoPedido produtoPedido : pedido.getProdutos()) {
             JpaProdutoPedidoEntity jpaProdutoPedidoEntity = modelMapper.map(produtoPedido, JpaProdutoPedidoEntity.class);
             jpaProdutoPedidoEntity.setPedido(jpaPedidoEntitySalvo);
-            jpaProdutoPedidoEntity.setAtivo(Boolean.TRUE);
             jpaProdutoPedidoRepository.save(jpaProdutoPedidoEntity);
         }
 

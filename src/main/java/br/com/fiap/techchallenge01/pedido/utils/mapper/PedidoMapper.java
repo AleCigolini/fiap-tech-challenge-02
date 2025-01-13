@@ -48,7 +48,6 @@ public class PedidoMapper {
         pedido.setCodigo(gerarCodigo());
         pedido.setStatus(StatusPedido.ABERTO.toString());
         pedido.setPreco(precoTotal);
-        pedido.setAtivo(Boolean.TRUE);
         return pedido;
     }
 

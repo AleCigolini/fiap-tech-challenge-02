@@ -42,7 +42,4 @@ public class JpaProdutoPedidoEntity {
     @Column(name = "data_atualizacao", nullable = false)
     @UpdateTimestamp
     private OffsetDateTime dataAtualizacao;
-
-    @Column(name = "e_ativo", nullable = false)
-    private Boolean ativo;
 }

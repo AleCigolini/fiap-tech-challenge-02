@@ -7,7 +7,6 @@ CREATE TABLE pedido (
     id_pagamento UUID NULL,
     data_criacao TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     data_atualizacao TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    e_ativo BOOL NOT NULL DEFAULT TRUE,
     CONSTRAINT fk_pedido_id_pagamento FOREIGN KEY (id_pagamento) REFERENCES pagamento(id)
 );
 CREATE INDEX ik_pedido_status ON pedido(status);
@@ -20,7 +19,6 @@ CREATE TABLE produto_pedido (
     id_produto UUID NOT NULL,
     data_criacao TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     data_atualizacao TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    e_ativo BOOL NOT NULL DEFAULT TRUE,
     CONSTRAINT fk_produto_pedido_id_pedido FOREIGN KEY (id_pedido) REFERENCES pedido(id),
     CONSTRAINT fk_produto_pedido_id_produto FOREIGN KEY (id_produto) REFERENCES produto(id)
 );
