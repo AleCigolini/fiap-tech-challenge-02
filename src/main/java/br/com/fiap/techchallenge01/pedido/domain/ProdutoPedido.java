@@ -10,6 +10,7 @@ import java.util.List;
 public class ProdutoPedido {
 
     private String id;
+    private Long quantidade;
     private String observacao;
     private Produto produto;
     private OffsetDateTime dataCriacao;

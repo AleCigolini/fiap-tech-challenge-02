@@ -24,6 +24,9 @@ public class JpaProdutoPedidoEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @Column(name = "quantidade")
+    private Long quantidade;
+
     @Column(name = "observacao")
     private String observacao;
 

@@ -46,4 +46,10 @@ public class PedidoRepositoryImpl implements PedidoRepository {
 
         return modelMapper.map(jpaPedidoEntitySalvo, Pedido.class);
     }
+
+    @Override
+    public Pedido atualizarStatusPedido(Pedido pedido) {
+        JpaPedidoEntity jpaPedidoEntity = modelMapper.map(pedido, JpaPedidoEntity.class);
+        return modelMapper.map(jpaPedidoRepository.save(jpaPedidoEntity), Pedido.class);
+    }
 }

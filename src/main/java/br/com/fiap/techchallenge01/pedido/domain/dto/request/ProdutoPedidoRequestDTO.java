@@ -4,8 +4,14 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class PedidoProdutoRequestDTO {
+public class ProdutoPedidoRequestDTO {
 
     @NotNull
     private String id;
+
+    @NotNull
+    private String observacao;
+
+    @NotNull
+    private Long quantidade;
 }

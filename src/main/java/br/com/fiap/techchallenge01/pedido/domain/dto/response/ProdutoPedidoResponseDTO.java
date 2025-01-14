@@ -7,6 +7,9 @@ import lombok.Data;
 @Data
 public class ProdutoPedidoResponseDTO {
 
+    @Schema(description = "Quantidade do produto no pedido")
+    private Long quantidade;
+
     @Schema(description = "Observação do produto no pedido")
     private String observacao;
 

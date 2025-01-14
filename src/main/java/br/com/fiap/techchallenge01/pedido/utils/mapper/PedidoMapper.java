@@ -2,8 +2,8 @@ package br.com.fiap.techchallenge01.pedido.utils.mapper;
 
 import br.com.fiap.techchallenge01.pedido.domain.Pedido;
 import br.com.fiap.techchallenge01.pedido.domain.ProdutoPedido;
-import br.com.fiap.techchallenge01.pedido.domain.dto.request.PedidoListaProdutoRequestDTO;
 import br.com.fiap.techchallenge01.pedido.domain.dto.request.PedidoRequestDTO;
+import br.com.fiap.techchallenge01.pedido.domain.dto.request.ProdutoPedidoRequestDTO;
 import br.com.fiap.techchallenge01.pedido.domain.dto.response.PedidoResponseDTO;
 import br.com.fiap.techchallenge01.produto.application.service.ProdutoService;
 import br.com.fiap.techchallenge01.produto.domain.Produto;
@@ -11,6 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -21,6 +23,7 @@ public class PedidoMapper {
 
     @Autowired
     private ModelMapper modelMapper;
+
     @Autowired
     private ProdutoService produtoService;
 
@@ -33,20 +36,22 @@ public class PedidoMapper {
         List<ProdutoPedido> produtos = new ArrayList<>();
         ProdutoPedido produto;
         Produto produtoEncontrado;
-        var precoTotal = 0D;
+        var precoTotal = new BigDecimal(BigInteger.ZERO);
 
-        for (PedidoListaProdutoRequestDTO pedidoProdutoRequestDTO : pedidoRequestDTO.getProdutos()) {
-            produtoEncontrado = produtoService.obterProdutoPorId(pedidoProdutoRequestDTO.getProduto().getId());
-            precoTotal += produtoEncontrado.getPreco();
+        for (ProdutoPedidoRequestDTO produtoPedidoRequestDTO : pedidoRequestDTO.getProdutos()) {
+            produtoEncontrado = produtoService.obterProdutoPorId(produtoPedidoRequestDTO.getId());
+            precoTotal = precoTotal.add(produtoEncontrado.getPreco().multiply(BigDecimal.valueOf(produtoPedidoRequestDTO.getQuantidade())));
 
             produto = new ProdutoPedido();
             produto.setProduto(produtoEncontrado);
-            produto.setObservacao(pedidoProdutoRequestDTO.getObservacao());
+            produto.setQuantidade(produtoPedidoRequestDTO.getQuantidade());
+            produto.setObservacao(produtoPedidoRequestDTO.getObservacao());
             produtos.add(produto);
         }
         pedido.setProdutos(produtos);
         pedido.setCodigo(gerarCodigo());
         pedido.setStatus(StatusPedido.ABERTO.toString());
+        pedido.setObservacao(pedidoRequestDTO.getObservacao());
         pedido.setPreco(precoTotal);
         return pedido;
     }
@@ -58,7 +63,7 @@ public class PedidoMapper {
     }
 
     private String gerarCodigo() {
-        // TODO: CONVERTER REGRA: SEQUENCIA DE NÚMEROS QUE ZERA A CADA DIA
+        // TODO: CONVERTER REGRA PARA SEQUENCIA DE NÚMEROS QUE ZERA A CADA DIA
         var CARACTERES = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         var TAMANHO_CODIGO = 5;
 

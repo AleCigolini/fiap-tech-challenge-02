@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -21,7 +22,10 @@ public class PedidoResponseDTO {
     private StatusPedido status;
 
     @Schema(description = "Valor total do pedido")
-    private Double preco;
+    private BigDecimal preco;
+
+    @Schema(description = "Observação do pedido")
+    private String observacao;
 
     @Schema(description = "Data de criação do pedido", example = "10/01/2025 11:11")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy HH:mm", timezone="GMT-3")

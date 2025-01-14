@@ -2,6 +2,7 @@ package br.com.fiap.techchallenge01.produto.domain;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 @Data
@@ -11,7 +12,7 @@ public class Produto {
     private String nome;
     private String descricao;
     private String idCategoria;
-    private Double preco;
+    private BigDecimal preco;
     private OffsetDateTime dataCriacao;
     private Boolean ativo;
 }
