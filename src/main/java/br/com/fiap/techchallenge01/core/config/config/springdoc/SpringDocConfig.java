@@ -1,6 +1,6 @@
 package br.com.fiap.techchallenge01.config.springdoc;
 
-import br.com.fiap.techchallenge01.identificacao.adapter.in.exceptionHandler.Problem;
+import br.com.fiap.techchallenge01.core.config.exception.domain.Problema;
 import io.swagger.v3.core.converter.ModelConverters;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.ExternalDocumentation;
