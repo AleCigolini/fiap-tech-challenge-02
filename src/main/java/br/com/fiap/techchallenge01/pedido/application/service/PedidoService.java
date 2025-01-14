@@ -54,7 +54,7 @@ public class PedidoService implements PedidoUseCase {
 
         pedido.setStatus(StatusPedido.APROVADO.toString());
         pedido.setCodigoPagamento(pagamentoEfetuado.getId());
-        pedido.setDataAlteracao(OffsetDateTime.now());
+        pedido.setDataAtualizacao(OffsetDateTime.now());
         pedidoRepository.atualizarStatusPedido(pedido);
     }
 }

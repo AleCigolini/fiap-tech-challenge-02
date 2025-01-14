@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge01.pedido.adapter.out.entity;
 
+import br.com.fiap.techchallenge01.core.utils.entity.JpaBaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "pedido")
-public class JpaPedidoEntity {
+public class JpaPedidoEntity extends JpaBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,12 +42,4 @@ public class JpaPedidoEntity {
 
     @OneToMany(mappedBy="pedido")
     private List<JpaProdutoPedidoEntity> produtos = new ArrayList<>();
-
-    @Column(name = "data_criacao", nullable = false, updatable = false)
-    @CreationTimestamp
-    private OffsetDateTime dataCriacao;
-
-    @Column(name = "data_atualizacao", nullable = false)
-    @UpdateTimestamp
-    private OffsetDateTime dataAtualizacao;
 }
