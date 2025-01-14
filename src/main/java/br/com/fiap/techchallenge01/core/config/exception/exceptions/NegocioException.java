@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.identificacao.application.exception;
+package br.com.fiap.techchallenge01.core.config.exception.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

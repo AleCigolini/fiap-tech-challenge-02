@@ -98,8 +98,8 @@ public class SpringDocConfig {
     private Map<String, Schema> gerarSchemas() {
         final Map<String, Schema> schemaMap = new HashMap<>();
 
-        Map<String, Schema> problemSchema = ModelConverters.getInstance().read(Problem.class);
-        Map<String, Schema> problemObjectSchema = ModelConverters.getInstance().read(Problem.Object.class);
+        Map<String, Schema> problemSchema = ModelConverters.getInstance().read(Problema.class);
+        Map<String, Schema> problemObjectSchema = ModelConverters.getInstance().read(Problema.ErroAtributo.class);
 
         schemaMap.putAll(problemSchema);
         schemaMap.putAll(problemObjectSchema);
@@ -112,7 +112,7 @@ public class SpringDocConfig {
 
         Content content = new Content()
                 .addMediaType(APPLICATION_JSON_VALUE,
-                        new MediaType().schema(new Schema<Problem>().$ref("Problema")));
+                        new MediaType().schema(new Schema<Problema>().$ref("Problema")));
 
         apiResponseMap.put(badRequestResponse, new ApiResponse()
                 .description("Requisição inválida")

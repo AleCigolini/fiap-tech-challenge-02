@@ -1,5 +1,7 @@
 package br.com.fiap.techchallenge01.cliente.application.service;
 
+import br.com.fiap.techchallenge01.cliente.application.exception.ClienteNaoEncontradoException;
+import br.com.fiap.techchallenge01.cliente.application.exception.ClienteValidacaoException;
 import br.com.fiap.techchallenge01.cliente.application.usecase.ClienteUseCase;
 import br.com.fiap.techchallenge01.cliente.domain.Cliente;
 import br.com.fiap.techchallenge01.cliente.domain.repository.ClienteRepository;
@@ -7,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -21,16 +24,37 @@ public class ClienteService implements ClienteUseCase {
     @Override
     public Cliente buscarClientePorCpf(String cpf) {
         List<Cliente> usuariosEncontradosPorCpf = clienteRepository.buscarClientePorCpf(cpf);
-        validarClientesEncontradosPorCpf(usuariosEncontradosPorCpf);
+        validarListaClienteUnicoEncontrado(usuariosEncontradosPorCpf, "cpf", cpf);
         return usuariosEncontradosPorCpf.getFirst();
     }
 
-    private void validarClientesEncontradosPorCpf(List<Cliente> clientes) {
+    @Override
+    public Cliente buscarClientePorId(UUID id) {
+        Cliente cliente = clienteRepository.buscarClientePorId(id)
+                .orElse(null);
+        if (cliente == null) {
+            this.throwClienteNaoEncontradoException("id", id.toString());
+        }
+        return cliente;
+    }
+
+    @Override
+    public Cliente buscarClientePorEmail(String email) {
+        List<Cliente> usuariosEncontradosPorEmail = clienteRepository.buscarClientePorEmail(email);
+        validarListaClienteUnicoEncontrado(usuariosEncontradosPorEmail, "email", email);
+        return usuariosEncontradosPorEmail.getFirst();
+    }
+
+    private void throwClienteNaoEncontradoException(String campoBusca, String valorBusca) {
+        throw new ClienteNaoEncontradoException(String.format("Não foi encontrado nenhum cliente para o %s: %s", campoBusca, valorBusca));
+    }
+
+    private void validarListaClienteUnicoEncontrado(List<Cliente> clientes, String campoBusca, String valorBusca) {
         if (clientes.isEmpty()) {
-            throw new RuntimeException("Usuário não encontrado");
+            this.throwClienteNaoEncontradoException(campoBusca, valorBusca);
         }
         if (clientes.size() > 1) {
-            throw new RuntimeException("Mais de um usuário encontrado");
+            throw new ClienteValidacaoException(String.format("Encontrado mais de um cliente para o %s: %s", campoBusca, valorBusca));
         }
     }
 }
