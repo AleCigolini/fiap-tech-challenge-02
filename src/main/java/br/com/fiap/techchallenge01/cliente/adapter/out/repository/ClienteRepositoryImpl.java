@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Repository
 public class ClienteRepositoryImpl implements ClienteRepository {
     @Autowired
-    private br.com.fiap.techchallenge01.cliente.adapter.out.repository.JpaClienteRepository jpaClienteRepository;
-
+    private JpaClienteRepository jpaClienteRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -31,4 +32,19 @@ public class ClienteRepositoryImpl implements ClienteRepository {
                 .map(jpaClienteEntity -> modelMapper.map(jpaClienteEntity, Cliente.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Optional<Cliente> buscarClientePorId(UUID id) {
+        return jpaClienteRepository.findById(id)
+                .map(jpaClienteEntity -> modelMapper.map(jpaClienteEntity, Cliente.class));
+    }
+
+    @Override
+    public List<Cliente> buscarClientePorEmail(String email) {
+        return jpaClienteRepository.findByEmail(email)
+                .stream()
+                .map(jpaClienteEntity -> modelMapper.map(jpaClienteEntity, Cliente.class))
+                .collect(Collectors.toList());
+    }
+
 }

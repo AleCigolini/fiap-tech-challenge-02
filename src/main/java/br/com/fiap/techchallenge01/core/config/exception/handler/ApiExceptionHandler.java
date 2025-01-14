@@ -1,15 +1,16 @@
 package br.com.fiap.techchallenge01.core.config.exception.handler;
 
-import br.com.fiap.techchallenge01.core.config.exception.exceptions.EntidadeNaoEncontradaException;
-import br.com.fiap.techchallenge01.core.config.exception.exceptions.NegocioException;
 import br.com.fiap.techchallenge01.core.config.exception.domain.Problema;
 import br.com.fiap.techchallenge01.core.config.exception.domain.ProblemaType;
+import br.com.fiap.techchallenge01.core.config.exception.exceptions.EntidadeNaoEncontradaException;
+import br.com.fiap.techchallenge01.core.config.exception.exceptions.NegocioException;
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -17,19 +18,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.lang.Nullable;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.method.ParameterValidationResult;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
@@ -128,6 +134,28 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         // Cria o problema com base nos erros encontrados
         Problema problema = createProblemBuilder(HttpStatus.BAD_REQUEST, ProblemaType.DADOS_INVALIDOS, "Erro na validação")
                 .mensagemUsuario(allErrors.isEmpty() ? "Erro de validação." : String.join(", ", allErrors))
+                .build();
+
+        return handleExceptionInternal(ex, problema, headers, status, request);
+    }
+
+    @Override
+    @Nullable
+    protected ResponseEntity<Object> handleHandlerMethodValidationException(
+            HandlerMethodValidationException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        List<String> mensagensErro = new ArrayList<String>();
+
+        for (ParameterValidationResult result : ex.getAllValidationResults()) {
+            if (result.getResolvableErrors() != null) {
+                for (MessageSourceResolvable error : result.getResolvableErrors()) {
+                    String errorMessage = error.getDefaultMessage();
+                    mensagensErro.add(errorMessage);
+                }
+            }
+        }
+
+        Problema problema = createProblemBuilder(HttpStatus.BAD_REQUEST, ProblemaType.DADOS_INVALIDOS, "Erro na validação")
+                .mensagemUsuario(mensagensErro.isEmpty() ? "Erro de validação." : String.join(", ", mensagensErro))
                 .build();
 
         return handleExceptionInternal(ex, problema, headers, status, request);

@@ -9,6 +9,7 @@ public class Cliente extends DominioBase {
     private String email;
     private String cpf;
 
+
     public String getId() {
         return id;
     }

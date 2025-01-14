@@ -3,6 +3,7 @@ package br.com.fiap.techchallenge01.cliente.adapter.in.controller.api;
 import br.com.fiap.techchallenge01.cliente.domain.dto.request.ClienteRequestDto;
 import br.com.fiap.techchallenge01.cliente.domain.dto.response.ClienteResponseDto;
 import br.com.fiap.techchallenge01.core.utils.validators.cpf.Cpf;
+import br.com.fiap.techchallenge01.core.utils.validators.email.EmailValido;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -10,6 +11,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+
+import java.util.UUID;
 
 @Tag(name = "${tag.swagger.cliente.name}", description = "${tag.swagger.cliente.description}")
 public interface ClienteApi {
@@ -30,7 +33,40 @@ public interface ClienteApi {
                             content = @Content(schema = @Schema(ref = "Problema"))
                     )
             })
-    ResponseEntity<ClienteResponseDto> buscarClientePorCpf(@Valid @Cpf String cpf);
+    ClienteResponseDto buscarClientePorCpf(@Valid @Cpf String cpf);
+
+    /**
+     * Busca o cliente a partir de seu e-mail.
+     *
+     * @param email String do e-mail do cliente
+     * @return {@link ResponseEntity<ClienteResponseDto>}
+     */
+    @Operation(summary = "Buscar cliente a partir de seu e-mail",
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "400", description = "Encontrado mais de um cliente para o mesmo e-mail",
+                            content = @Content(schema = @Schema(ref = "Problema"))
+                    ),
+                    @ApiResponse(responseCode = "404", description = "Cliente não encntrado",
+                            content = @Content(schema = @Schema(ref = "Problema"))
+                    )
+            })
+    ClienteResponseDto buscarClientePorEmail(@Valid @EmailValido String email);
+
+    /**
+     * Busca o cliente a partir de seu id.
+     *
+     * @param id UUID do id do cliente
+     * @return {@link ResponseEntity<ClienteResponseDto>}
+     */
+    @Operation(summary = "Buscar cliente a partir de seu id",
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "404", description = "Cliente não encntrado",
+                            content = @Content(schema = @Schema(ref = "Problema"))
+                    )
+            })
+    ClienteResponseDto buscarClientePorId(UUID id);
 
     /**
      * Cadastrar um novo cliente.
@@ -45,6 +81,6 @@ public interface ClienteApi {
                             content = @Content(schema = @Schema(ref = "Problema"))
                     ),
     })
-    ResponseEntity<ClienteResponseDto> cadastrarCliente(@Valid ClienteRequestDto clienteRequestDto);
+    ClienteResponseDto cadastrarCliente(@Valid ClienteRequestDto clienteRequestDto);
 
 }
