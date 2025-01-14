@@ -26,7 +26,7 @@ public interface ClienteApi {
     @Operation(summary = "Buscar cliente a partir de seu cpf",
             responses = {
                     @ApiResponse(responseCode = "200"),
-                    @ApiResponse(responseCode = "400", description = "Encontrado mais de um cliente para o mesmo cpf",
+                    @ApiResponse(responseCode = "400", description = "Encontrado mais de um cliente para o mesmo cpf/Erros de validação",
                             content = @Content(schema = @Schema(ref = "Problema"))
                     ),
                     @ApiResponse(responseCode = "404", description = "Cliente não encntrado",
@@ -44,7 +44,7 @@ public interface ClienteApi {
     @Operation(summary = "Buscar cliente a partir de seu e-mail",
             responses = {
                     @ApiResponse(responseCode = "200"),
-                    @ApiResponse(responseCode = "400", description = "Encontrado mais de um cliente para o mesmo e-mail",
+                    @ApiResponse(responseCode = "400", description = "Encontrado mais de um cliente para o mesmo e-mail/Erros de validação",
                             content = @Content(schema = @Schema(ref = "Problema"))
                     ),
                     @ApiResponse(responseCode = "404", description = "Cliente não encntrado",
@@ -77,7 +77,7 @@ public interface ClienteApi {
     @Operation(summary = "Cadastrar cliente",
             responses = {
                     @ApiResponse(responseCode = "200"),
-                    @ApiResponse(responseCode = "400", description = "Erro no cadastro do cliente",
+                    @ApiResponse(responseCode = "400", description = "Erro no cadastro do cliente/Erros de validação",
                             content = @Content(schema = @Schema(ref = "Problema"))
                     ),
     })
