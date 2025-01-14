@@ -2,7 +2,6 @@ package br.com.fiap.techchallenge01.pedido.domain.dto.response;
 
 import br.com.fiap.techchallenge01.cliente.domain.dto.response.ClienteResponseDto;
 import br.com.fiap.techchallenge01.pedido.utils.mapper.StatusPedido;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -31,8 +30,7 @@ public class PedidoResponseDTO {
     @Schema(description = "Observação do pedido")
     private String observacao;
 
-    @Schema(description = "Data de criação do pedido", example = "10/01/2025 11:11")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm", timezone = "GMT-3")
+    @Schema(description = "Data de criação do pedido", example = "2023-01-01T10:00:00Z")
     private OffsetDateTime dataCriacao;
 
     @Schema(description = "Produtos do pedido")
