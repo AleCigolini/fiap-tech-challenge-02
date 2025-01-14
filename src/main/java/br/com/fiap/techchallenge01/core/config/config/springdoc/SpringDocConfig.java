@@ -1,6 +1,6 @@
-package br.com.fiap.techchallenge01.config.springdoc;
+package br.com.fiap.techchallenge01.core.config.config.springdoc;
 
-import br.com.fiap.techchallenge01.identificacao.adapter.in.exceptionHandler.Problem;
+import br.com.fiap.techchallenge01.core.config.exception.domain.Problema;
 import io.swagger.v3.core.converter.ModelConverters;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.ExternalDocumentation;
@@ -12,13 +12,10 @@ import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
-import io.swagger.v3.oas.models.tags.Tag;
 import org.springdoc.core.customizers.OpenApiCustomizer;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,11 +28,6 @@ public class SpringDocConfig {
     private static final String notFoundResponse = "NotFoundResponse";
     private static final String notAcceptableResponse = "NotAcceptableResponse";
     private static final String internalServerErrorResponse = "InternalServerErrorResponse";
-
-    @Value("${tag.swagger.cliente.name}")
-    private String clienteName;
-    @Value("${tag.swagger.cliente.description}")
-    private String clienteDescription;
 
     @Bean
     public OpenAPI openAPI() {
@@ -51,10 +43,7 @@ public class SpringDocConfig {
                 ).externalDocs(new ExternalDocumentation()
                         .description("Fiap Tech Challenge")
                         .url("https://techchallenge.com")
-                ).tags(Arrays.asList(
-                        new Tag().name("Categorias de Produto").description("API de categorias de produto"),
-                        new Tag().name(clienteName).description(clienteDescription)
-                )).components(new Components()
+                ).components(new Components()
                         .schemas(gerarSchemas())
                         .responses(gerarResponses())
                 );
@@ -96,8 +85,8 @@ public class SpringDocConfig {
     private Map<String, Schema> gerarSchemas() {
         final Map<String, Schema> schemaMap = new HashMap<>();
 
-        Map<String, Schema> problemSchema = ModelConverters.getInstance().read(Problem.class);
-        Map<String, Schema> problemObjectSchema = ModelConverters.getInstance().read(Problem.Object.class);
+        Map<String, Schema> problemSchema = ModelConverters.getInstance().read(Problema.class);
+        Map<String, Schema> problemObjectSchema = ModelConverters.getInstance().read(Problema.ErroAtributo.class);
 
         schemaMap.putAll(problemSchema);
         schemaMap.putAll(problemObjectSchema);
@@ -110,7 +99,7 @@ public class SpringDocConfig {
 
         Content content = new Content()
                 .addMediaType(APPLICATION_JSON_VALUE,
-                        new MediaType().schema(new Schema<Problem>().$ref("Problema")));
+                        new MediaType().schema(new Schema<Problema>().$ref("Problema")));
 
         apiResponseMap.put(badRequestResponse, new ApiResponse()
                 .description("Requisição inválida")

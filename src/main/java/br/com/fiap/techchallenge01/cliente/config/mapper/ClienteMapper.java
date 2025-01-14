@@ -1,8 +1,8 @@
-package br.com.fiap.techchallenge01.cliente.utils.mapper;
+package br.com.fiap.techchallenge01.cliente.config.mapper;
 
 import br.com.fiap.techchallenge01.cliente.domain.Cliente;
-import br.com.fiap.techchallenge01.cliente.domain.ClienteRequestDto;
-import br.com.fiap.techchallenge01.cliente.domain.ClienteResponseDto;
+import br.com.fiap.techchallenge01.cliente.domain.dto.request.ClienteRequestDto;
+import br.com.fiap.techchallenge01.cliente.domain.dto.response.ClienteResponseDto;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
