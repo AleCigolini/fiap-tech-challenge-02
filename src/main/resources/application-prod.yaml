@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: techchallenge01
+  datasource:
+    url: jdbc:postgresql://localhost-prod:5432/techchallenge
+    username: "root"
+    password: "m@_ssq@HJ7<h(+"
+    driver-class-name: org.postgresql.Driver

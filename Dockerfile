@@ -1,7 +1,19 @@
-FROM openjdk:21-slim
+FROM registry.suse.com/bci/openjdk-devel:21 AS build
 
-ARG JAR_FILE=target/*.jar
+WORKDIR /app
 
-COPY ${JAR_FILE} app.jar
+COPY pom.xml .
 
-ENTRYPOINT ["java","-jar","/app.jar"]
+RUN mvn dependency:go-offline
+
+COPY src ./src
+
+RUN mvn clean package -DskipTests
+
+FROM registry.suse.com/bci/openjdk:21
+
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
