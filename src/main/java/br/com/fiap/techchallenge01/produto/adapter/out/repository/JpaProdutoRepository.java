@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface JpaProdutoRepository extends JpaRepository<JpaProdutoEntity, UUID> {
 
-    List<JpaProdutoEntity> findAllByIdCategoriaOrderByNomeAsc(UUID idCategoriaProduto);
+//    List<JpaProdutoEntity> findAllByIdCategoriaOrderByNomeAsc(UUID idCategoriaProduto);
 
     List<JpaProdutoEntity> findAllByOrderByNomeAsc();
 }

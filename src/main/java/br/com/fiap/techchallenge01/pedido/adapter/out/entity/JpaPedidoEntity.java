@@ -36,7 +36,7 @@ public class JpaPedidoEntity extends JpaBaseEntity {
     @Column(name = "observacao")
     private String observacao;
 
-    @Column(name = "cdPagamento")
+    @Column(name = "cd_pagamento")
     private String codigoPagamento;
 
     @ManyToOne

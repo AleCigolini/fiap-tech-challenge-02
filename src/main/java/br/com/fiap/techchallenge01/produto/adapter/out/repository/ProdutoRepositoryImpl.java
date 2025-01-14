@@ -60,9 +60,11 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
 
     @Override
     public List<Produto> buscarProdutosPorCategoria(String idCategoriaProduto) {
-        return jpaProdutoRepository.findAllByIdCategoriaOrderByNomeAsc(UUID.fromString(idCategoriaProduto))
-                .stream()
-                .map(jpaProdutoEntity -> modelMapper.map(jpaProdutoEntity, Produto.class))
-                .collect(Collectors.toList());
+        // TODO: Ajustar essa busca depois que o JpaCategoriaProdutoEntity foi vinculado no JpaProdutoEntity
+        return null;
+//        return jpaProdutoRepository.findAllByIdCategoriaOrderByNomeAsc(UUID.fromString(idCategoriaProduto))
+//                .stream()
+//                .map(jpaProdutoEntity -> modelMapper.map(jpaProdutoEntity, Produto.class))
+//                .collect(Collectors.toList());
     }
 }

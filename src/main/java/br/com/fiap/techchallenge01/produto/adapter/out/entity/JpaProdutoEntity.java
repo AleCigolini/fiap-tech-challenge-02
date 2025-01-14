@@ -26,8 +26,9 @@ public class JpaProdutoEntity {
     @Column(name = "descricao")
     private String descricao;
 
-    @Column(name = "id_categoria")
-    private UUID idCategoria;
+    @ManyToOne
+    @JoinColumn(name = "id_categoria")
+    private JpaCategoriaProdutoEntity categoria;
 
     @Column(name = "preco")
     private Double preco;

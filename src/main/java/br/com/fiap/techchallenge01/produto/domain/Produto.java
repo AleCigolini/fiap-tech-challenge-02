@@ -11,7 +11,7 @@ public class Produto {
     private String id;
     private String nome;
     private String descricao;
-    private String idCategoria;
+    private CategoriaProduto categoria;
     private BigDecimal preco;
     private OffsetDateTime dataCriacao;
     private Boolean ativo;
