@@ -1,8 +1,8 @@
-package br.com.fiap.techchallenge01.identificacao.utils.mapper;
+package br.com.fiap.techchallenge01.produto.utils.mapper;
 
-import br.com.fiap.techchallenge01.identificacao.domain.CategoriaProduto;
-import br.com.fiap.techchallenge01.identificacao.domain.dto.request.CategoriaProdutoRequestDTO;
-import br.com.fiap.techchallenge01.identificacao.domain.dto.response.CategoriaProdutoResponseDTO;
+import br.com.fiap.techchallenge01.produto.domain.CategoriaProduto;
+import br.com.fiap.techchallenge01.produto.domain.dto.request.CategoriaProdutoRequestDTO;
+import br.com.fiap.techchallenge01.produto.domain.dto.response.CategoriaProdutoResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

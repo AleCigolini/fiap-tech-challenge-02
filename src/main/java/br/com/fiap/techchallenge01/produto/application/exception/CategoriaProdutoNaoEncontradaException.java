@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.identificacao.application.exception;
+package br.com.fiap.techchallenge01.produto.application.exception;
 
 import br.com.fiap.techchallenge01.core.config.exception.exceptions.EntidadeNaoEncontradaException;
 

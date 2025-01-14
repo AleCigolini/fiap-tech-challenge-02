@@ -1,14 +1,15 @@
-package br.com.fiap.techchallenge01.identificacao.adapter.out.repository;
+package br.com.fiap.techchallenge01.produto.adapter.out.repository;
 
-import br.com.fiap.techchallenge01.identificacao.adapter.out.entity.JpaCategoriaProdutoEntity;
-import br.com.fiap.techchallenge01.identificacao.domain.CategoriaProduto;
-import br.com.fiap.techchallenge01.identificacao.domain.repository.CategoriaProdutoRepository;
+import br.com.fiap.techchallenge01.produto.adapter.out.entity.JpaCategoriaProdutoEntity;
+import br.com.fiap.techchallenge01.produto.domain.CategoriaProduto;
+import br.com.fiap.techchallenge01.produto.domain.repository.CategoriaProdutoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Repository
@@ -29,11 +30,10 @@ public class CategoriaProdutoRepositoryImpl implements CategoriaProdutoRepositor
     }
 
     @Override
-    public Optional<CategoriaProduto> buscarCategoriaProdutoPorId(Long id) {
-
-        return jpaCategoriaProdutoRepository.findById(id)
+    public Optional<CategoriaProduto> buscarCategoriaProdutoPorId(String id) {
+        return jpaCategoriaProdutoRepository.findById(UUID.fromString(id))
                 .filter(JpaCategoriaProdutoEntity::getAtivo)
-                .map(jpaAcompanhamentoEntity -> modelMapper.map(jpaAcompanhamentoEntity, CategoriaProduto.class));
+                .map(jpaCategoriaProdutoEntity -> modelMapper.map(jpaCategoriaProdutoEntity, CategoriaProduto.class));
 
     }
 
@@ -41,12 +41,12 @@ public class CategoriaProdutoRepositoryImpl implements CategoriaProdutoRepositor
     public List<CategoriaProduto> buscarCategoriasProduto() {
         return jpaCategoriaProdutoRepository.findByAtivoTrue()
                 .stream()
-                .map(jpaAcompanhamentoEntity -> modelMapper.map(jpaAcompanhamentoEntity, CategoriaProduto.class))
+                .map(jpaCategoriaProdutoEntity -> modelMapper.map(jpaCategoriaProdutoEntity, CategoriaProduto.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public CategoriaProduto alterarNomeCategoriaProduto(Long id, CategoriaProduto categoriaProduto) {
+    public CategoriaProduto alterarNomeCategoriaProduto(String id, CategoriaProduto categoriaProduto) {
         return salvarCategoriaProduto(categoriaProduto);
     }
 

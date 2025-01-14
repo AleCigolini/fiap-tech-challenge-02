@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.identificacao.adapter.in.controller.api;
+package br.com.fiap.techchallenge01.produto.adapter.in.controller.api;
 
 import br.com.fiap.techchallenge01.produto.domain.dto.request.CategoriaProdutoRequestDTO;
 import br.com.fiap.techchallenge01.produto.domain.dto.response.CategoriaProdutoResponseDTO;
@@ -30,7 +30,7 @@ public interface CategoriaProdutoApi {
                             content = @Content(schema = @Schema(ref = "Problema"))
                     )
             })
-    CategoriaProdutoResponseDTO buscarCategoriaProduto(@Parameter(description = "ID da categoria de produto", example = "1", required = true) String id);
+    CategoriaProdutoResponseDTO buscarCategoriaProduto(@Parameter(description = "ID da categoria de produto", example = "1", required = true) Long id);
 
     /**
      * Listar todas as categorias de produto.
@@ -85,7 +85,7 @@ public interface CategoriaProdutoApi {
                     )
             })
     CategoriaProdutoResponseDTO alterarNomeCategoriaProduto(
-            @Parameter(description = "ID da categoria de produto", example = "1", required = true) String id,
+            @Parameter(description = "ID da categoria de produto", example = "1", required = true) Long id,
             CategoriaProdutoRequestDTO categoriaProdutoRequestDto);
 
 
@@ -109,6 +109,6 @@ public interface CategoriaProdutoApi {
                     )
             })
     void desativarCategoriaProduto(
-            @Parameter(description = "ID da categoria de produto", example = "1", required = true) String id);
+            @Parameter(description = "ID da categoria de produto", example = "1", required = true) Long id);
 
 }

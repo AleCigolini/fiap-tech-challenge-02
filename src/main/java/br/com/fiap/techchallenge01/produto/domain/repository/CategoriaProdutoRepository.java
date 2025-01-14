@@ -1,6 +1,6 @@
-package br.com.fiap.techchallenge01.identificacao.domain.repository;
+package br.com.fiap.techchallenge01.produto.domain.repository;
 
-import br.com.fiap.techchallenge01.identificacao.domain.CategoriaProduto;
+import br.com.fiap.techchallenge01.produto.domain.CategoriaProduto;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,8 +8,8 @@ import java.util.Optional;
 public interface CategoriaProdutoRepository {
 
     CategoriaProduto salvarCategoriaProduto(CategoriaProduto categoriaProduto);
-    Optional<CategoriaProduto> buscarCategoriaProdutoPorId(Long id);
+    Optional<CategoriaProduto> buscarCategoriaProdutoPorId(String id);
     List<CategoriaProduto> buscarCategoriasProduto();
-    CategoriaProduto alterarNomeCategoriaProduto(Long id, CategoriaProduto categoriaProduto);
+    CategoriaProduto alterarNomeCategoriaProduto(String id, CategoriaProduto categoriaProduto);
     void desativarCategoriaProduto(CategoriaProduto categoriaProduto);
 }

@@ -1,9 +1,9 @@
-package br.com.fiap.techchallenge01.identificacao.application.service;
+package br.com.fiap.techchallenge01.produto.application.service;
 
-import br.com.fiap.techchallenge01.identificacao.application.exception.CategoriaProdutoNaoEncontradaException;
-import br.com.fiap.techchallenge01.identificacao.application.usecase.CategoriaProdutoUseCase;
-import br.com.fiap.techchallenge01.identificacao.domain.CategoriaProduto;
-import br.com.fiap.techchallenge01.identificacao.domain.repository.CategoriaProdutoRepository;
+import br.com.fiap.techchallenge01.produto.application.exception.CategoriaProdutoNaoEncontradaException;
+import br.com.fiap.techchallenge01.produto.application.usecase.CategoriaProdutoUseCase;
+import br.com.fiap.techchallenge01.produto.domain.CategoriaProduto;
+import br.com.fiap.techchallenge01.produto.domain.repository.CategoriaProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class CategoriaProdutoService implements CategoriaProdutoUseCase {
     }
 
     @Override
-    public CategoriaProduto buscarCategoriaProdutoPorId(Long id) {
+    public CategoriaProduto buscarCategoriaProdutoPorId(String id) {
         return categoriaProdutoRepository.buscarCategoriaProdutoPorId(id).orElseThrow(() -> new CategoriaProdutoNaoEncontradaException(id));
     }
 
@@ -34,7 +34,7 @@ public class CategoriaProdutoService implements CategoriaProdutoUseCase {
     }
 
     @Override
-    public CategoriaProduto alterarNomeCategoriaProduto(Long id, CategoriaProduto categoriaProduto) {
+    public CategoriaProduto alterarNomeCategoriaProduto(String id, CategoriaProduto categoriaProduto) {
         return categoriaProdutoRepository.alterarNomeCategoriaProduto(id, categoriaProduto);
     }
 
