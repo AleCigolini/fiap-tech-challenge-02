@@ -11,11 +11,13 @@ CREATE TABLE pedido (
     id UUID PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
     codigo VARCHAR(5) NOT NULL,
     status TEXT NOT NULL,
+    id_cliente UUID NOT NULL,
     preco DECIMAL(10,2) NOT NULL DEFAULT 00.00,
     observacao VARCHAR(255) NULL,
     cd_pagamento VARCHAR(255) NULL,
     data_criacao TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    data_atualizacao TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    data_atualizacao TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT fk_pedido_id_cliente FOREIGN KEY (id_cliente) REFERENCES cliente(id)
 );
 CREATE INDEX ik_pedido_status ON pedido(status);
 
@@ -42,11 +44,11 @@ VALUES
 
 -- Inserção de pedido na tabela pedido
 INSERT INTO pedido
-    (id, codigo, status, preco, observacao)
+    (id, codigo, status, id_cliente, preco, observacao)
 VALUES
-    ('e389406d-5531-4acf-a354-be5cc46a8cb1', 'XK8JL', 'ABERTO', 100.00, 'Trazer bem embalado'),
-    ('e389406d-5531-4acf-a354-be5cc46a8cb2', 'I7LXA', 'ABERTO', 110.00, 'Estarei na frente da casa'),
-    ('e389406d-5531-4acf-a354-be5cc46a8cb3', 'M0I2W', 'CANCELADO', 120.00, null);
+    ('e389406d-5531-4acf-a354-be5cc46a8cb1', 'XK8JL', 'ABERTO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 100.00, 'Trazer bem embalado'),
+    ('e389406d-5531-4acf-a354-be5cc46a8cb2', 'I7LXA', 'ABERTO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 110.00, 'Estarei na frente da casa'),
+    ('e389406d-5531-4acf-a354-be5cc46a8cb3', 'M0I2W', 'CANCELADO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 120.00, null);
 
 -- Inserção de produtos no pedido na tabela produto_pedido
 INSERT INTO produto_pedido
