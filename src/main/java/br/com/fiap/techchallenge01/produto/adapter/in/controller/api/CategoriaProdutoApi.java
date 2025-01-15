@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 
-@Tag(name = "Categorias de Produto")
+@Tag(name = "${tag.swagger.categoriaproduto.name}", description = "${tag.swagger.categoriaproduto.description}")
 public interface CategoriaProdutoApi {
 
     /**
