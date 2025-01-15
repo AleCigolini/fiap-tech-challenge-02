@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.net.URISyntaxException;
 import java.util.List;
 
-@Tag(name = "Produtos")
+@Tag(name = "${tag.swagger.produto.name}", description = "${tag.swagger.produto.description}")
 public interface ProdutoApi {
 
     /**
