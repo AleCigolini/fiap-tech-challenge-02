@@ -8,7 +8,7 @@ import java.time.OffsetDateTime;
 @Data
 public class ClienteResponseDto {
 
-    @Schema(description = "Identificador único do pedido", example = "e389406d-5531-4acf-a354-be5cc46a8cd4")
+    @Schema(description = "Identificador único do cliente", example = "e389406d-5531-4acf-a354-be5cc46a8cd4")
     private String id;
 
     @Schema(description = "Nome do cliente", example = "José da Silva")
