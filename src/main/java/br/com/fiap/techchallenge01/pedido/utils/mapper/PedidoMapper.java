@@ -39,7 +39,7 @@ public class PedidoMapper {
         var precoTotal = new BigDecimal(BigInteger.ZERO);
 
         for (ProdutoPedidoRequestDTO produtoPedidoRequestDTO : pedidoRequestDTO.getProdutos()) {
-            produtoEncontrado = produtoService.obterProdutoPorId(produtoPedidoRequestDTO.getId());
+            produtoEncontrado = produtoService.obterProdutoPorId(produtoPedidoRequestDTO.getIdProduto());
             precoTotal = precoTotal.add(produtoEncontrado.getPreco().multiply(BigDecimal.valueOf(produtoPedidoRequestDTO.getQuantidade())));
 
             produto = new ProdutoPedido();

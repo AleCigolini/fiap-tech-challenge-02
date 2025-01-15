@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class PedidoRequestDTO {
 
-    @NotNull
+    @NotEmpty
     private String observacao;
 
     @NotNull
