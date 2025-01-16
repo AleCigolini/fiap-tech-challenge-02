@@ -12,6 +12,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -186,7 +187,7 @@ class ProdutoControllerTest {
         Long idProduto = 1L;
         ProdutoRequestDTO produtoRequestDTO = montarProdutoRequestDTO();
         produtoRequestDTO.setNome("Nome atualizado");
-        produtoRequestDTO.setPreco(40.00);
+        produtoRequestDTO.setPreco(new BigDecimal("40.00"));
 
         MockHttpServletResponse response = mockMvc.perform(
                         put(PRODUTOS_URL_PADRAO + "/" + idProduto)
@@ -214,7 +215,7 @@ class ProdutoControllerTest {
         Long idProduto = 9999L;
         ProdutoRequestDTO produtoRequestDTO = montarProdutoRequestDTO();
         produtoRequestDTO.setNome("Nome atualizado");
-        produtoRequestDTO.setPreco(40.00);
+        produtoRequestDTO.setPreco(new BigDecimal("40.00"));
 
         mockMvc.perform(
                         put(PRODUTOS_URL_PADRAO + "/" + idProduto)
@@ -301,7 +302,7 @@ class ProdutoControllerTest {
         produtoRequestDTO.setNome("Porção de batatas");
         produtoRequestDTO.setDescricao("500g de batatas fritas");
         produtoRequestDTO.setIdCategoria(UUID.randomUUID().toString());
-        produtoRequestDTO.setPreco(25.00);
+        produtoRequestDTO.setPreco(new BigDecimal("25.00"));
 
         return produtoRequestDTO;
     }
