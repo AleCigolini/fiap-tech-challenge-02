@@ -23,7 +23,6 @@ public class CategoriaProdutoRepositoryImpl implements CategoriaProdutoRepositor
 
     @Override
     public CategoriaProduto salvarCategoriaProduto(CategoriaProduto categoriaProduto) {
-
         JpaCategoriaProdutoEntity jpaCategoriaProdutoEntity = modelMapper.map(categoriaProduto, JpaCategoriaProdutoEntity.class);
 
         return modelMapper.map(jpaCategoriaProdutoRepository.save(jpaCategoriaProdutoEntity), CategoriaProduto.class);

@@ -11,5 +11,5 @@ public class CategoriaProduto {
     private String nome;
     private OffsetDateTime dataCriacao;
     private OffsetDateTime dataAtualizacao;
-    private Boolean ativo;
+    private Boolean ativo = Boolean.TRUE;
 }

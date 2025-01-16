@@ -31,5 +31,5 @@ public class JpaCategoriaProdutoEntity {
     private OffsetDateTime dataAtualizacao;
 
     @Column(name = "e_ativo", nullable = false)
-    private Boolean ativo;
+    private Boolean ativo = Boolean.TRUE;
 }
