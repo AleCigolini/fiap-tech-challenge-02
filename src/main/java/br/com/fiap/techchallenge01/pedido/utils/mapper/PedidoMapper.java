@@ -7,6 +7,7 @@ import br.com.fiap.techchallenge01.pedido.domain.dto.request.ProdutoPedidoReques
 import br.com.fiap.techchallenge01.pedido.domain.dto.response.PedidoResponseDTO;
 import br.com.fiap.techchallenge01.produto.application.service.ProdutoService;
 import br.com.fiap.techchallenge01.produto.domain.Produto;
+import br.com.fiap.techchallenge01.produto.domain.dto.response.ProdutoResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,19 +35,21 @@ public class PedidoMapper {
     public Pedido toPedido(PedidoRequestDTO pedidoRequestDTO) {
         Pedido pedido = new Pedido();
         List<ProdutoPedido> produtos = new ArrayList<>();
-        ProdutoPedido produto;
-        Produto produtoEncontrado;
+        ProdutoPedido produtoPedido;
+        ProdutoResponseDTO produtoEncontrado;
         var precoTotal = new BigDecimal(BigInteger.ZERO);
 
         for (ProdutoPedidoRequestDTO produtoPedidoRequestDTO : pedidoRequestDTO.getProdutos()) {
-            produtoEncontrado = produtoService.obterProdutoPorId(produtoPedidoRequestDTO.getId());
-            precoTotal = precoTotal.add(produtoEncontrado.getPreco().multiply(BigDecimal.valueOf(produtoPedidoRequestDTO.getQuantidade())));
+            produtoEncontrado = produtoService.buscarProdutoPorId(produtoPedidoRequestDTO.getId());
+            Produto produto = modelMapper.map(produtoEncontrado, Produto.class);
 
-            produto = new ProdutoPedido();
-            produto.setProduto(produtoEncontrado);
-            produto.setQuantidade(produtoPedidoRequestDTO.getQuantidade());
-            produto.setObservacao(produtoPedidoRequestDTO.getObservacao());
-            produtos.add(produto);
+            precoTotal = precoTotal.add(produto.getPreco().multiply(BigDecimal.valueOf(produtoPedidoRequestDTO.getQuantidade())));
+
+            produtoPedido = new ProdutoPedido();
+            produtoPedido.setProduto(produto);
+            produtoPedido.setQuantidade(produtoPedidoRequestDTO.getQuantidade());
+            produtoPedido.setObservacao(produtoPedidoRequestDTO.getObservacao());
+            produtos.add(produtoPedido);
         }
         pedido.setProdutos(produtos);
         pedido.setCodigo(gerarCodigo());
