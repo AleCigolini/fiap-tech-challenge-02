@@ -17,9 +17,6 @@ public class CategoriaProdutoService implements CategoriaProdutoUseCase {
 
     @Override
     public CategoriaProduto salvarCategoriaProduto(CategoriaProduto categoriaProduto) {
-
-        categoriaProduto.setAtivo(true);
-
         return categoriaProdutoRepository.salvarCategoriaProduto(categoriaProduto);
     }
 
