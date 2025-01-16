@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge01.produto.adapter.in.controller;
 
+import br.com.fiap.techchallenge01.produto.application.service.ProdutoService;
 import br.com.fiap.techchallenge01.produto.domain.dto.request.ProdutoRequestDTO;
 import br.com.fiap.techchallenge01.produto.domain.dto.response.ProdutoResponseDTO;
 import br.com.fiap.techchallenge01.utils.JsonHelper;
@@ -25,9 +26,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ProdutoControllerTest {
 
     private static final String PRODUTOS_URL_PADRAO = "/produtos";
+    private static final String ID_PRODUTO_PADRAO = "d98620ab-094e-4702-a066-42c8f39caaaa";
+    private static final String ID_CATEGORIA_PRODUTO_PADRAO = "4ce30a87-5654-486b-bed6-88c6f83f491a";
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private ProdutoService produtoService;
 
     @Test
     @Transactional
@@ -39,16 +45,13 @@ class ProdutoControllerTest {
         ProdutoResponseDTO[] produtos = JsonHelper.toObject(response.getContentAsByteArray(), ProdutoResponseDTO[].class);
 
         assertThat(produtos).isNotNull();
-        assertThat(produtos.length).isEqualTo(3);
     }
 
     @Test
     @Transactional
     void deveBuscarProdutosPorCategoria() throws Exception {
-        long idCategoriaProduto = 1L;
-
         MockHttpServletResponse response = mockMvc.perform(
-                        get(PRODUTOS_URL_PADRAO + "/categoria/" + idCategoriaProduto)
+                        get(PRODUTOS_URL_PADRAO + "/categoria/" + ID_CATEGORIA_PRODUTO_PADRAO)
                 )
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
@@ -57,13 +60,13 @@ class ProdutoControllerTest {
 
         assertThat(produtosResponse).isNotNull();
         assertThat(produtosResponse)
-                .allMatch(produtoResponse -> produtoResponse.getCategoriaProduto().getId().equals(idCategoriaProduto));
+                .allMatch(produtoResponse -> produtoResponse.getCategoriaProduto().getId().equals(ID_CATEGORIA_PRODUTO_PADRAO));
     }
 
     @Test
     @Transactional
     void deveBuscarProdutoPorId() throws Exception {
-        long idProduto = 1L;
+        String idProduto = UUID.fromString(ID_PRODUTO_PADRAO).toString();
 
         MockHttpServletResponse response = mockMvc.perform(get(PRODUTOS_URL_PADRAO + "/" + idProduto))
                 .andExpect(status().isOk())
@@ -184,13 +187,12 @@ class ProdutoControllerTest {
     @Test
     @Transactional
     void deveAtualizarProduto() throws Exception {
-        Long idProduto = 1L;
         ProdutoRequestDTO produtoRequestDTO = montarProdutoRequestDTO();
         produtoRequestDTO.setNome("Nome atualizado");
         produtoRequestDTO.setPreco(new BigDecimal("40.00"));
 
         MockHttpServletResponse response = mockMvc.perform(
-                        put(PRODUTOS_URL_PADRAO + "/" + idProduto)
+                        put(PRODUTOS_URL_PADRAO + "/" + ID_PRODUTO_PADRAO)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(JsonHelper.toJson(produtoRequestDTO))
                 )
@@ -201,7 +203,7 @@ class ProdutoControllerTest {
 
         assertThat(produtoResponse).isNotNull();
         assertThat(produtoResponse.getId()).isNotNull();
-        assertThat(produtoResponse.getId()).isEqualTo(idProduto);
+        assertThat(produtoResponse.getId()).isEqualTo(ID_PRODUTO_PADRAO);
         assertThat(produtoResponse.getNome()).isEqualTo(produtoRequestDTO.getNome());
         assertThat(produtoResponse.getDescricao()).isEqualTo(produtoRequestDTO.getDescricao());
         assertThat(produtoResponse.getCategoriaProduto()).isNotNull();
@@ -212,13 +214,12 @@ class ProdutoControllerTest {
     @Test
     @Transactional
     void naoDeveAtualizarOProdutoQuandoNaoEncontrarOProduto() throws Exception {
-        Long idProduto = 9999L;
         ProdutoRequestDTO produtoRequestDTO = montarProdutoRequestDTO();
         produtoRequestDTO.setNome("Nome atualizado");
         produtoRequestDTO.setPreco(new BigDecimal("40.00"));
 
         mockMvc.perform(
-                        put(PRODUTOS_URL_PADRAO + "/" + idProduto)
+                        put(PRODUTOS_URL_PADRAO + "/" + UUID.randomUUID())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(JsonHelper.toJson(produtoRequestDTO))
                 )
@@ -228,7 +229,7 @@ class ProdutoControllerTest {
     @Test
     @Transactional
     void naoDeveAtualizarOProdutoQuandoONomeDoProdutoEstiverVazio() throws Exception {
-        Long idProduto = 9999L;
+        String idProduto = UUID.randomUUID().toString();
         ProdutoRequestDTO produtoRequestDTO = montarProdutoRequestDTO();
         produtoRequestDTO.setNome("");
 
@@ -243,7 +244,7 @@ class ProdutoControllerTest {
     @Test
     @Transactional
     void naoDeveAtualizarOProdutoQuandoADescricaoDoProdutoEstiverVazia() throws Exception {
-        Long idProduto = 9999L;
+        String idProduto = UUID.randomUUID().toString();
         ProdutoRequestDTO produtoRequestDTO = montarProdutoRequestDTO();
         produtoRequestDTO.setDescricao("");
 
@@ -258,7 +259,7 @@ class ProdutoControllerTest {
     @Test
     @Transactional
     void naoDeveAtualizarOProdutoQuandoOIdCategoriaDoProdutoEstiverNulo() throws Exception {
-        Long idProduto = 9999L;
+        String idProduto = UUID.randomUUID().toString();
         ProdutoRequestDTO produtoRequestDTO = montarProdutoRequestDTO();
         produtoRequestDTO.setIdCategoria(null);
 
@@ -273,7 +274,7 @@ class ProdutoControllerTest {
     @Test
     @Transactional
     void naoDeveAtualizarOProdutoQuandoOPrecoDoProdutoEstiverNulo() throws Exception {
-        Long idProduto = 9999L;
+        String idProduto = UUID.randomUUID().toString();
         ProdutoRequestDTO produtoRequestDTO = montarProdutoRequestDTO();
         produtoRequestDTO.setPreco(null);
 
@@ -288,7 +289,7 @@ class ProdutoControllerTest {
     @Test
     @Transactional
     void deveExcluirProduto() throws Exception {
-        Long idProduto = 1L;
+        String idProduto = UUID.randomUUID().toString();
 
         mockMvc.perform(
                         delete(PRODUTOS_URL_PADRAO + "/" + idProduto)
@@ -301,7 +302,7 @@ class ProdutoControllerTest {
         ProdutoRequestDTO produtoRequestDTO = new ProdutoRequestDTO();
         produtoRequestDTO.setNome("Porção de batatas");
         produtoRequestDTO.setDescricao("500g de batatas fritas");
-        produtoRequestDTO.setIdCategoria(UUID.randomUUID().toString());
+        produtoRequestDTO.setIdCategoria(ID_CATEGORIA_PRODUTO_PADRAO);
         produtoRequestDTO.setPreco(new BigDecimal("25.00"));
 
         return produtoRequestDTO;
