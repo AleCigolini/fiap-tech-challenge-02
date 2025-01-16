@@ -26,7 +26,7 @@ public class JpaProdutoEntity {
     @Column(name = "descricao")
     private String descricao;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_categoria")
     private JpaCategoriaProdutoEntity categoria;
 

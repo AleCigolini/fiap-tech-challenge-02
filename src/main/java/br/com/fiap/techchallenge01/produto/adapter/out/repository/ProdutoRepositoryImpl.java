@@ -61,9 +61,9 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
 
     @Override
     public List<Produto> buscarProdutosPorCategoria(String idCategoriaProduto) {
-
         JpaCategoriaProdutoEntity categoria = new JpaCategoriaProdutoEntity();
         categoria.setId(UUID.fromString(idCategoriaProduto));
+
         return jpaProdutoRepository.findAllByCategoriaOrderByNomeAsc(categoria)
                 .stream()
                 .map(jpaProdutoEntity -> modelMapper.map(jpaProdutoEntity, Produto.class))
