@@ -63,7 +63,6 @@ public class PedidoMapper {
     }
 
     private String gerarCodigo() {
-        // TODO: Converter regra para sequencia de números que zera a cada dia
         var CARACTERES = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         var TAMANHO_CODIGO = 5;
 

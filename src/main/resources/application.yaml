@@ -22,7 +22,10 @@ springdoc:
 tag:
   swagger:
     cliente:
-        name: "Cliente"
-        description: "API de Clientes"
+      name: "Cliente"
+      description: "API de Clientes"
+    pedido:
+      name: "Pedido"
+      description: "API de Pedidos"
 
 

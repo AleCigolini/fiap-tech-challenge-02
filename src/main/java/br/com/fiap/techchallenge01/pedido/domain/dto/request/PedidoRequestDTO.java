@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge01.pedido.domain.dto.request;
 
 import br.com.fiap.techchallenge01.cliente.domain.dto.request.ClienteRequestDto;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -10,7 +11,7 @@ import java.util.List;
 @Data
 public class PedidoRequestDTO {
 
-    @NotEmpty
+    @NotBlank
     private String observacao;
 
     @NotNull

@@ -1,17 +1,18 @@
 package br.com.fiap.techchallenge01.pedido.domain.dto.request;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
 public class ProdutoPedidoRequestDTO {
 
-    @NotEmpty
+    @NotBlank
     private String idProduto;
 
-    @NotEmpty
+    @NotBlank
     private String observacao;
 
-    @NotEmpty
+    @Min(1)
     private Long quantidade;
 }
