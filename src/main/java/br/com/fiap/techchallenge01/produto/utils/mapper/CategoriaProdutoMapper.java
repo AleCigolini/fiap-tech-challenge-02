@@ -27,9 +27,6 @@ public class CategoriaProdutoMapper {
     }
 
     public CategoriaProduto toDomain(CategoriaProdutoRequestDTO categoriaProdutoRequestDTO) {
-
-
-
         return modelMapper.map(categoriaProdutoRequestDTO, CategoriaProduto.class);
     }
 

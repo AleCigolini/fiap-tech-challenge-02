@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Data
@@ -22,9 +23,10 @@ public class JpaProdutoEntity {
     @Column(name = "descricao")
     private String descricao;
 
-    @Column(name = "id_categoria")
-    private UUID idCategoria;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_categoria")
+    private JpaCategoriaProdutoEntity categoria;
 
     @Column(name = "preco")
-    private Double preco;
+    private BigDecimal preco;
 }

@@ -33,25 +33,15 @@ public class ProdutoService implements ProdutoUseCase {
     public List<ProdutoResponseDTO> buscarProdutos() {
         List<Produto> produtos = produtoRepository.buscarProdutos();
 
-        List<ProdutoResponseDTO> produtosResponseDTO = produtoMapper.toCollectionResponse(produtos);
-        produtosResponseDTO.forEach(produtoResponseDTO -> {
-            CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(produtoResponseDTO.getCategoriaProduto().getId());
-            produtoResponseDTO.setCategoriaProduto(categoriaProduto);
-        });
-
-        return produtosResponseDTO;
+        return produtoMapper.toCollectionResponse(produtos);
     }
 
     @Override
     @Transactional(readOnly = true)
     public ProdutoResponseDTO buscarProdutoPorId(String id) {
         Produto produto = produtoRepository.buscarProdutoPorId(id).orElseThrow(() -> new ProdutoNaoEncontradoException(id));
-        ProdutoResponseDTO produtoResponseDTO = produtoMapper.toResponse(produto);
 
-        CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(produtoResponseDTO.getCategoriaProduto().getId());
-        produtoResponseDTO.setCategoriaProduto(categoriaProduto);
-
-        return produtoResponseDTO;
+        return produtoMapper.toResponse(produto);
     }
 
     @Override

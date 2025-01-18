@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge01.produto.adapter.out.repository;
 
+import br.com.fiap.techchallenge01.produto.adapter.out.entity.JpaCategoriaProdutoEntity;
 import br.com.fiap.techchallenge01.produto.adapter.out.entity.JpaProdutoEntity;
 import br.com.fiap.techchallenge01.produto.domain.Produto;
 import br.com.fiap.techchallenge01.produto.domain.repository.ProdutoRepository;
@@ -60,7 +61,10 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
 
     @Override
     public List<Produto> buscarProdutosPorCategoria(String idCategoriaProduto) {
-        return jpaProdutoRepository.findAllByIdCategoriaOrderByNomeAsc(UUID.fromString(idCategoriaProduto))
+        JpaCategoriaProdutoEntity categoria = new JpaCategoriaProdutoEntity();
+        categoria.setId(UUID.fromString(idCategoriaProduto));
+
+        return jpaProdutoRepository.findAllByCategoriaOrderByNomeAsc(categoria)
                 .stream()
                 .map(jpaProdutoEntity -> modelMapper.map(jpaProdutoEntity, Produto.class))
                 .collect(Collectors.toList());
