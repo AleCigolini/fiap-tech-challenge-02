@@ -1,6 +1,6 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/techchallenge
-    username: root
-    password: m@_ssq@HJ7<h(+
+    username: "root"
+    password: "m@_ssq@HJ7<h(+"
     driver-class-name: org.postgresql.Driver

@@ -4,6 +4,8 @@ import br.com.fiap.techchallenge01.produto.domain.CategoriaProduto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class ProdutoResponseDTO {
 
@@ -20,5 +22,5 @@ public class ProdutoResponseDTO {
     private CategoriaProduto categoriaProduto;
 
     @Schema(description = "Preço do produto")
-    private Double preco;
+    private BigDecimal preco;
 }
