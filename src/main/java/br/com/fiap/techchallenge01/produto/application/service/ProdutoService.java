@@ -55,6 +55,12 @@ public class ProdutoService implements ProdutoUseCase {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Produto obterProdutoPorId(String id) {
+        return produtoRepository.buscarProdutoPorId(id).orElseThrow(() -> new ProdutoNaoEncontradoException(id));
+    }
+
+    @Override
     public ProdutoResponseDTO criarProduto(ProdutoRequestDTO produtoRequestDTO) {
         CategoriaProduto categoriaProduto = categoriaProdutoService.buscarCategoriaProdutoPorId(produtoRequestDTO.getIdCategoria());
 

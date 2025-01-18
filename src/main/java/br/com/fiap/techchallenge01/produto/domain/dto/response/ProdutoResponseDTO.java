@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class ProdutoResponseDTO {
 
-    @Schema(description = "Identificador único do produto", example = "1")
+    @Schema(description = "Identificador único do produto", example = "e389406d-5531-4acf-a354-be5cc46a8cb1")
     private String id;
 
     @Schema(description = "Nome do produto")
@@ -21,5 +21,4 @@ public class ProdutoResponseDTO {
 
     @Schema(description = "Preço do produto")
     private Double preco;
-
 }

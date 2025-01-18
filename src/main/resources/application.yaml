@@ -8,6 +8,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         ddl-auto: update
+    show-sql: false
   jackson:
     deserialization:
       fail-on-unknown-properties: true
@@ -21,7 +22,10 @@ springdoc:
 tag:
   swagger:
     cliente:
-        name: "Cliente"
-        description: "API de Clientes"
+      name: "Cliente"
+      description: "API de Clientes"
+    pedido:
+      name: "Pedido"
+      description: "API de Pedidos"
 
 
