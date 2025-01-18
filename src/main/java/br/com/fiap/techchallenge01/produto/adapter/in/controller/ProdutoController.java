@@ -1,10 +1,11 @@
 package br.com.fiap.techchallenge01.produto.adapter.in.controller;
 
 import br.com.fiap.techchallenge01.produto.adapter.in.controller.api.ProdutoApi;
-import br.com.fiap.techchallenge01.produto.application.service.ProdutoService;
+import br.com.fiap.techchallenge01.produto.application.usecase.ProdutoUseCase;
 import br.com.fiap.techchallenge01.produto.domain.dto.request.ProdutoRequestDTO;
 import br.com.fiap.techchallenge01.produto.domain.dto.response.ProdutoResponseDTO;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,18 +15,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/produtos")
+@RequiredArgsConstructor
 public class ProdutoController implements ProdutoApi {
 
-    private final ProdutoService produtoService;
-
-    public ProdutoController(ProdutoService produtoService) {
-        this.produtoService = produtoService;
-    }
+    private final ProdutoUseCase produtoUseCase;
 
     @Override
     @GetMapping
     public ResponseEntity<List<ProdutoResponseDTO>> buscarProdutos() {
-        List<ProdutoResponseDTO> produtosResponseDTO = produtoService.buscarProdutos();
+        List<ProdutoResponseDTO> produtosResponseDTO = produtoUseCase.buscarProdutos();
 
         return ResponseEntity.ok(produtosResponseDTO);
     }
@@ -33,7 +31,7 @@ public class ProdutoController implements ProdutoApi {
     @Override
     @GetMapping("/categoria/{idCategoriaProduto}")
     public ResponseEntity<List<ProdutoResponseDTO>> buscarProdutosPorCategoria(@PathVariable String idCategoriaProduto) {
-        List<ProdutoResponseDTO> produtosResponse = produtoService.buscarProdutosPorCategoria(idCategoriaProduto);
+        List<ProdutoResponseDTO> produtosResponse = produtoUseCase.buscarProdutosPorCategoria(idCategoriaProduto);
 
         return ResponseEntity.ok(produtosResponse);
     }
@@ -41,7 +39,7 @@ public class ProdutoController implements ProdutoApi {
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<ProdutoResponseDTO> buscarProdutoPorId(@PathVariable String id) {
-        ProdutoResponseDTO produtoResponseDTO = produtoService.buscarProdutoPorId(id);
+        ProdutoResponseDTO produtoResponseDTO = produtoUseCase.buscarProdutoPorId(id);
 
         return ResponseEntity.ok(produtoResponseDTO);
     }
@@ -49,7 +47,7 @@ public class ProdutoController implements ProdutoApi {
     @Override
     @PostMapping
     public ResponseEntity<ProdutoResponseDTO> criarProduto(@RequestBody @Valid ProdutoRequestDTO produtoRequestDTO) throws URISyntaxException {
-        ProdutoResponseDTO produtoResponse = produtoService.criarProduto(produtoRequestDTO);
+        ProdutoResponseDTO produtoResponse = produtoUseCase.criarProduto(produtoRequestDTO);
 
         return ResponseEntity.created(new URI("/produtos/" + produtoResponse.getId())).body(produtoResponse);
     }
@@ -57,7 +55,7 @@ public class ProdutoController implements ProdutoApi {
     @Override
     @PutMapping("/{id}")
     public ResponseEntity<ProdutoResponseDTO> atualizarProduto(@RequestBody @Valid ProdutoRequestDTO produtoRequestDTO, @PathVariable String id) {
-        ProdutoResponseDTO produtoResponse = produtoService.atualizarProduto(produtoRequestDTO, id);
+        ProdutoResponseDTO produtoResponse = produtoUseCase.atualizarProduto(produtoRequestDTO, id);
 
         return ResponseEntity.ok(produtoResponse);
     }
@@ -65,7 +63,7 @@ public class ProdutoController implements ProdutoApi {
     @Override
     @DeleteMapping("/{idProduto}")
     public ResponseEntity<Void> excluirProduto(@PathVariable String idProduto) {
-        produtoService.excluirProduto(idProduto);
+        produtoUseCase.excluirProduto(idProduto);
         return ResponseEntity.ok().build();
     }
 }
