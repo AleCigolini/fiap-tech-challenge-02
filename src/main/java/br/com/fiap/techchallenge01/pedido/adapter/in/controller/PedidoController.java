@@ -35,6 +35,6 @@ public class PedidoController implements PedidoApi {
     public ResponseEntity<PedidoResponseDTO> criarPedido(@RequestBody @Valid PedidoRequestDTO pedidoRequestDTO) throws URISyntaxException {
         PedidoResponseDTO pedidoResponse = pedidoService.criarPedido(pedidoRequestDTO);
 
-        return ResponseEntity.created(new URI(STR."/pedidos/\{pedidoResponse.getId()}")).body(pedidoResponse);
+        return ResponseEntity.created(new URI("/pedidos/" + pedidoResponse.getId())).body(pedidoResponse);
     }
 }
