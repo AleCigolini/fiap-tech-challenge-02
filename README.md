@@ -32,6 +32,11 @@ Será inicializado 3 contêineres:
 - Flyway (Inicializar estrutura de banco de dados)
 - PostgreSQL
 
+Segue URL do banco de dados abaixo. Credenciais para acesso estão no arquivo .env do projeto.
+```
+jdbc:postgresql://localhost:5432/techchallenge
+```
+
 ### Visualização do Swagger
 Com a aplicação rodando, via navegador de sua preferência, acesse a URL:
 ```
