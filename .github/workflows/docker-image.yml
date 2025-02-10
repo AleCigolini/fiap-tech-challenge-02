@@ -8,14 +8,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag fiap-techchallenge01:$(date +%s)
+      - uses: actions/checkout@v4
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag fiap-techchallenge01:$(date +%s)
 
-    - uses: docker/login-action@v3.3.0
-    - name: Docker Login
-      run: docker login -u alecigolini -p ${{ secrets.DOCKER_ACCESS_TOKEN }}
+  login:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker Login
+        run: docker login -u alecigolini -p ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
-    - uses: elgohr/Publish-Docker-Github-Action@v5
-    - name: Publish to Registry
-      run: docker push alecigolini/fiap-techchallenge01
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker Publish
+        run: docker push alecigolini/fiap-techchallenge01
