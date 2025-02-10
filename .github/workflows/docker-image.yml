@@ -22,7 +22,3 @@ jobs:
     - uses: elgohr/Publish-Docker-Github-Action@v5
     - name: Publish to Registry
       run: docker push alecigolini/fiap-techchallenge01
-      with:
-        name: aleCigolini/fiap-techchallenge01
-        username: aleCigolini
-        password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
