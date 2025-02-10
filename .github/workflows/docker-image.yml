@@ -5,18 +5,18 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag fiap-techchallenge01:$(date +%s)
-
   login:
     runs-on: ubuntu-latest
     steps:
       - name: Docker Login
         run: docker login -u alecigolini -p ${{ secrets.DOCKER_ACCESS_TOKEN }}
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag fiap-techchallenge01
 
   publish:
     runs-on: ubuntu-latest
