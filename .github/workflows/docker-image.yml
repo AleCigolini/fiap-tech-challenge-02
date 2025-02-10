@@ -20,6 +20,9 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
+    needs:
+      - login
+      - build
     steps:
       - name: Docker Publish
         run: docker push alecigolini/fiap-techchallenge01
