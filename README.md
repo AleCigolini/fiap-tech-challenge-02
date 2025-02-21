@@ -1,4 +1,4 @@
-# Tech Challenge 01 - Autoatendimento de Fast Food
+# Tech Challenge 02 - Autoatendimento de Fast Food
 ## Colaboradores
 - Alessandro Cigolini
 - Carlos Ferreira
@@ -11,6 +11,9 @@ Responsável por administrar de forma eficiente e segura todas as operações, d
 Através da integração com o sistema de frente de loja, a aplicação garante a disponibilidade de informações precisas e atualizadas, proporcionando ao cliente autonomia na escolha e personalização dos pedidos, 
 e à lanchonete, uma ferramenta poderosa para aumentar a eficiência operacional, reduzir custos e elevar a satisfação do consumidor.
 
+## Arquitetura
+Utilizada a metodologia Clean Architecture.
+
 ## Execução em ambiente local
 ### Pré-requisitos
 - Ter o Docker instalado e em execução. Para mais informações:
@@ -20,7 +23,7 @@ e à lanchonete, uma ferramenta poderosa para aumentar a eficiência operacional
 ### Execução
 1. Clone o projeto para sua máquina:
 ```
-git clone https://github.com/AleCigolini/fiap-tech-challenge-01.git
+git clone https://github.com/AleCigolini/fiap-tech-challenge-02.git
 ```
 2. Acesse o diretório do projeto clonado e execute:
 ```
