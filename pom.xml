@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>br.com.fiap</groupId>
-    <artifactId>techchallenge01</artifactId>
+    <artifactId>techchallenge02</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>techchallenge01</name>
-    <description>techchallenge01</description>
+    <name>techchallenge02</name>
+    <description>techchallenge02</description>
     <url/>
     <licenses>
         <license/>
