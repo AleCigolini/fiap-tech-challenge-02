@@ -9,4 +9,8 @@ public interface ProdutoGateway {
     List<Produto> buscarProdutos();
 
     List<Produto> buscarProdutosPorCategoria(String idCategoriaProduto);
+
+    Produto buscarProdutoPorId(String id);
+
+    Produto criarProduto(Produto produto);
 }

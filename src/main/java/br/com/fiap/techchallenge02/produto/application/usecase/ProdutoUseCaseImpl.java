@@ -25,8 +25,17 @@ public class ProdutoUseCaseImpl implements ProdutoUseCase {
         return produtoGateway.buscarProdutosPorCategoria(idCategoriaProduto);
     }
 
+    @Override
+    public Produto buscarProdutoPorId(String id) {
+        return produtoGateway.buscarProdutoPorId(id);
+    }
 
-//    @Override
+    @Override
+    public Produto criarProduto(Produto produto) {
+        return produtoGateway.criarProduto(produto);
+    }
+
+    //    @Override
 //    public ProdutoResponseDTO buscarProdutoPorId(String id) {
 //        return null;
 //    }

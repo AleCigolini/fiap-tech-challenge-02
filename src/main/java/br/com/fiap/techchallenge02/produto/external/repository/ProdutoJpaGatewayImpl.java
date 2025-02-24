@@ -8,6 +8,7 @@ import br.com.fiap.techchallenge02.produto.external.entity.JpaProdutoEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -35,5 +36,20 @@ public class ProdutoJpaGatewayImpl implements ProdutoGateway {
         List<JpaProdutoEntity> jpaProdutoEntities = produtoJpaRepository.findAllByCategoriaOrderByNomeAsc(categoria);
 
         return produtoPresenter.jpaProdutoEntitiesParaProdutos(jpaProdutoEntities);
+    }
+
+    @Override
+    public Produto buscarProdutoPorId(String id) {
+        Optional<JpaProdutoEntity> jpaProdutoEntityOptional = produtoJpaRepository.findById(UUID.fromString(id));
+
+        return jpaProdutoEntityOptional.map(produtoPresenter::jpaProdutoEntityParaProduto).orElse(null);
+    }
+
+    @Override
+    public Produto criarProduto(Produto produto) {
+        JpaProdutoEntity jpaProdutoEntity = produtoPresenter.produtoParaJpaProdutoEntity(produto);
+        JpaProdutoEntity jpaProdutoEntitySalvo = produtoJpaRepository.save(jpaProdutoEntity);
+
+        return produtoPresenter.jpaProdutoEntityParaProduto(jpaProdutoEntitySalvo);
     }
 }
