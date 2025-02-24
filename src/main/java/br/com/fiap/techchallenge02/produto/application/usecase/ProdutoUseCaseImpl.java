@@ -2,6 +2,7 @@ package br.com.fiap.techchallenge02.produto.application.usecase;
 
 import br.com.fiap.techchallenge02.produto.adapter.gateway.ProdutoGateway;
 import br.com.fiap.techchallenge02.produto.domain.Produto;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,6 +18,13 @@ public class ProdutoUseCaseImpl implements ProdutoUseCase {
     public List<Produto> buscarProdutos() {
         return produtoGateway.buscarProdutos();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Produto> buscarProdutosPorCategoria(String idCategoriaProduto) {
+        return produtoGateway.buscarProdutosPorCategoria(idCategoriaProduto);
+    }
+
 
 //    @Override
 //    public ProdutoResponseDTO buscarProdutoPorId(String id) {

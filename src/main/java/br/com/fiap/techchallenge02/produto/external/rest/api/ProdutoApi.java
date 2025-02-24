@@ -1,12 +1,10 @@
 package br.com.fiap.techchallenge02.produto.external.rest.api;
 
-import br.com.fiap.techchallenge02.produto.domain.dto.request.ProdutoRequestDTO;
 import br.com.fiap.techchallenge02.produto.domain.dto.response.ProdutoResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
 @Tag(name = "${tag.swagger.produto.name}", description = "${tag.swagger.produto.description}")
@@ -20,15 +18,15 @@ public interface ProdutoApi {
     @Operation(summary = "Buscar todos os produtos")
     ResponseEntity<List<ProdutoResponseDTO>> buscarProdutos();
 
-//    /**
-//     * Busca os produtos por categoria
-//     *
-//     * @param idCategoriaProduto Long da categoria produto
-//     * @return {@link ProdutoResponseDTO}
-//     */
-//    @Operation(summary = "Buscar os produtos por categoria")
-//    ResponseEntity<List<ProdutoResponseDTO>> buscarProdutosPorCategoria(String idCategoriaProduto);
-//
+    /**
+     * Busca os produtos por categoria
+     *
+     * @param idCategoriaProduto Long da categoria produto
+     * @return {@link ProdutoResponseDTO}
+     */
+    @Operation(summary = "Buscar os produtos por categoria")
+    ResponseEntity<List<ProdutoResponseDTO>> buscarProdutosPorCategoria(String idCategoriaProduto);
+
 //    /**
 //     * Busca produto por ID
 //     *

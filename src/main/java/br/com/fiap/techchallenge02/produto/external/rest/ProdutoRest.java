@@ -6,6 +6,7 @@ import br.com.fiap.techchallenge02.produto.external.rest.api.ProdutoApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,14 +27,14 @@ public class ProdutoRest implements ProdutoApi {
         return ResponseEntity.ok(produtosResponseDTO);
     }
 
-//    @Override
-//    @GetMapping("/categoria/{idCategoriaProduto}")
-//    public ResponseEntity<List<ProdutoResponseDTO>> buscarProdutosPorCategoria(@PathVariable String idCategoriaProduto) {
-//        List<ProdutoResponseDTO> produtosResponse = produtoController.buscarProdutosPorCategoria(idCategoriaProduto);
-//
-//        return ResponseEntity.ok(produtosResponse);
-//    }
-//
+    @Override
+    @GetMapping("/categoria/{idCategoriaProduto}")
+    public ResponseEntity<List<ProdutoResponseDTO>> buscarProdutosPorCategoria(@PathVariable String idCategoriaProduto) {
+        List<ProdutoResponseDTO> produtosResponse = produtoController.buscarProdutosPorCategoria(idCategoriaProduto);
+
+        return ResponseEntity.ok(produtosResponse);
+    }
+
 //    @Override
 //    @GetMapping("/{id}")
 //    public ResponseEntity<ProdutoResponseDTO> buscarProdutoPorId(@PathVariable String id) {

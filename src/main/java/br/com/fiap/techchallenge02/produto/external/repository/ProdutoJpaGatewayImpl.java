@@ -3,10 +3,12 @@ package br.com.fiap.techchallenge02.produto.external.repository;
 import br.com.fiap.techchallenge02.produto.adapter.gateway.ProdutoGateway;
 import br.com.fiap.techchallenge02.produto.adapter.presenter.ProdutoPresenter;
 import br.com.fiap.techchallenge02.produto.domain.Produto;
+import br.com.fiap.techchallenge02.produto.external.entity.JpaCategoriaProdutoEntity;
 import br.com.fiap.techchallenge02.produto.external.entity.JpaProdutoEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class ProdutoJpaGatewayImpl implements ProdutoGateway {
@@ -22,6 +24,16 @@ public class ProdutoJpaGatewayImpl implements ProdutoGateway {
     @Override
     public List<Produto> buscarProdutos() {
         List<JpaProdutoEntity> jpaProdutoEntities = produtoJpaRepository.findAllByOrderByNomeAsc();
-        return produtoPresenter.jpaProdutoEntityParaProduto(jpaProdutoEntities);
+        return produtoPresenter.jpaProdutoEntitiesParaProdutos(jpaProdutoEntities);
+    }
+
+    @Override
+    public List<Produto> buscarProdutosPorCategoria(String idCategoriaProduto) {
+        JpaCategoriaProdutoEntity categoria = new JpaCategoriaProdutoEntity();
+        categoria.setId(UUID.fromString(idCategoriaProduto));
+
+        List<JpaProdutoEntity> jpaProdutoEntities = produtoJpaRepository.findAllByCategoriaOrderByNomeAsc(categoria);
+
+        return produtoPresenter.jpaProdutoEntitiesParaProdutos(jpaProdutoEntities);
     }
 }

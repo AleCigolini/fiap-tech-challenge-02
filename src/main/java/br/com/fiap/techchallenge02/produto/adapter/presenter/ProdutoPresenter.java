@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface ProdutoPresenter {
 
-    List<Produto> jpaProdutoEntityParaProduto(List<JpaProdutoEntity> jpaProdutoEntities);
+    List<Produto> jpaProdutoEntitiesParaProdutos(List<JpaProdutoEntity> jpaProdutoEntities);
 
     List<ProdutoResponseDTO> produtosParaProdutosResponseDTO(List<Produto> produtos);
+
 }

@@ -17,7 +17,7 @@ public class ProdutoModelMapperPresenterImpl implements ProdutoPresenter {
         this.modelMapper = modelMapper;
     }
 
-    public List<Produto> jpaProdutoEntityParaProduto(List<JpaProdutoEntity> jpaProdutoEntities) {
+    public List<Produto> jpaProdutoEntitiesParaProdutos(List<JpaProdutoEntity> jpaProdutoEntities) {
         return jpaProdutoEntities.stream().map(jpaProdutoEntity -> modelMapper.map(jpaProdutoEntity, Produto.class)).toList();
     }
 

@@ -8,6 +8,8 @@ public interface ProdutoUseCase {
 
     List<Produto> buscarProdutos();
 
+    List<Produto> buscarProdutosPorCategoria(String idCategoriaProduto);
+
 //    ProdutoResponseDTO buscarProdutoPorId(String id);
 //
 //    ProdutoResponseDTO criarProduto(ProdutoRequestDTO produtoRequestDTO);

@@ -21,4 +21,10 @@ public class ProdutoController {
 
         return produtoPresenter.produtosParaProdutosResponseDTO(produtos);
     }
+
+    public List<ProdutoResponseDTO> buscarProdutosPorCategoria(String idCategoriaProduto) {
+        List<Produto> produtos = produtoUseCase.buscarProdutosPorCategoria(idCategoriaProduto);
+
+        return produtoPresenter.produtosParaProdutosResponseDTO(produtos);
+    }
 }
