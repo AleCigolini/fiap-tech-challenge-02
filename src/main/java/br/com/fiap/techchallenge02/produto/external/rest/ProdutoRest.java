@@ -60,10 +60,11 @@ public class ProdutoRest implements ProdutoApi {
         return ResponseEntity.ok(produtoResponse);
     }
 
-//    @Override
-//    @DeleteMapping("/{idProduto}")
-//    public ResponseEntity<Void> excluirProduto(@PathVariable String idProduto) {
-//        produtoController.excluirProduto(idProduto);
-//        return ResponseEntity.ok().build();
-//    }
+    @Override
+    @DeleteMapping("/{idProduto}")
+    public ResponseEntity<Void> excluirProduto(@PathVariable String idProduto) {
+        produtoController.excluirProduto(idProduto);
+
+        return ResponseEntity.ok().build();
+    }
 }

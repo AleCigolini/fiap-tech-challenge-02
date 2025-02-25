@@ -60,4 +60,9 @@ public class ProdutoJpaGatewayImpl implements ProdutoGateway {
 
         return produtoPresenter.jpaProdutoEntityParaProduto(jpaProdutoEntitySalvo);
     }
+
+    @Override
+    public void excluirProduto(String idProduto) {
+        produtoJpaRepository.deleteById(UUID.fromString(idProduto));
+    }
 }

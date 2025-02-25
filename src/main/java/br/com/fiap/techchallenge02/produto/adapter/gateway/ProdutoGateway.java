@@ -15,4 +15,6 @@ public interface ProdutoGateway {
     Produto criarProduto(Produto produto);
 
     Produto atualizarProduto(Produto produto);
+
+    void excluirProduto(String idProduto);
 }

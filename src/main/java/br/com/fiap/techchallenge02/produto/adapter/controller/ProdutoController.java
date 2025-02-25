@@ -63,4 +63,8 @@ public class ProdutoController {
 
         return produtoResponseDTO;
     }
+
+    public void excluirProduto(String idProduto) {
+        produtoUseCase.excluirProduto(idProduto);
+    }
 }

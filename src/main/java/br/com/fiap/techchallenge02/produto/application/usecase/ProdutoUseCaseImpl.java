@@ -6,6 +6,7 @@ import br.com.fiap.techchallenge02.produto.domain.Produto;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 public class ProdutoUseCaseImpl implements ProdutoUseCase {
 
@@ -31,7 +32,7 @@ public class ProdutoUseCaseImpl implements ProdutoUseCase {
         Produto produto = produtoGateway.buscarProdutoPorId(id);
 
         if (produto == null) {
-            throw new ProdutoNaoEncontradoException(id);
+            throw new ProdutoNaoEncontradoException(UUID.fromString(id));
         }
 
         return produto;
@@ -47,28 +48,8 @@ public class ProdutoUseCaseImpl implements ProdutoUseCase {
         return produtoGateway.atualizarProduto(produto);
     }
 
-    //    @Override
-//    public ProdutoResponseDTO buscarProdutoPorId(String id) {
-//        return null;
-//    }
-//
-//    @Override
-//    public ProdutoResponseDTO criarProduto(ProdutoRequestDTO produtoRequestDTO) {
-//        return null;
-//    }
-//
-//    @Override
-//    public ProdutoResponseDTO atualizarProduto(ProdutoRequestDTO produtoRequestDTO, String idProduto) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void excluirProduto(String idProduto) {
-//
-//    }
-//
-//    @Override
-//    public List<ProdutoResponseDTO> buscarProdutosPorCategoria(String idCategoriaProduto) {
-//        return List.of();
-//    }
+    @Override
+    public void excluirProduto(String idProduto) {
+        produtoGateway.excluirProduto(idProduto);
+    }
 }

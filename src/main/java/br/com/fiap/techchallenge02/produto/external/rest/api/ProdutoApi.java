@@ -57,12 +57,12 @@ public interface ProdutoApi {
     @Operation(summary = "Atualizar um produto")
     ResponseEntity<ProdutoResponseDTO> atualizarProduto(ProdutoRequestDTO produtoRequestDTO, String id);
 
-//    /**
-//     * Excluir um produto
-//     *
-//     * @param id ID do produto a ser excluído
-//     * @return void
-//     */
-//    @Operation(summary = "Excluir um produto")
-//    ResponseEntity<Void> excluirProduto(String id);
+    /**
+     * Excluir um produto
+     *
+     * @param id ID do produto a ser excluído
+     * @return void
+     */
+    @Operation(summary = "Excluir um produto")
+    ResponseEntity<Void> excluirProduto(String id);
 }
