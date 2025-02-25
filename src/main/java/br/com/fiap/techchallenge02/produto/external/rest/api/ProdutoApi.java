@@ -3,6 +3,9 @@ package br.com.fiap.techchallenge02.produto.external.rest.api;
 import br.com.fiap.techchallenge02.produto.domain.dto.request.ProdutoRequestDTO;
 import br.com.fiap.techchallenge02.produto.domain.dto.response.ProdutoResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 
@@ -17,7 +20,12 @@ public interface ProdutoApi {
      *
      * @return {@link ProdutoResponseDTO}
      */
-    @Operation(summary = "Buscar todos os produtos")
+    @Operation(summary = "Buscar todos os produtos", responses = {
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content(schema = @Schema(ref = "Problema"))
+            )
+    })
     ResponseEntity<List<ProdutoResponseDTO>> buscarProdutos();
 
     /**
@@ -26,7 +34,15 @@ public interface ProdutoApi {
      * @param idCategoriaProduto Long da categoria produto
      * @return {@link ProdutoResponseDTO}
      */
-    @Operation(summary = "Buscar os produtos por categoria")
+    @Operation(summary = "Buscar os produtos por categoria", responses = {
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "404", description = "Produto não encontrado",
+                    content = @Content(schema = @Schema(ref = "Problema"))
+            ),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content(schema = @Schema(ref = "Problema"))
+            )
+    })
     ResponseEntity<List<ProdutoResponseDTO>> buscarProdutosPorCategoria(String idCategoriaProduto);
 
     /**
@@ -35,7 +51,15 @@ public interface ProdutoApi {
      * @param id Long do produto
      * @return {@link ProdutoResponseDTO}
      */
-    @Operation(summary = "Buscar produto por ID")
+    @Operation(summary = "Buscar produto por ID", responses = {
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "404", description = "Produto não encontrado",
+                    content = @Content(schema = @Schema(ref = "Problema"))
+            ),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content(schema = @Schema(ref = "Problema"))
+            )
+    })
     ResponseEntity<ProdutoResponseDTO> buscarProdutoPorId(String id);
 
     /**
@@ -44,7 +68,12 @@ public interface ProdutoApi {
      * @param produtoRequestDTO DTO para criação de produto
      * @return {@link ProdutoResponseDTO}
      */
-    @Operation(summary = "Criar novo produto")
+    @Operation(summary = "Criar novo produto", responses = {
+            @ApiResponse(responseCode = "201"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content(schema = @Schema(ref = "Problema"))
+            )
+    })
     ResponseEntity<ProdutoResponseDTO> criarProduto(ProdutoRequestDTO produtoRequestDTO) throws URISyntaxException;
 
     /**
@@ -54,7 +83,15 @@ public interface ProdutoApi {
      * @param id ID do produto a ser atualizado
      * @return {@link ProdutoResponseDTO}
      */
-    @Operation(summary = "Atualizar um produto")
+    @Operation(summary = "Atualizar um produto", responses = {
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "404", description = "Produto não encontrado",
+                    content = @Content(schema = @Schema(ref = "Problema"))
+            ),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content(schema = @Schema(ref = "Problema"))
+            )
+    })
     ResponseEntity<ProdutoResponseDTO> atualizarProduto(ProdutoRequestDTO produtoRequestDTO, String id);
 
     /**
@@ -63,6 +100,11 @@ public interface ProdutoApi {
      * @param id ID do produto a ser excluído
      * @return void
      */
-    @Operation(summary = "Excluir um produto")
+    @Operation(summary = "Excluir um produto", responses = {
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content(schema = @Schema(ref = "Problema"))
+            )
+    })
     ResponseEntity<Void> excluirProduto(String id);
 }
