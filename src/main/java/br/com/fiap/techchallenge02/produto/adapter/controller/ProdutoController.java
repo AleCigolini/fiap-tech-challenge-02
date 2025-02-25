@@ -48,4 +48,19 @@ public class ProdutoController {
 
         return produtoResponseDTO;
     }
+
+    public ProdutoResponseDTO atualizarProduto(ProdutoRequestDTO produtoRequestDTO, String id) {
+        produtoUseCase.buscarProdutoPorId(id);
+
+        Produto produto = produtoPresenter.produtoRequestDtoParaProduto(produtoRequestDTO);
+        produto.setId(id);
+
+        Produto produtoAtualizado = produtoUseCase.atualizarProduto(produto);
+        CategoriaProduto categoriaProduto = categoriaProdutoController.buscarCategoriaProdutoPorId(produtoRequestDTO.getIdCategoria());
+
+        ProdutoResponseDTO produtoResponseDTO = produtoPresenter.produtoParaProdutoResponseDTO(produtoAtualizado);
+        produtoResponseDTO.setCategoriaProduto(categoriaProduto);
+
+        return produtoResponseDTO;
+    }
 }

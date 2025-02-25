@@ -52,14 +52,14 @@ public class ProdutoRest implements ProdutoApi {
         return ResponseEntity.created(new URI("/produtos/" + produtoResponse.getId())).body(produtoResponse);
     }
 
-//    @Override
-//    @PutMapping("/{id}")
-//    public ResponseEntity<ProdutoResponseDTO> atualizarProduto(@RequestBody @Valid ProdutoRequestDTO produtoRequestDTO, @PathVariable String id) {
-//        ProdutoResponseDTO produtoResponse = produtoController.atualizarProduto(produtoRequestDTO, id);
-//
-//        return ResponseEntity.ok(produtoResponse);
-//    }
-//
+    @Override
+    @PutMapping("/{id}")
+    public ResponseEntity<ProdutoResponseDTO> atualizarProduto(@RequestBody @Valid ProdutoRequestDTO produtoRequestDTO, @PathVariable String id) {
+        ProdutoResponseDTO produtoResponse = produtoController.atualizarProduto(produtoRequestDTO, id);
+
+        return ResponseEntity.ok(produtoResponse);
+    }
+
 //    @Override
 //    @DeleteMapping("/{idProduto}")
 //    public ResponseEntity<Void> excluirProduto(@PathVariable String idProduto) {

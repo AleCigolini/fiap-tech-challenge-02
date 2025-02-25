@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge02.produto.application.usecase;
 
 import br.com.fiap.techchallenge02.produto.adapter.gateway.ProdutoGateway;
+import br.com.fiap.techchallenge02.produto.application.exception.ProdutoNaoEncontradoException;
 import br.com.fiap.techchallenge02.produto.domain.Produto;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,12 +28,23 @@ public class ProdutoUseCaseImpl implements ProdutoUseCase {
 
     @Override
     public Produto buscarProdutoPorId(String id) {
-        return produtoGateway.buscarProdutoPorId(id);
+        Produto produto = produtoGateway.buscarProdutoPorId(id);
+
+        if (produto == null) {
+            throw new ProdutoNaoEncontradoException(id);
+        }
+
+        return produto;
     }
 
     @Override
     public Produto criarProduto(Produto produto) {
         return produtoGateway.criarProduto(produto);
+    }
+
+    @Override
+    public Produto atualizarProduto(Produto produto) {
+        return produtoGateway.atualizarProduto(produto);
     }
 
     //    @Override

@@ -13,4 +13,6 @@ public interface ProdutoGateway {
     Produto buscarProdutoPorId(String id);
 
     Produto criarProduto(Produto produto);
+
+    Produto atualizarProduto(Produto produto);
 }

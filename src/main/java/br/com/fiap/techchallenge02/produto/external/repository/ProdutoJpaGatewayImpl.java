@@ -52,4 +52,12 @@ public class ProdutoJpaGatewayImpl implements ProdutoGateway {
 
         return produtoPresenter.jpaProdutoEntityParaProduto(jpaProdutoEntitySalvo);
     }
+
+    @Override
+    public Produto atualizarProduto(Produto produto) {
+        JpaProdutoEntity jpaProdutoEntity = produtoPresenter.produtoParaJpaProdutoEntity(produto);
+        JpaProdutoEntity jpaProdutoEntitySalvo = produtoJpaRepository.save(jpaProdutoEntity);
+
+        return produtoPresenter.jpaProdutoEntityParaProduto(jpaProdutoEntitySalvo);
+    }
 }

@@ -14,6 +14,8 @@ public interface ProdutoUseCase {
 
     Produto criarProduto(Produto produto);
 
+    Produto atualizarProduto(Produto produto);
+
 //    ProdutoResponseDTO buscarProdutoPorId(String id);
 //
 //    ProdutoResponseDTO criarProduto(ProdutoRequestDTO produtoRequestDTO);
