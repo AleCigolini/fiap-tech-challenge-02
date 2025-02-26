@@ -6,6 +6,7 @@ import br.com.fiap.techchallenge02.produto.domain.CategoriaProduto;
 import br.com.fiap.techchallenge02.produto.external.entity.JpaCategoriaProdutoEntity;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,5 +28,20 @@ public class CategoriaProdutoJpaGatewayImpl implements CategoriaProdutoGateway {
                 .filter(JpaCategoriaProdutoEntity::getAtivo);
 
         return jpaCategoriaProdutoEntity.map(categoriaProdutoPresenter::jpaCategoriaProdutoEntityParaCategoriaProduto).orElse(null);
+    }
+
+    @Override
+    public List<CategoriaProduto> buscarCategoriasProduto() {
+        List<JpaCategoriaProdutoEntity> jpaCategoriaProdutoEntities = categoriaProdutoJpaRepository.findByAtivoTrue();
+
+        return jpaCategoriaProdutoEntities.stream().map(categoriaProdutoPresenter::jpaCategoriaProdutoEntityParaCategoriaProduto).toList();
+    }
+
+    @Override
+    public CategoriaProduto criarCategoriaProduto(CategoriaProduto categoriaProduto) {
+        JpaCategoriaProdutoEntity jpaCategoriaProdutoEntity = categoriaProdutoPresenter.categoriaProdutoParaJpaCategoriaProdutoEntity(categoriaProduto);
+        JpaCategoriaProdutoEntity jpaCategoriaProdutoEntitySalvo = categoriaProdutoJpaRepository.save(jpaCategoriaProdutoEntity);
+
+        return categoriaProdutoPresenter.jpaCategoriaProdutoEntityParaCategoriaProduto(jpaCategoriaProdutoEntitySalvo);
     }
 }

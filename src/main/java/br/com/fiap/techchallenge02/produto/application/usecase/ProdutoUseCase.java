@@ -17,14 +17,4 @@ public interface ProdutoUseCase {
     Produto atualizarProduto(Produto produto);
 
     void excluirProduto(String idProduto);
-
-//    ProdutoResponseDTO buscarProdutoPorId(String id);
-//
-//    ProdutoResponseDTO criarProduto(ProdutoRequestDTO produtoRequestDTO);
-//
-//    ProdutoResponseDTO atualizarProduto(ProdutoRequestDTO produtoRequestDTO, String idProduto);
-//
-//    void excluirProduto(String idProduto);
-//
-//    List<ProdutoResponseDTO> buscarProdutosPorCategoria(String idCategoriaProduto);
 }
