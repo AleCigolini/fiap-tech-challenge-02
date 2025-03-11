@@ -1,13 +1,14 @@
-package br.com.fiap.techchallenge02.produto.application.usecase;
+package br.com.fiap.techchallenge02.produto_old.adapter.gateway;
 
-
-import br.com.fiap.techchallenge02.produto.domain.Produto;
+import br.com.fiap.techchallenge02.produto_old.domain.Produto;
 
 import java.util.List;
 
-public interface ProdutoUseCase {
+public interface ProdutoGateway {
 
     List<Produto> buscarProdutos();
+
+    List<Produto> buscarProdutosPorCategoria(String idCategoriaProduto);
 
     Produto buscarProdutoPorId(String id);
 
@@ -16,6 +17,4 @@ public interface ProdutoUseCase {
     Produto atualizarProduto(Produto produto);
 
     void excluirProduto(String idProduto);
-
-    List<Produto> buscarProdutosPorCategoria(String idCategoriaProduto);
 }
