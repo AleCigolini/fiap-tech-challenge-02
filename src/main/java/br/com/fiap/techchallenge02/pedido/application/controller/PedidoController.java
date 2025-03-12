@@ -1,8 +1,10 @@
 package br.com.fiap.techchallenge02.pedido.application.controller;
 
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.PedidoRequestDto;
+import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.PedidoStatusRequestDto;
+import br.com.fiap.techchallenge02.pedido.common.domain.dto.response.PagamentoResponseDto;
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.response.PedidoResponseDto;
-import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.WebhookNotificationRequestDto;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -12,5 +14,5 @@ public interface PedidoController {
 
     PedidoResponseDto criarPedido(PedidoRequestDto pedidoRequestDTO);
 
-    void processarNotificacao(WebhookNotificationRequestDto notificacao);
+    PedidoResponseDto atualizarStatusPedido(PedidoStatusRequestDto pedidoStatusRequestDTO, String id);
 }

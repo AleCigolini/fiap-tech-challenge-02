@@ -2,8 +2,9 @@ package br.com.fiap.techchallenge02.pedido.presentation.rest;
 
 import br.com.fiap.techchallenge02.pedido.application.controller.PedidoController;
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.PedidoRequestDto;
+import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.PedidoStatusRequestDto;
+import br.com.fiap.techchallenge02.pedido.common.domain.dto.response.PagamentoResponseDto;
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.response.PedidoResponseDto;
-import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.WebhookNotificationRequestDto;
 import br.com.fiap.techchallenge02.pedido.presentation.rest.interfaces.PedidoRestController;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class PedidoRestControllerImpl implements PedidoRestController {
 
     @Override
     @GetMapping
-    public ResponseEntity<List<PedidoResponseDto>> buscarPedidos(@RequestParam("status") List<String> status) {
+    public ResponseEntity<List<PedidoResponseDto>> buscarPedidos(@RequestParam(value="status", required=false) List<String> status) {
         List<PedidoResponseDto> pedidosResponseDTO = pedidoController.buscarPedidos(status);
 
         return ResponseEntity.ok(pedidosResponseDTO);
@@ -37,26 +38,20 @@ public class PedidoRestControllerImpl implements PedidoRestController {
         return ResponseEntity.created(new URI("/pedidos/" + pedidoResponse.getId())).body(pedidoResponse);
     }
 
-    // Recebe a notificação POST do Mercado Pago
     @Override
-    @PostMapping("/webhook")
-    public void webhook(@RequestBody WebhookNotificationRequestDto notificacao,
-                        @RequestHeader("X-MercadoPago-Signature") String signature) {
-        // O Mercado Pago envia o "notification" com os detalhes da transação.
-        // A string "notificacao" pode ser um JSON que você precisa parsear
-        // para identificar o status do pagamento.
-        System.out.println("Recebido Webhook: " + notificacao);
-        if (isSignatureValid(notificacao, signature)) {
-            System.out.println("Pagamento " + notificacao.getAction() + " para ID: " + notificacao.getData().getId());
+    @PatchMapping("/{id}")
+    public ResponseEntity<PedidoResponseDto> atualizarStatusPedido(@RequestBody @Valid PedidoStatusRequestDto pedidoStatusRequestDTO, @PathVariable String id) {
+        PedidoResponseDto pedidoResponseDTO = pedidoController.atualizarStatusPedido(pedidoStatusRequestDTO, id);
 
-            pedidoController.processarNotificacao(notificacao);
-        } else {
-            System.out.println("Assinatura inválida");
-        }
+        return ResponseEntity.ok(pedidoResponseDTO);
     }
 
-    private boolean isSignatureValid(WebhookNotificationRequestDto notification, String signature) {
-        // Verificar assinatura com o segredo compartilhado
-        return true; // Aqui você validaria a assinatura
-    }
+//      TODO: MOVER PARA O MÓDULO PAGAMENTO
+//    @Override
+//    @GetMapping("/{idPedido}/pagamento")
+//    public ResponseEntity<PagamentoResponseDto> verificarPagamentoPedido(@PathVariable String idPedido) {
+//        PagamentoResponseDto pagamentoResponseDTO = pedidoController.verificarPagamentoPedido(idPedido);
+//
+//        return ResponseEntity.ok(pagamentoResponseDTO);
+//    }
 }

@@ -12,6 +12,8 @@ public interface PedidoPresenter {
 
     List<StatusPedidoEnum> statusPedidoTextParaStatusPedidoEnums(List<String> status);
 
+    StatusPedidoEnum statusPedidoTextParaStatusPedidoEnum(String status);
+
     PedidoResponseDto pedidoParaPedidoResponseDTO(Pedido pedido);
 
     Pedido pedidoRequestDtoParaPedido(PedidoResponseDto pedidoRequestDTO);
