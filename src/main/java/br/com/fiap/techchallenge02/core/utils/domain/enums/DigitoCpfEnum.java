@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge02.core.utils.validators.cpf.helper;
+package br.com.fiap.techchallenge02.core.utils.domain.enums;
 
 import lombok.Getter;
 
