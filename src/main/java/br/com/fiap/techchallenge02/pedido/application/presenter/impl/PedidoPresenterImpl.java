@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static br.com.fiap.techchallenge02.pedido.domain.StatusPedidoEnum.fromStringStatus;
+
 @Component
 @AllArgsConstructor
 public class PedidoPresenterImpl implements PedidoPresenter {
@@ -24,6 +26,11 @@ public class PedidoPresenterImpl implements PedidoPresenter {
     @Override
     public List<StatusPedidoEnum> statusPedidoTextParaStatusPedidoEnums(List<String> status) {
         return status.stream().map(StatusPedidoEnum::fromStringStatus).toList();
+    }
+
+    @Override
+    public StatusPedidoEnum statusPedidoTextParaStatusPedidoEnum(String status) {
+        return fromStringStatus(status);
     }
 
     @Override

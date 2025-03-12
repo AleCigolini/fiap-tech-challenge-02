@@ -6,9 +6,10 @@ import br.com.fiap.techchallenge02.pedido.application.presenter.PedidoPresenter;
 import br.com.fiap.techchallenge02.pedido.application.usecase.ConsultarPedidoUseCase;
 import br.com.fiap.techchallenge02.pedido.application.usecase.SalvarPedidoUseCase;
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.PedidoRequestDto;
+import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.PedidoStatusRequestDto;
+import br.com.fiap.techchallenge02.pedido.common.domain.dto.response.PagamentoResponseDto;
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.response.PedidoResponseDto;
 import br.com.fiap.techchallenge02.pedido.domain.StatusPedidoEnum;
-import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.WebhookNotificationRequestDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 
@@ -27,7 +28,8 @@ public class PedidoControllerImpl implements PedidoController {
     @Override
     public List<PedidoResponseDto> buscarPedidos(List<String> status) {
         List<StatusPedidoEnum> statusPedidoEnums =
-                pedidoPresenter.statusPedidoTextParaStatusPedidoEnums(status);
+                status == null || status.isEmpty() ?
+                        null : pedidoPresenter.statusPedidoTextParaStatusPedidoEnums(status);
 
         return pedidoPresenter.pedidosParaPedidoResponseDTOs(
                 consultarPedidoUseCase.buscarPedidos(statusPedidoEnums));
@@ -37,11 +39,13 @@ public class PedidoControllerImpl implements PedidoController {
     public PedidoResponseDto criarPedido(PedidoRequestDto pedidoRequestDto) {
         return pedidoPresenter.pedidoParaPedidoResponseDTO(
                 salvarPedidoUseCase.criarPedido(
-                        requestPedidoMapper.requestDtoToDomain(pedidoRequestDto)));
+                        requestPedidoMapper.pedidoRequestDtoParaPedido(pedidoRequestDto)));
     }
 
     @Override
-    public void processarNotificacao(WebhookNotificationRequestDto notificacao) {
-        salvarPedidoUseCase.atualizarStatus();
+    public PedidoResponseDto atualizarStatusPedido(PedidoStatusRequestDto pedidoStatusRequestDTO, String id) {
+        return pedidoPresenter.pedidoParaPedidoResponseDTO(
+                salvarPedidoUseCase.atualizarStatusPedido(
+                        pedidoPresenter.statusPedidoTextParaStatusPedidoEnum(pedidoStatusRequestDTO.getStatus()), id));
     }
 }

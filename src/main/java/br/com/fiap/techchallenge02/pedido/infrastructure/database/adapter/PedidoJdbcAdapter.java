@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class PedidoJdbcAdapter implements PedidoDatabase {
@@ -21,12 +23,23 @@ public class PedidoJdbcAdapter implements PedidoDatabase {
 
     @Override
     public List<JpaPedidoEntity> buscarPedidos(List<StatusPedidoEnum> statusPedidoEnums) {
-        List<String> status = statusPedidoEnums.stream().map(StatusPedidoEnum::toString).toList();
-        return jpaPedidoRepository.findAllByStatusIn(status);
+
+        if (statusPedidoEnums == null || statusPedidoEnums.isEmpty()) {
+            return jpaPedidoRepository.findAll();
+
+        } else {
+            List<String> status = statusPedidoEnums.stream().map(StatusPedidoEnum::toString).toList();
+            return jpaPedidoRepository.findAllByStatusIn(status);
+        }
     }
 
     @Override
     public JpaPedidoEntity criarPedido(JpaPedidoEntity jpaPedidoEntity) {
         return jpaPedidoRepository.save(jpaPedidoEntity);
+    }
+
+    @Override
+    public Optional<JpaPedidoEntity> buscarPedidoPorId(String id) {
+        return jpaPedidoRepository.findById(UUID.fromString(id));
     }
 }

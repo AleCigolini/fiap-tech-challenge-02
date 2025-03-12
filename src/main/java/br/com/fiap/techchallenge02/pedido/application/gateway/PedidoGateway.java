@@ -9,5 +9,7 @@ public interface PedidoGateway {
 
     List<Pedido> buscarPedidos(List<StatusPedidoEnum> statusPedidoEnums);
 
-    Pedido criarPedido(Pedido pedido);
+    Pedido buscarPedidoPorId(String id);
+
+    Pedido salvarPedido(Pedido pedido);
 }

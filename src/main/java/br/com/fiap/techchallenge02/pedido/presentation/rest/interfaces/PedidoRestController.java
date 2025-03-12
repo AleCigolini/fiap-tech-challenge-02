@@ -1,6 +1,8 @@
 package br.com.fiap.techchallenge02.pedido.presentation.rest.interfaces;
 
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.PedidoRequestDto;
+import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.PedidoStatusRequestDto;
+import br.com.fiap.techchallenge02.pedido.common.domain.dto.response.PagamentoResponseDto;
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.response.PedidoResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -9,10 +11,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-
-import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.WebhookNotificationRequestDto;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.net.URISyntaxException;
 import java.util.List;
@@ -35,7 +33,7 @@ public interface PedidoRestController {
                             content = @Content(schema = @Schema(ref = "Problema"))
                     )
             })
-    ResponseEntity<List<PedidoResponseDto>> buscarPedidos(@Parameter(name = "status", description = "Aberto, Aprovado, Em Andamento, Entregue, Finalizado, Cancelado") List<String> status);
+    ResponseEntity<List<PedidoResponseDto>> buscarPedidos(@Parameter(name = "status", required=false, description = "Aberto, Aprovado, Em Andamento, Entregue, Finalizado, Cancelado") List<String> status);
 
     /**
      * Criar pedido
@@ -52,5 +50,23 @@ public interface PedidoRestController {
             })
     ResponseEntity<PedidoResponseDto> criarPedido(PedidoRequestDto pedidoRequestDTO) throws URISyntaxException;
 
-    void webhook(@RequestBody WebhookNotificationRequestDto notification, @RequestHeader("X-MercadoPago-Signature") String signature);
+    /**
+     * Atualizar status do pedido
+     *
+     * @param pedidoStatusRequestDTO DTO para atualização do status do pedido
+     * @param id ID do pedido a ter seu status atualizado
+     * @return {@link PedidoResponseDto}
+     */
+    @Operation(summary = "Atualizar o status de um pedido")
+    ResponseEntity<PedidoResponseDto> atualizarStatusPedido(PedidoStatusRequestDto pedidoStatusRequestDTO, String id);
+
+//      TODO: MOVER PARA O MÓDULO PAGAMENTO
+//    /**
+//     * Verifica status do pagamento do pedido por ID do pedido
+//     *
+//     * @param idPedido ID do pedido
+//     * @return {@link PagamentoResponseDto}
+//     */
+//    @Operation(summary = "Status do pagamento do pedido por ID do pedido")
+//    ResponseEntity<PagamentoResponseDto> verificarPagamentoPedido(String idPedido);
 }
