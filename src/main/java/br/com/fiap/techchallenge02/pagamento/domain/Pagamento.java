@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge02.pedido.domain;
+package br.com.fiap.techchallenge02.pagamento.domain;
 
 import lombok.Data;
 
@@ -11,5 +11,6 @@ public class Pagamento {
     private String id;
     private String codigoPedido;
     private BigDecimal preco;
+    private String status;
     private OffsetDateTime dataCriacao;
 }

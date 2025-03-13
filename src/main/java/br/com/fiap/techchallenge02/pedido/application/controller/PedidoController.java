@@ -2,9 +2,7 @@ package br.com.fiap.techchallenge02.pedido.application.controller;
 
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.PedidoRequestDto;
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.PedidoStatusRequestDto;
-import br.com.fiap.techchallenge02.pedido.common.domain.dto.response.PagamentoResponseDto;
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.response.PedidoResponseDto;
-import jakarta.validation.Valid;
 
 import java.util.List;
 

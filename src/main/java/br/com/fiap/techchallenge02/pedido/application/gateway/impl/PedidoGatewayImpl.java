@@ -28,8 +28,14 @@ public class PedidoGatewayImpl implements PedidoGateway {
     }
 
     @Override
-    public Pedido salvarPedido(Pedido pedido) {
+    public Pedido criarPedido(Pedido pedido) {
         final var jpaPedidoEntity = mapper.pedidoParaJpaPedidoEntity(pedido);
         return mapper.jpaPedidoEntityParaPedido(pedidoDatabase.criarPedido(jpaPedidoEntity));
+    }
+
+    @Override
+    public Pedido salvarPedido(Pedido pedido) {
+        final var jpaPedidoEntity = mapper.pedidoParaJpaPedidoEntity(pedido);
+        return mapper.jpaPedidoEntityParaPedido(pedidoDatabase.salvarPedido(jpaPedidoEntity));
     }
 }
