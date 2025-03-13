@@ -45,7 +45,7 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
         montarPedido(pedido);
         Pedido pedidoCriado = pedidoOutputPort.criarPedido(pedido);
 
-        enviarPagamento(pedidoCriado);
+        salvarPagamentoUseCase.salvarPagamentoDoPedido(pedidoCriado);
 
         return pedidoCriado;
     }
@@ -83,14 +83,6 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
         pedido.setCodigo(gerarCodigo());
         pedido.setStatus(StatusPedidoEnum.ABERTO.toString());
         pedido.setPreco(precoTotal);
-    }
-
-    private void enviarPagamento(Pedido pedidoCriado) {
-        Pagamento pagamento = new Pagamento();
-        pagamento.setPreco(pedidoCriado.getPreco());
-        pagamento.setCodigoPedido(pedidoCriado.getId());
-        pagamento.setStatus("Pendente");
-        salvarPagamentoUseCase.salvarPagamento(pagamento);
     }
 
     private String gerarCodigo() {
