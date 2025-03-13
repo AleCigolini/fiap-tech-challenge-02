@@ -7,7 +7,6 @@ import br.com.fiap.techchallenge02.pedido.application.usecase.ConsultarPedidoUse
 import br.com.fiap.techchallenge02.pedido.application.usecase.SalvarPedidoUseCase;
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.PedidoRequestDto;
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.PedidoStatusRequestDto;
-import br.com.fiap.techchallenge02.pedido.common.domain.dto.response.PagamentoResponseDto;
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.response.PedidoResponseDto;
 import br.com.fiap.techchallenge02.pedido.domain.StatusPedidoEnum;
 import lombok.AllArgsConstructor;

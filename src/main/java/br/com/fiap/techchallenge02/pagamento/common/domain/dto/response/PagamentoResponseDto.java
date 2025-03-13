@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge02.pedido.common.domain.dto.response;
+package br.com.fiap.techchallenge02.pagamento.common.domain.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -17,6 +17,9 @@ public class PagamentoResponseDto {
 
     @Schema(description = "Valor do pagamento")
     private BigDecimal preco;
+
+    @Schema(description = "Status do pagamento")
+    private String status;
 
     @Schema(description = "Data de criação do pagamento", example = "2023-01-01T10:00:00Z")
     private OffsetDateTime dataCriacao;

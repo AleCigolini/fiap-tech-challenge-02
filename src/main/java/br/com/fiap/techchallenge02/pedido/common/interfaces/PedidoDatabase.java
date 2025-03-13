@@ -12,5 +12,7 @@ public interface PedidoDatabase {
 
     JpaPedidoEntity criarPedido(JpaPedidoEntity jpaPedidoEntity);
 
+    JpaPedidoEntity salvarPedido(JpaPedidoEntity jpaPedidoEntity);
+
     Optional<JpaPedidoEntity> buscarPedidoPorId(String id);
 }

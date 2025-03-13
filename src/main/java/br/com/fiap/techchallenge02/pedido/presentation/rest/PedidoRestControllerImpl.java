@@ -3,7 +3,6 @@ package br.com.fiap.techchallenge02.pedido.presentation.rest;
 import br.com.fiap.techchallenge02.pedido.application.controller.PedidoController;
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.PedidoRequestDto;
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.PedidoStatusRequestDto;
-import br.com.fiap.techchallenge02.pedido.common.domain.dto.response.PagamentoResponseDto;
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.response.PedidoResponseDto;
 import br.com.fiap.techchallenge02.pedido.presentation.rest.interfaces.PedidoRestController;
 import jakarta.validation.Valid;
@@ -45,13 +44,4 @@ public class PedidoRestControllerImpl implements PedidoRestController {
 
         return ResponseEntity.ok(pedidoResponseDTO);
     }
-
-//      TODO: MOVER PARA O MÓDULO PAGAMENTO
-//    @Override
-//    @GetMapping("/{idPedido}/pagamento")
-//    public ResponseEntity<PagamentoResponseDto> verificarPagamentoPedido(@PathVariable String idPedido) {
-//        PagamentoResponseDto pagamentoResponseDTO = pedidoController.verificarPagamentoPedido(idPedido);
-//
-//        return ResponseEntity.ok(pagamentoResponseDTO);
-//    }
 }

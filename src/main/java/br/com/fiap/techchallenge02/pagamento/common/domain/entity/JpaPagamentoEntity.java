@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge02.pedido.common.domain.entity;
+package br.com.fiap.techchallenge02.pagamento.common.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,6 +26,9 @@ public class JpaPagamentoEntity {
 
     @Column(name = "cdPedido")
     private String codigoPedido;
+
+    @Column(name = "status")
+    private String status;
 
     @Column(name = "data_criacao", nullable = false, updatable = false)
     @CreationTimestamp

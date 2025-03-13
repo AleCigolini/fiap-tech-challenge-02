@@ -1,5 +1,7 @@
 package br.com.fiap.techchallenge02.pedido.application.usecase.impl;
 
+import br.com.fiap.techchallenge02.pagamento.application.usecase.SalvarPagamentoUseCase;
+import br.com.fiap.techchallenge02.pagamento.domain.Pagamento;
 import br.com.fiap.techchallenge02.pedido.application.gateway.PedidoGateway;
 import br.com.fiap.techchallenge02.pedido.application.usecase.SalvarPedidoUseCase;
 import br.com.fiap.techchallenge02.pedido.common.domain.exception.PedidoNaoEncontradoException;
@@ -10,6 +12,7 @@ import br.com.fiap.techchallenge02.produto.application.usecase.ProdutoUseCase;
 import br.com.fiap.techchallenge02.produto.domain.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -22,28 +25,33 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
 
     private final PedidoGateway pedidoOutputPort;
     private final ProdutoUseCase produtoUseCase;
+    private final SalvarPagamentoUseCase salvarPagamentoUseCase;
 
     @Autowired
     public SalvarPedidoUseCaseImpl(PedidoGateway pedidoOutputPort,
-                                   ProdutoUseCase produtoUseCase) {
+                                   ProdutoUseCase produtoUseCase,
+                                   SalvarPagamentoUseCase salvarPagamentoUseCase) {
         this.pedidoOutputPort = pedidoOutputPort;
         this.produtoUseCase = produtoUseCase;
+        this.salvarPagamentoUseCase = salvarPagamentoUseCase;
     }
 
     @Override
+    @Transactional
     public Pedido criarPedido(Pedido pedido) {
 
         //TODO: COLOCAR O CLIENTE
 
         montarPedido(pedido);
-        Pedido pedidoCriado = pedidoOutputPort.salvarPedido(pedido);
+        Pedido pedidoCriado = pedidoOutputPort.criarPedido(pedido);
 
-        //TODO: COLCOCAR PAGAMENTO
+        enviarPagamento(pedidoCriado);
 
         return pedidoCriado;
     }
 
     @Override
+    @Transactional
     public Pedido atualizarStatusPedido(StatusPedidoEnum statusPedidoEnum, String id) {
         Pedido pedidoEncontrado = pedidoOutputPort.buscarPedidoPorId(id);
 
@@ -75,6 +83,14 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
         pedido.setCodigo(gerarCodigo());
         pedido.setStatus(StatusPedidoEnum.ABERTO.toString());
         pedido.setPreco(precoTotal);
+    }
+
+    private void enviarPagamento(Pedido pedidoCriado) {
+        Pagamento pagamento = new Pagamento();
+        pagamento.setPreco(pedidoCriado.getPreco());
+        pagamento.setCodigoPedido(pedidoCriado.getId());
+        pagamento.setStatus("Pendente");
+        salvarPagamentoUseCase.salvarPagamento(pagamento);
     }
 
     private String gerarCodigo() {

@@ -11,5 +11,7 @@ public interface PedidoGateway {
 
     Pedido buscarPedidoPorId(String id);
 
+    Pedido criarPedido(Pedido pedido);
+
     Pedido salvarPedido(Pedido pedido);
 }

@@ -2,7 +2,6 @@ package br.com.fiap.techchallenge02.pedido.presentation.rest.interfaces;
 
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.PedidoRequestDto;
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.request.PedidoStatusRequestDto;
-import br.com.fiap.techchallenge02.pedido.common.domain.dto.response.PagamentoResponseDto;
 import br.com.fiap.techchallenge02.pedido.common.domain.dto.response.PedidoResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -29,7 +28,7 @@ public interface PedidoRestController {
                     @ApiResponse(responseCode = "400", description = "Erros de validação",
                             content = @Content(schema = @Schema(ref = "Problema"))
                     ),
-                    @ApiResponse(responseCode = "404", description = "Cliente não encntrado",
+                    @ApiResponse(responseCode = "404", description = "Pedido não encntrado",
                             content = @Content(schema = @Schema(ref = "Problema"))
                     )
             })
@@ -59,14 +58,4 @@ public interface PedidoRestController {
      */
     @Operation(summary = "Atualizar o status de um pedido")
     ResponseEntity<PedidoResponseDto> atualizarStatusPedido(PedidoStatusRequestDto pedidoStatusRequestDTO, String id);
-
-//      TODO: MOVER PARA O MÓDULO PAGAMENTO
-//    /**
-//     * Verifica status do pagamento do pedido por ID do pedido
-//     *
-//     * @param idPedido ID do pedido
-//     * @return {@link PagamentoResponseDto}
-//     */
-//    @Operation(summary = "Status do pagamento do pedido por ID do pedido")
-//    ResponseEntity<PagamentoResponseDto> verificarPagamentoPedido(String idPedido);
 }
