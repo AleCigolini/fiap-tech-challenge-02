@@ -13,9 +13,9 @@ public interface JpaPedidoRepository extends JpaRepository<JpaPedidoEntity, UUID
     @Query(value = "SELECT e FROM JpaPedidoEntity e " +
             "WHERE e.status IN :status " +
             "ORDER BY CASE e.status " +
-            "WHEN 'APROVADO' THEN 1 " +
-            "WHEN 'EM_ANDAMENTO' THEN 2 " +
-            "WHEN 'ENTREGUE' THEN 3 " +
+            "WHEN 'PRONTO' THEN 1 " +
+            "WHEN 'EM_PREPARACAO' THEN 2 " +
+            "WHEN 'RECEBIDO' THEN 3 " +
             "ELSE 4 END ASC, e.dataCriacao ASC")
     List<JpaPedidoEntity> findAllByStatusIn(@Param("status") List<String> status);
 }

@@ -110,11 +110,11 @@ VALUES
 INSERT INTO pedido
 (id, codigo, status, id_cliente, preco, observacao, data_criacao)
 VALUES
-    ('e389406d-5531-4acf-a354-be5cc46a8cb1', 'XK8JL', 'APROVADO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 100.00, 'Trazer bem embalado', NOW()),
-    ('e389406d-5531-4acf-a354-be5cc46a8cb4', 'XK8JF', 'APROVADO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 100.00, 'Trazer bem embalado', NOW() + INTERVAL '3 minutes'),
-    ('e389406d-5531-4acf-a354-be5cc46a8cb2', 'I7LXA', 'EM_ANDAMENTO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 110.00, 'Estarei na frente da casa', NOW()),
-    ('e389406d-5531-4acf-a354-be5cc46a8cb5', 'I7LXB', 'EM_ANDAMENTO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 110.00, null, NOW() - INTERVAL '1 minutes'),
-    ('e389406d-5531-4acf-a354-be5cc46a8cb3', 'M0I2W', 'ENTREGUE', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 120.00, null, NOW());
+    ('e389406d-5531-4acf-a354-be5cc46a8cb1', 'XK8JL', 'RECEBIDO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 100.00, 'Trazer bem embalado', NOW()),
+    ('e389406d-5531-4acf-a354-be5cc46a8cb4', 'XK8JF', 'RECEBIDO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 100.00, 'Trazer bem embalado', NOW() + INTERVAL '3 minutes'),
+    ('e389406d-5531-4acf-a354-be5cc46a8cb2', 'I7LXA', 'EM_PREPARACAO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 110.00, 'Estarei na frente da casa', NOW()),
+    ('e389406d-5531-4acf-a354-be5cc46a8cb5', 'I7LXB', 'EM_PREPARACAO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 110.00, null, NOW() - INTERVAL '1 minutes'),
+    ('e389406d-5531-4acf-a354-be5cc46a8cb3', 'M0I2W', 'FINALIZADO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 120.00, null, NOW());
 
 -- Inserção de produtos no pedido na tabela produto_pedido
 INSERT INTO produto_pedido

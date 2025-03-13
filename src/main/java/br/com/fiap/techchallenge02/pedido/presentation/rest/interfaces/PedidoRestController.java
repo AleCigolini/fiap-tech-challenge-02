@@ -32,7 +32,7 @@ public interface PedidoRestController {
                             content = @Content(schema = @Schema(ref = "Problema"))
                     )
             })
-    ResponseEntity<List<PedidoResponseDto>> buscarPedidos(@Parameter(name = "status", required=false, description = "Aberto, Aprovado, Em Andamento, Entregue, Finalizado, Cancelado") List<String> status);
+    ResponseEntity<List<PedidoResponseDto>> buscarPedidos(@Parameter(name = "status", required=false, description = "ABERTO, RECEBIDO, EM_PREPARACAO, PRONTO, FINALIZADO, CANCELADO") List<String> status);
 
     /**
      * Criar pedido
