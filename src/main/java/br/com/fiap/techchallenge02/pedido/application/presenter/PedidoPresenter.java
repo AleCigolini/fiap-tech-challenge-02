@@ -12,7 +12,9 @@ public interface PedidoPresenter {
 
     List<StatusPedidoEnum> statusPedidoTextParaStatusPedidoEnums(List<String> status);
 
-    StatusPedidoEnum statusPedidoTextParaStatusPedidoEnum(String status);
+    List<StatusPedidoEnum> statusPedidoParaStatusPedidoEnums(List<String> status);
+
+    StatusPedidoEnum statusPedidoParaStatusPedidoEnum(String status);
 
     PedidoResponseDto pedidoParaPedidoResponseDTO(Pedido pedido);
 

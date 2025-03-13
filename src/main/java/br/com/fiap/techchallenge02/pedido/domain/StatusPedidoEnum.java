@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum StatusPedidoEnum {
 
     ABERTO("Aberto"),
-    APROVADO("Aprovado"),
-    EM_ANDAMENTO("Em Andamento"),
-    ENTREGUE("Entregue"),
+    RECEBIDO("Recebido"),
+    EM_PREPARACAO("Em preparação"),
+    PRONTO("Pronto"),
     FINALIZADO("Finalizado"),
     CANCELADO("Cancelado");
 
@@ -28,7 +28,15 @@ public enum StatusPedidoEnum {
                 return valoresStatusPedidoEnum;
             }
         }
+        return null;
+    }
 
-        return StatusPedidoEnum.ABERTO;
+    public static StatusPedidoEnum fromStatus(String status) {
+        for (StatusPedidoEnum valoresStatusPedidoEnum : StatusPedidoEnum.values()) {
+            if (valoresStatusPedidoEnum.toString().equals(status)) {
+                return valoresStatusPedidoEnum;
+            }
+        }
+        return null;
     }
 }

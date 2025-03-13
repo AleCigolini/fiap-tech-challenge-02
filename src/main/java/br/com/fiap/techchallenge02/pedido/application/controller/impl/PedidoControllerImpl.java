@@ -28,7 +28,7 @@ public class PedidoControllerImpl implements PedidoController {
     public List<PedidoResponseDto> buscarPedidos(List<String> status) {
         List<StatusPedidoEnum> statusPedidoEnums =
                 status == null || status.isEmpty() ?
-                        null : pedidoPresenter.statusPedidoTextParaStatusPedidoEnums(status);
+                        null : pedidoPresenter.statusPedidoParaStatusPedidoEnums(status);
 
         return pedidoPresenter.pedidosParaPedidoResponseDTOs(
                 consultarPedidoUseCase.buscarPedidos(statusPedidoEnums));
@@ -45,6 +45,6 @@ public class PedidoControllerImpl implements PedidoController {
     public PedidoResponseDto atualizarStatusPedido(PedidoStatusRequestDto pedidoStatusRequestDTO, String id) {
         return pedidoPresenter.pedidoParaPedidoResponseDTO(
                 salvarPedidoUseCase.atualizarStatusPedido(
-                        pedidoPresenter.statusPedidoTextParaStatusPedidoEnum(pedidoStatusRequestDTO.getStatus()), id));
+                        pedidoPresenter.statusPedidoParaStatusPedidoEnum(pedidoStatusRequestDTO.getStatus()), id));
     }
 }
