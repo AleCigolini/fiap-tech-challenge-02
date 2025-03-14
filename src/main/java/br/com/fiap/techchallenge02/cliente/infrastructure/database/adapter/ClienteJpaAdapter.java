@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Repository
 @AllArgsConstructor
-public class ClienteJdbcAdapter implements ClienteDatabase {
+public class ClienteJpaAdapter implements ClienteDatabase {
     private JpaClienteRepository jpaClienteRepository;
 
     @Override
