@@ -16,18 +16,18 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class ConsultarClienteUseCaseImpl implements ConsultarClienteUseCase {
-    private ClienteGateway clienteOutputPort;
+    private ClienteGateway clienteGateway;
 
     @Override
     public Cliente buscarClientePorCpf(Cpf cpf) {
-        List<Cliente> usuariosEncontradosPorCpf = clienteOutputPort.buscarClientePorCpf(cpf);
+        List<Cliente> usuariosEncontradosPorCpf = clienteGateway.buscarClientePorCpf(cpf);
         validarListaClienteUnicoEncontrado(usuariosEncontradosPorCpf, "cpf", cpf.getValue());
         return usuariosEncontradosPorCpf.getFirst();
     }
 
     @Override
     public Cliente buscarClientePorId(UUID id) {
-        Cliente cliente = clienteOutputPort.buscarClientePorId(id)
+        Cliente cliente = clienteGateway.buscarClientePorId(id)
                 .orElse(null);
         if (cliente == null) {
             this.throwClienteNaoEncontradoException("id", id.toString());
@@ -37,7 +37,7 @@ public class ConsultarClienteUseCaseImpl implements ConsultarClienteUseCase {
 
     @Override
     public Cliente buscarClientePorEmail(Email email) {
-        List<Cliente> usuariosEncontradosPorEmail = clienteOutputPort.buscarClientePorEmail(email);
+        List<Cliente> usuariosEncontradosPorEmail = clienteGateway.buscarClientePorEmail(email);
         validarListaClienteUnicoEncontrado(usuariosEncontradosPorEmail, "email", email.getEndereco());
         return usuariosEncontradosPorEmail.getFirst();
     }
