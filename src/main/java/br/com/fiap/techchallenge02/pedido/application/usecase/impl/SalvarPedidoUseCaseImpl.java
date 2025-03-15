@@ -3,14 +3,13 @@ package br.com.fiap.techchallenge02.pedido.application.usecase.impl;
 import br.com.fiap.techchallenge02.cliente.application.usecase.ConsultarClienteUseCase;
 import br.com.fiap.techchallenge02.cliente.domain.Cliente;
 import br.com.fiap.techchallenge02.pagamento.application.usecase.SalvarPagamentoUseCase;
-import br.com.fiap.techchallenge02.pagamento.domain.Pagamento;
 import br.com.fiap.techchallenge02.pedido.application.gateway.PedidoGateway;
 import br.com.fiap.techchallenge02.pedido.application.usecase.SalvarPedidoUseCase;
 import br.com.fiap.techchallenge02.pedido.common.domain.exception.PedidoNaoEncontradoException;
 import br.com.fiap.techchallenge02.pedido.domain.Pedido;
 import br.com.fiap.techchallenge02.pedido.domain.ProdutoPedido;
 import br.com.fiap.techchallenge02.pedido.domain.StatusPedidoEnum;
-import br.com.fiap.techchallenge02.produto.application.usecase.ProdutoUseCase;
+import br.com.fiap.techchallenge02.produto.application.usecase.BuscarProdutoUseCase;
 import br.com.fiap.techchallenge02.produto.domain.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,17 +25,17 @@ import java.util.Random;
 public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
 
     private final PedidoGateway pedidoOutputPort;
-    private final ProdutoUseCase produtoUseCase;
     private final ConsultarClienteUseCase consultarClienteUseCase;
+    private final BuscarProdutoUseCase buscarProdutoUseCase;
     private final SalvarPagamentoUseCase salvarPagamentoUseCase;
 
     @Autowired
     public SalvarPedidoUseCaseImpl(PedidoGateway pedidoOutputPort,
-                                   ProdutoUseCase produtoUseCase,
+                                   BuscarProdutoUseCase buscarProdutoUseCase,
                                    ConsultarClienteUseCase consultarClienteUseCase,
                                    SalvarPagamentoUseCase salvarPagamentoUseCase) {
         this.pedidoOutputPort = pedidoOutputPort;
-        this.produtoUseCase = produtoUseCase;
+        this.buscarProdutoUseCase = buscarProdutoUseCase;
         this.consultarClienteUseCase = consultarClienteUseCase;
         this.salvarPagamentoUseCase = salvarPagamentoUseCase;
     }
@@ -76,7 +75,7 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
         var precoTotal = new BigDecimal(BigInteger.ZERO);
 
         for (ProdutoPedido produtoPedidoAux : pedido.getProdutos()) {
-            Produto produto = produtoUseCase.buscarProdutoPorId(produtoPedidoAux.getProduto().getId());
+            Produto produto = buscarProdutoUseCase.buscarProdutoPorId(produtoPedidoAux.getProduto().getId());
 
             precoTotal = precoTotal.add(produto.getPreco().multiply(BigDecimal.valueOf(produtoPedidoAux.getQuantidade())));
 
