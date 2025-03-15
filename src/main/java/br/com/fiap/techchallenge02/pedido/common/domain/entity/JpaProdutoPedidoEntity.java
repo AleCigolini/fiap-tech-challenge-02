@@ -1,7 +1,7 @@
 package br.com.fiap.techchallenge02.pedido.common.domain.entity;
 
 import br.com.fiap.techchallenge02.core.utils.entity.JpaBaseEntity;
-import br.com.fiap.techchallenge02.produto.external.entity.JpaProdutoEntity;
+import br.com.fiap.techchallenge02.produto.common.entity.JpaProdutoEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

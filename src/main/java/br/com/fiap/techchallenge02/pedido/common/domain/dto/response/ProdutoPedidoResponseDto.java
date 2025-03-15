@@ -1,6 +1,6 @@
 package br.com.fiap.techchallenge02.pedido.common.domain.dto.response;
 
-import br.com.fiap.techchallenge02.produto.domain.dto.response.ProdutoResponseDTO;
+import br.com.fiap.techchallenge02.produto.common.dto.response.ProdutoResponseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
