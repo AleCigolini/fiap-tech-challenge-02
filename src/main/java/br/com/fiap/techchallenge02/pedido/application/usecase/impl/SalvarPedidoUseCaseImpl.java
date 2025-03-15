@@ -1,5 +1,7 @@
 package br.com.fiap.techchallenge02.pedido.application.usecase.impl;
 
+import br.com.fiap.techchallenge02.cliente.application.usecase.ConsultarClienteUseCase;
+import br.com.fiap.techchallenge02.cliente.domain.Cliente;
 import br.com.fiap.techchallenge02.pagamento.application.usecase.SalvarPagamentoUseCase;
 import br.com.fiap.techchallenge02.pagamento.domain.Pagamento;
 import br.com.fiap.techchallenge02.pedido.application.gateway.PedidoGateway;
@@ -25,22 +27,23 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
 
     private final PedidoGateway pedidoOutputPort;
     private final ProdutoUseCase produtoUseCase;
+    private final ConsultarClienteUseCase consultarClienteUseCase;
     private final SalvarPagamentoUseCase salvarPagamentoUseCase;
 
     @Autowired
     public SalvarPedidoUseCaseImpl(PedidoGateway pedidoOutputPort,
                                    ProdutoUseCase produtoUseCase,
+                                   ConsultarClienteUseCase consultarClienteUseCase,
                                    SalvarPagamentoUseCase salvarPagamentoUseCase) {
         this.pedidoOutputPort = pedidoOutputPort;
         this.produtoUseCase = produtoUseCase;
+        this.consultarClienteUseCase = consultarClienteUseCase;
         this.salvarPagamentoUseCase = salvarPagamentoUseCase;
     }
 
     @Override
     @Transactional
     public Pedido criarPedido(Pedido pedido) {
-
-        //TODO: COLOCAR O CLIENTE
 
         montarPedido(pedido);
         Pedido pedidoCriado = pedidoOutputPort.criarPedido(pedido);
@@ -64,6 +67,10 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
     }
 
     public void montarPedido(Pedido pedido) {
+
+        Cliente cliente = consultarClienteUseCase.buscarClientePorCpf(pedido.getCliente().getCpf());
+        pedido.setCliente(cliente);
+
         List<ProdutoPedido> produtos = new ArrayList<>();
         ProdutoPedido produtoPedido;
         var precoTotal = new BigDecimal(BigInteger.ZERO);

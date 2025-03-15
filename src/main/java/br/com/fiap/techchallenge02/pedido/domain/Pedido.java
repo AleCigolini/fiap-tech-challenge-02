@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge02.pedido.domain;
 
+import br.com.fiap.techchallenge02.cliente.domain.Cliente;
 import br.com.fiap.techchallenge02.core.utils.domain.DominioBase;
 import lombok.Data;
 
@@ -15,6 +16,6 @@ public class Pedido extends DominioBase {
     private BigDecimal preco;
     private String codigoPagamento;
     private String observacao;
-//    private Cliente cliente;
+    private Cliente cliente;
     private List<ProdutoPedido> produtos;
 }
