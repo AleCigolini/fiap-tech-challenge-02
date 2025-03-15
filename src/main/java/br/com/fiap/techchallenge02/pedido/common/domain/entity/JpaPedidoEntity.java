@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge02.pedido.common.domain.entity;
 
+import br.com.fiap.techchallenge02.cliente.common.domain.entity.JpaClienteEntity;
 import br.com.fiap.techchallenge02.core.utils.entity.JpaBaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -39,9 +40,9 @@ public class JpaPedidoEntity extends JpaBaseEntity {
     @Column(name = "cd_pagamento")
     private String codigoPagamento;
 
-//    @ManyToOne
-//    @JoinColumn(name="id_cliente", nullable=false)
-//    private JpaClienteEntity cliente;
+    @ManyToOne
+    @JoinColumn(name="id_cliente", nullable=false)
+    private JpaClienteEntity cliente;
 
     @OneToMany(mappedBy="pedido")
     private List<JpaProdutoPedidoEntity> produtos = new ArrayList<>();

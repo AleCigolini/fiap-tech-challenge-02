@@ -1,7 +1,3 @@
--- TODO: APENAS PARA TESTE, REMOVER LINHA ABAIXO QUANTO TIVER MÓDULO DE CLIENTE
-ALTER TABLE pedido ALTER COLUMN id_cliente DROP NOT NULL;
-
-
 -- Alteração na tabela pagamento para adicionar o campo status
 ALTER TABLE pagamento
     ADD status TEXT NULL;
@@ -13,4 +9,3 @@ VALUES
     ('e389406d-5531-4acf-a354-be5cc46a8ce1','e389406d-5531-4acf-a354-be5cc46a8cb2', 110, 'SUCESSO'),
     ('e389406d-5531-4acf-a354-be5cc46a8ce2','e389406d-5531-4acf-a354-be5cc46a8cb5', 110, 'FALHA'),
     ('e389406d-5531-4acf-a354-be5cc46a8ce3','e389406d-5531-4acf-a354-be5cc46a8cb5', 110, 'SUCESSO');
-

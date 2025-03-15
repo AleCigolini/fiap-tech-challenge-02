@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge02.pedido.common.domain.dto.response;
 
+import br.com.fiap.techchallenge02.cliente.common.domain.dto.response.ClienteResponseDto;
 import br.com.fiap.techchallenge02.pedido.domain.StatusPedidoEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -17,8 +18,8 @@ public class PedidoResponseDto {
     @Schema(description = "Código do pedido")
     private String codigo;
 
-//    @Schema(description = "Cliente do pedido")
-//    private ClienteResponseDto cliente;
+    @Schema(description = "Cliente do pedido")
+    private ClienteResponseDto cliente;
 
     @Schema(description = "Status do pedido")
     private StatusPedidoEnum status;
