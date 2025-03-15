@@ -8,8 +8,14 @@ import br.com.fiap.techchallenge02.produto.application.mapper.ProdutoMapper;
 import br.com.fiap.techchallenge02.produto.application.mapper.impl.ProdutoMapperImpl;
 import br.com.fiap.techchallenge02.produto.application.presenter.ProdutoPresenter;
 import br.com.fiap.techchallenge02.produto.application.presenter.impl.ProdutoModelMapperPresenterImpl;
-import br.com.fiap.techchallenge02.produto.application.usecase.ProdutoUseCase;
-import br.com.fiap.techchallenge02.produto.application.usecase.impl.ProdutoUseCaseImpl;
+import br.com.fiap.techchallenge02.produto.application.usecase.AtualizarProdutoUseCase;
+import br.com.fiap.techchallenge02.produto.application.usecase.BuscarProdutoUseCase;
+import br.com.fiap.techchallenge02.produto.application.usecase.ExcluirProdutoUseCase;
+import br.com.fiap.techchallenge02.produto.application.usecase.SalvarProdutoUseCase;
+import br.com.fiap.techchallenge02.produto.application.usecase.impl.AtualizarProdutoUseCaseImpl;
+import br.com.fiap.techchallenge02.produto.application.usecase.impl.BuscarProdutoUseCaseImpl;
+import br.com.fiap.techchallenge02.produto.application.usecase.impl.ExcluirProdutoUseCaseImpl;
+import br.com.fiap.techchallenge02.produto.application.usecase.impl.SalvarProdutoUseCaseImpl;
 import br.com.fiap.techchallenge02.produto.common.dto.request.ProdutoRequestDTO;
 import br.com.fiap.techchallenge02.produto.common.dto.response.ProdutoResponseDTO;
 import br.com.fiap.techchallenge02.produto.domain.CategoriaProduto;
@@ -23,7 +29,10 @@ import java.util.List;
 @Component
 public class ProdutoControllerImpl implements ProdutoController {
 
-    private final ProdutoUseCase produtoUseCase;
+    private final BuscarProdutoUseCase buscarProdutoUseCase;
+    private final SalvarProdutoUseCase salvarProdutoUseCase;
+    private final AtualizarProdutoUseCase atualizarProdutoUseCase;
+    private final ExcluirProdutoUseCase excluirProdutoUseCase;
     private final ProdutoPresenter produtoPresenter;
     private final ProdutoMapper produtoMapper;
     private final CategoriaProdutoController categoriaProdutoController;
@@ -32,18 +41,21 @@ public class ProdutoControllerImpl implements ProdutoController {
         this.produtoPresenter = new ProdutoModelMapperPresenterImpl(modelMapper);
         this.produtoMapper = new ProdutoMapperImpl(modelMapper);
         final ProdutoGateway produtoGateway = new ProdutoGatewayImpl(produtoDatabase, produtoMapper);
-        this.produtoUseCase = new ProdutoUseCaseImpl(produtoGateway);
+        this.buscarProdutoUseCase = new BuscarProdutoUseCaseImpl(produtoGateway);
+        this.salvarProdutoUseCase = new SalvarProdutoUseCaseImpl(produtoGateway);
+        this.atualizarProdutoUseCase = new AtualizarProdutoUseCaseImpl(produtoGateway);
+        this.excluirProdutoUseCase = new ExcluirProdutoUseCaseImpl(produtoGateway);
         this.categoriaProdutoController = categoriaProdutoController;
     }
 
     public List<ProdutoResponseDTO> buscarProdutos() {
-        List<Produto> produtos = produtoUseCase.buscarProdutos();
+        List<Produto> produtos = buscarProdutoUseCase.buscarProdutos();
 
         return produtoPresenter.produtosParaProdutosResponseDTO(produtos);
     }
 
     public List<ProdutoResponseDTO> buscarProdutosPorCategoria(String idCategoriaProduto) {
-        List<Produto> produtos = produtoUseCase.buscarProdutosPorCategoria(idCategoriaProduto);
+        List<Produto> produtos = buscarProdutoUseCase.buscarProdutosPorCategoria(idCategoriaProduto);
 
         List<ProdutoResponseDTO> produtosResponseDTOs = produtoPresenter.produtosParaProdutosResponseDTO(produtos);
 
@@ -56,7 +68,7 @@ public class ProdutoControllerImpl implements ProdutoController {
     }
 
     public ProdutoResponseDTO buscarProdutoPorId(String id) {
-        Produto produto = produtoUseCase.buscarProdutoPorId(id);
+        Produto produto = buscarProdutoUseCase.buscarProdutoPorId(id);
 
         return produtoPresenter.produtoParaProdutoResponseDTO(produto);
     }
@@ -64,7 +76,7 @@ public class ProdutoControllerImpl implements ProdutoController {
     public ProdutoResponseDTO criarProduto(ProdutoRequestDTO produtoRequestDTO) {
         Produto produto = produtoMapper.produtoRequestDtoParaProduto(produtoRequestDTO);
 
-        Produto produtoCriado = produtoUseCase.criarProduto(produto);
+        Produto produtoCriado = salvarProdutoUseCase.criarProduto(produto);
         CategoriaProduto categoriaProduto = categoriaProdutoController.buscarCategoriaProdutoPorId(produtoRequestDTO.getIdCategoria());
 
         ProdutoResponseDTO produtoResponseDTO = produtoPresenter.produtoParaProdutoResponseDTO(produtoCriado);
@@ -74,12 +86,12 @@ public class ProdutoControllerImpl implements ProdutoController {
     }
 
     public ProdutoResponseDTO atualizarProduto(ProdutoRequestDTO produtoRequestDTO, String id) {
-        produtoUseCase.buscarProdutoPorId(id);
+        buscarProdutoUseCase.buscarProdutoPorId(id);
 
         Produto produto = produtoMapper.produtoRequestDtoParaProduto(produtoRequestDTO);
         produto.setId(id);
 
-        Produto produtoAtualizado = produtoUseCase.atualizarProduto(produto);
+        Produto produtoAtualizado = atualizarProdutoUseCase.atualizarProduto(produto);
         CategoriaProduto categoriaProduto = categoriaProdutoController.buscarCategoriaProdutoPorId(produtoRequestDTO.getIdCategoria());
 
         ProdutoResponseDTO produtoResponseDTO = produtoPresenter.produtoParaProdutoResponseDTO(produtoAtualizado);
@@ -89,6 +101,6 @@ public class ProdutoControllerImpl implements ProdutoController {
     }
 
     public void excluirProduto(String idProduto) {
-        produtoUseCase.excluirProduto(idProduto);
+        excluirProdutoUseCase.excluirProduto(idProduto);
     }
 }
