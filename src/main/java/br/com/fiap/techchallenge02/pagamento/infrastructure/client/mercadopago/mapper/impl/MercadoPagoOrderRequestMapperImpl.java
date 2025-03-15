@@ -1,0 +1,49 @@
+package br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.mapper.impl;
+
+import br.com.fiap.techchallenge02.pedido.domain.Pedido;
+import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.request.MercadoPagoOrderItemRequest;
+import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.request.MercadoPagoOrderRequest;
+import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.mapper.MercadoPagoOrderRequestMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
+public class MercadoPagoOrderRequestMapperImpl implements MercadoPagoOrderRequestMapper {
+
+    @Value("${client.mercado-pago.notification_url}")
+    private String notificationUrl;
+
+    @Override
+    public MercadoPagoOrderRequest pedidoParaMercadoPagoOrderItemRequest(Pedido pedido) {
+
+        List<MercadoPagoOrderItemRequest> mercadoPagoOrderItemRequests = new ArrayList<>();
+
+        pedido.getProdutos().forEach(produto -> {
+            BigDecimal totalPrecoItem = produto.getProduto().getPreco().multiply(BigDecimal.valueOf(produto.getQuantidade()));
+            MercadoPagoOrderItemRequest mercadoPagoOrderItemRequest = MercadoPagoOrderItemRequest.builder()
+                    .skuNumber(produto.getProduto().getId())
+                    .category(produto.getProduto().getCategoria().getNome())
+                    .title(produto.getProduto().getNome())
+                    .description(produto.getProduto().getDescricao())
+                    .quantity(produto.getQuantidade())
+                    .unitPrice(produto.getProduto().getPreco())
+                    .unitMeasure("unit")
+                    .totalAmount(totalPrecoItem)
+                    .build();
+            mercadoPagoOrderItemRequests.add(mercadoPagoOrderItemRequest);
+        });
+
+        return MercadoPagoOrderRequest.builder()
+                .externalReference(pedido.getId())
+                .title(pedido.getCodigo())
+                .description(pedido.getObservacao())
+                .notificationUrl(notificationUrl)
+                .totalAmount(pedido.getPreco())
+                .items(mercadoPagoOrderItemRequests)
+                .build();
+    }
+}

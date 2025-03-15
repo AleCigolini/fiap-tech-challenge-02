@@ -9,5 +9,5 @@ public class ValidacaoEntidadeException extends NegocioException {
     public ValidacaoEntidadeException(String mensagem) {
         super(mensagem);
     }
-
 }
+
