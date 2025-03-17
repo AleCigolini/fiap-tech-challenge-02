@@ -10,5 +10,4 @@ client:
     pos_id: 123456
     external_store_id: "X"
     external_pos_id: "X"
-    auth_signature: "a#4Dg%"
     auth_header: "Bearer TEST-X"

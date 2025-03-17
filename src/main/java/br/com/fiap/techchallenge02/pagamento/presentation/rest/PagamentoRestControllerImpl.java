@@ -2,7 +2,6 @@ package br.com.fiap.techchallenge02.pagamento.presentation.rest;
 
 import br.com.fiap.techchallenge02.pagamento.common.domain.dto.request.WebhookNotificationRequestDto;
 import br.com.fiap.techchallenge02.pagamento.common.domain.dto.response.PagamentoResponseDto;
-import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.auth.MercadoPagoSignatureValidator;
 import br.com.fiap.techchallenge02.pagamento.presentation.rest.interfaces.PagamentoRestController;
 import br.com.fiap.techchallenge02.pagamento.application.controller.PagamentoController;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +20,6 @@ public class PagamentoRestControllerImpl implements PagamentoRestController {
 
     private final PagamentoController pagamentoController;
 
-    private final MercadoPagoSignatureValidator signatureValidator;
-
     @Override
     @GetMapping("/pedidos/{pedidoId}")
     public ResponseEntity<List<PagamentoResponseDto>> buscarPagamentosPorPedidoId(@PathVariable String pedidoId) {
@@ -40,10 +37,7 @@ public class PagamentoRestControllerImpl implements PagamentoRestController {
     @Override
     @PostMapping("/webhook")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void webhook(@RequestBody WebhookNotificationRequestDto notificacao,
-                        @RequestHeader("X-MercadoPago-Signature") String assinatura) {
-//        if (signatureValidator.isValid(assinatura)) {
-            pagamentoController.processarNotificacao(notificacao);
-//        }
+    public void webhook(@RequestBody WebhookNotificationRequestDto notificacao) {
+        pagamentoController.processarNotificacao(notificacao);
     }
 }
