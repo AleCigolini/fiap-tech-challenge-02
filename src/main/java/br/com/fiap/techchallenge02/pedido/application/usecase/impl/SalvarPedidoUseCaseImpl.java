@@ -13,6 +13,7 @@ import br.com.fiap.techchallenge02.pedido.domain.StatusPedidoEnum;
 import br.com.fiap.techchallenge02.produto.application.usecase.ProdutoUseCase;
 import br.com.fiap.techchallenge02.produto.domain.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +35,7 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
     public SalvarPedidoUseCaseImpl(PedidoGateway pedidoOutputPort,
                                    ProdutoUseCase produtoUseCase,
                                    ConsultarClienteUseCase consultarClienteUseCase,
-                                   SalvarPagamentoUseCase salvarPagamentoUseCase) {
+                                   @Lazy SalvarPagamentoUseCase salvarPagamentoUseCase) {
         this.pedidoOutputPort = pedidoOutputPort;
         this.produtoUseCase = produtoUseCase;
         this.consultarClienteUseCase = consultarClienteUseCase;
@@ -55,15 +56,25 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
 
     @Override
     @Transactional
-    public Pedido atualizarStatusPedido(StatusPedidoEnum statusPedidoEnum, String id) {
-        Pedido pedidoEncontrado = pedidoOutputPort.buscarPedidoPorId(id);
+    public Pedido atualizarPedido(Pedido pedido) {
+        Pedido pedidoEncontrado = pedidoOutputPort.buscarPedidoPorId(pedido.getId());
 
         if (pedidoEncontrado == null) {
-            throw new PedidoNaoEncontradoException(id);
+            throw new PedidoNaoEncontradoException(pedido.getId());
         }
 
-        pedidoEncontrado.setStatus(statusPedidoEnum.toString());
+        pedidoEncontrado.setStatus(pedido.getStatus());
+        pedidoEncontrado.setCodigoPagamento(pedido.getCodigoPagamento());
         return pedidoOutputPort.salvarPedido(pedidoEncontrado);
+    }
+
+    @Override
+    @Transactional
+    public Pedido atualizarStatusPedido(StatusPedidoEnum statusPedidoEnum, String id) {
+        Pedido pedido = new Pedido();
+        pedido.setId(id);
+        pedido.setStatus(statusPedidoEnum.toString());
+        return atualizarPedido(pedido);
     }
 
     public void montarPedido(Pedido pedido) {

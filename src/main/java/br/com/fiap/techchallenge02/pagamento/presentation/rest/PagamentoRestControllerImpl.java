@@ -2,6 +2,7 @@ package br.com.fiap.techchallenge02.pagamento.presentation.rest;
 
 import br.com.fiap.techchallenge02.pagamento.common.domain.dto.request.WebhookNotificationRequestDto;
 import br.com.fiap.techchallenge02.pagamento.common.domain.dto.response.PagamentoResponseDto;
+import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.auth.MercadoPagoSignatureValidator;
 import br.com.fiap.techchallenge02.pagamento.presentation.rest.interfaces.PagamentoRestController;
 import br.com.fiap.techchallenge02.pagamento.application.controller.PagamentoController;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,8 @@ import java.util.List;
 public class PagamentoRestControllerImpl implements PagamentoRestController {
 
     private final PagamentoController pagamentoController;
+
+    private final MercadoPagoSignatureValidator signatureValidator;
 
     @Override
     @GetMapping("/pedidos/{pedidoId}")
@@ -39,21 +42,8 @@ public class PagamentoRestControllerImpl implements PagamentoRestController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void webhook(@RequestBody WebhookNotificationRequestDto notificacao,
                         @RequestHeader("X-MercadoPago-Signature") String assinatura) {
-        // TODO: O Mercado Pago envia o "notification" com os detalhes da transação.
-        //  A string "notificacao" pode ser um JSON que você precisa parsear
-        //  para identificar o status do pagamento.
-        System.out.println("Recebido Webhook: " + notificacao);
-        if (isSignatureValid(notificacao, assinatura)) {
-            System.out.println("Pagamento " + notificacao.getAction() + " para ID: " + notificacao.getData().getId());
-
+//        if (signatureValidator.isValid(assinatura)) {
             pagamentoController.processarNotificacao(notificacao);
-        } else {
-            System.out.println("Assinatura inválida");
-        }
-    }
-
-    private boolean isSignatureValid(WebhookNotificationRequestDto notificacao, String assinatura) {
-        // TODO: Verificar assinatura com o segredo compartilhado
-        return true;
+//        }
     }
 }

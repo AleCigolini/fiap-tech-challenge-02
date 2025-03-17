@@ -8,4 +8,6 @@ import java.util.List;
 public interface ConsultarPedidoUseCase {
 
     List<Pedido> buscarPedidos(List<StatusPedidoEnum> status);
+
+    Pedido buscarPedidoPorId(String id);
 }

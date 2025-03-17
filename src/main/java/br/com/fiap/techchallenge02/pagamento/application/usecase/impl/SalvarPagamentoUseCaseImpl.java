@@ -6,14 +6,20 @@ import br.com.fiap.techchallenge02.pagamento.common.domain.dto.request.WebhookNo
 import br.com.fiap.techchallenge02.pagamento.domain.Pagamento;
 import br.com.fiap.techchallenge02.pagamento.domain.StatusPagamentoEnum;
 import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.MercadoPagoCodigoQRClient;
+import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.MercadoPagoMerchantOrdersClient;
 import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.MercadoPagoPosClient;
 import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.mapper.MercadoPagoOrderRequestMapper;
 import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.request.MercadoPagoOrderRequest;
+import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.response.MercadoPagoMerchantOrderResponse;
 import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.response.MercadoPagoPosResponse;
+import br.com.fiap.techchallenge02.pedido.application.usecase.ConsultarPedidoUseCase;
+import br.com.fiap.techchallenge02.pedido.application.usecase.SalvarPedidoUseCase;
 import br.com.fiap.techchallenge02.pedido.domain.Pedido;
+import br.com.fiap.techchallenge02.pedido.domain.StatusPedidoEnum;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -38,18 +45,27 @@ public class SalvarPagamentoUseCaseImpl implements SalvarPagamentoUseCase {
     private String authHeader;
 
     private final PagamentoGateway pagamentoOutputPort;
+    private final ConsultarPedidoUseCase consultarPedidoUseCase;
+    private final SalvarPedidoUseCase salvarPedidoUseCase;
     private final MercadoPagoCodigoQRClient mercadoPagoCodigoQRClient;
     private final MercadoPagoPosClient mercadoPagoPosClient;
+    private final MercadoPagoMerchantOrdersClient mercadoPagoMerchantOrdersClient;
     private final MercadoPagoOrderRequestMapper mercadoPagoOrderRequestMapper;
 
     @Autowired
     public SalvarPagamentoUseCaseImpl(PagamentoGateway pagamentoOutputPort,
+                                      ConsultarPedidoUseCase consultarPedidoUseCase,
+                                      @Lazy SalvarPedidoUseCase salvarPedidoUseCase,
                                       MercadoPagoCodigoQRClient mercadoPagoCodigoQRClient,
                                       MercadoPagoPosClient mercadoPagoPosClient,
+                                      MercadoPagoMerchantOrdersClient mercadoPagoMerchantOrdersClient,
                                       MercadoPagoOrderRequestMapper mercadoPagoOrderRequestMapper) {
         this.pagamentoOutputPort = pagamentoOutputPort;
+        this.consultarPedidoUseCase = consultarPedidoUseCase;
+        this.salvarPedidoUseCase = salvarPedidoUseCase;
         this.mercadoPagoCodigoQRClient = mercadoPagoCodigoQRClient;
         this.mercadoPagoPosClient = mercadoPagoPosClient;
+        this.mercadoPagoMerchantOrdersClient = mercadoPagoMerchantOrdersClient;
         this.mercadoPagoOrderRequestMapper = mercadoPagoOrderRequestMapper;
     }
 
@@ -75,13 +91,12 @@ public class SalvarPagamentoUseCaseImpl implements SalvarPagamentoUseCase {
         try {
             MercadoPagoOrderRequest mercadoPagoOrderRequest = mercadoPagoOrderRequestMapper.pedidoParaMercadoPagoOrderItemRequest(pedido);
 
-            Object response = mercadoPagoCodigoQRClient.pedidosPresenciaisV2(
+            mercadoPagoCodigoQRClient.pedidosPresenciaisV2(
                     userId,
                     externalStoreId,
                     externalPosId,
                     authHeader,
                     mercadoPagoOrderRequest);
-            // TODO: FAZER VALIDAÇÕES: NULLPOINTER, STATUS_CODE 200 E DIFERENTE DE 200
             return true;
         } catch (Exception ex) {
             System.out.printf(
@@ -93,10 +108,51 @@ public class SalvarPagamentoUseCaseImpl implements SalvarPagamentoUseCase {
 
     @Override
     public void processarNotificacao(WebhookNotificationRequestDto notificacao) {
-        // TODO: FAZER TENTATIVA DE PAGAMENTO E SALVAR COM STATUS PENDENTE
-        //  DEPOIS VIA WEBHOOK O STATUS DO PAGAMENTO E DO PEDIDO DEVEM SER ATUALIZADOS
-        //  STATUS_PAGAMENTO: O QUE RETORNAR DO MERCADO PAGO;
-        //  STATUS_PEDIDO: SE RETORNAR SUCESSO DO MERCADO PAGO ENTÃO ALTERAR O STATUS DO PEDIDO PARA StatusPedidoEnum.APROVADO("Aprovado")
+
+        try {
+            ResponseEntity<Object> response =
+                    mercadoPagoMerchantOrdersClient.obterPagamento(
+                            notificacao.getId(),
+                            authHeader);
+
+            if (response.getStatusCode().is2xxSuccessful()) {
+
+                var responseBody = (LinkedHashMap) response.getBody();
+
+                MercadoPagoMerchantOrderResponse orderResponse = new MercadoPagoMerchantOrderResponse();
+
+                for (Object key : responseBody.keySet()) {
+                    if (key.equals("status")) {
+                        orderResponse.setStatus((String) responseBody.get(key));
+
+                    } else if (key.equals("id")) {
+                        orderResponse.setId((Long) responseBody.get(key));
+
+                    } else if (key.equals("external_reference")) {
+                        orderResponse.setExternalReference((String) responseBody.get(key));
+                    }
+                }
+
+                if (orderResponse.getStatus().equals("closed")) {
+                    Pedido pedido = consultarPedidoUseCase.buscarPedidoPorId(orderResponse.getExternalReference());
+
+                    Pagamento pagamento = new Pagamento();
+                    pagamento.setPreco(pedido.getPreco());
+                    pagamento.setCodigoPedido(pedido.getId());
+                    pagamento.setStatus(StatusPagamentoEnum.APROVADO.toString());
+                    pagamentoOutputPort.salvarPagamento(pagamento);
+
+                    pedido.setStatus(StatusPedidoEnum.RECEBIDO.toString());
+                    pedido.setCodigoPagamento(orderResponse.getId().toString());
+                    salvarPedidoUseCase.atualizarPedido(pedido);
+                }
+            }
+
+        } catch (Exception ex) {
+            System.out.printf(
+                    "MercadoPago Error. Status: %s, Content: %s",
+                    ex.getCause(), ex.getMessage());
+        }
     }
 
     @Override
@@ -107,10 +163,13 @@ public class SalvarPagamentoUseCaseImpl implements SalvarPagamentoUseCase {
                             posId,
                             authHeader);
 
-            // TODO: FAZER VALIDAÇÕES: NULLPOINTER, STATUS_CODE 200 E DIFERENTE DE 200
-            String enderecoImagem = response.getBody().getQr().getImage();
-            URL imageURL = new URL(enderecoImagem);
-            return ImageIO.read(imageURL);
+            if (response.getStatusCode().is2xxSuccessful()) {
+                String enderecoImagem = response.getBody().getQr().getImage();
+                URL imageURL = new URL(enderecoImagem);
+                return ImageIO.read(imageURL);
+            } else {
+                return null;
+            }
 
         } catch (Exception ex) {
             System.out.printf(
@@ -119,40 +178,4 @@ public class SalvarPagamentoUseCaseImpl implements SalvarPagamentoUseCase {
             return null;
         }
     }
-
-//    @Override
-//    public void atualizarStatus() {
-////        // TODO: ALTERAR O STATUS DO PEDIDO PARA APROVADO OU REJEITADO
-////        //  VER OUTROS STATUS DE PAGAMENTO PRA CONSIDERAR 3 TENTATIVAS POR EXEMPLO
-////        try {
-////            // O Mercado Pago envia um ID de pagamento que você pode usar para consultar a transação.
-////            // Vamos simular que o ID da transação está na notificação como exemplo.
-////            String paymentId = extractPaymentIdFromNotification(notificacao);
-////            System.out.println("Notificacao: " + notificacao);
-////            // Consultar o status do pagamento
-//////            Payment payment = Payment.findById(paymentId);
-//////            Payment payment = new Payment();
-////            // Processar o pagamento dependendo do status
-//////            if (payment.getStatus().equals("approved")) {
-//////                logger.info("Pagamento aprovado: " + payment.getId());
-//////                // Realizar ação como atualizar status no banco de dados, enviar e-mail, etc.
-//////            } else if (payment.getStatus().equals("rejected")) {
-//////                logger.warn("Pagamento rejeitado: " + payment.getId());
-//////                // Realizar ação de erro ou alerta
-//////            } else {
-//////                logger.info("Pagamento com status: " + payment.getStatus());
-//////            }
-////        } catch (Exception e) {
-//////            logger.error("Erro ao processar a notificação: " + e.getMessage());
-////            System.out.println("ERRO: " + e.getMessage());
-////        }
-////    }
-////
-////    // Metodo para extrair o ID do pagamento da notificação recebida
-////    private String extractPaymentIdFromNotification(WebhookNotificationDTO notification) {
-////        // Aqui você deve fazer o parse do JSON e extrair o ID do pagamento
-////        // Isso pode variar dependendo da estrutura exata do webhook
-////        return notification.getData().getId(); // Retornar apenas o ID como exemplo
-////    }
-//    }
 }

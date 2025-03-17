@@ -7,5 +7,7 @@ public interface SalvarPedidoUseCase {
 
     Pedido criarPedido(Pedido pedido);
 
+    Pedido atualizarPedido(Pedido pedido);
+
     Pedido atualizarStatusPedido(StatusPedidoEnum statusPedidoEnum, String id);
 }
