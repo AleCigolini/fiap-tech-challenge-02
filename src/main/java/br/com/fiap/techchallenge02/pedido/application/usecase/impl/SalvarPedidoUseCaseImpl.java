@@ -4,6 +4,7 @@ import br.com.fiap.techchallenge02.cliente.application.usecase.ConsultarClienteU
 import br.com.fiap.techchallenge02.cliente.domain.Cliente;
 import br.com.fiap.techchallenge02.pagamento.application.usecase.SalvarPagamentoUseCase;
 import br.com.fiap.techchallenge02.pedido.application.gateway.PedidoGateway;
+import br.com.fiap.techchallenge02.pedido.application.usecase.CriarPedidoMercadoPagoUseCase;
 import br.com.fiap.techchallenge02.pedido.application.usecase.SalvarPedidoUseCase;
 import br.com.fiap.techchallenge02.pedido.common.domain.exception.PedidoNaoEncontradoException;
 import br.com.fiap.techchallenge02.pedido.domain.Pedido;
@@ -11,9 +12,6 @@ import br.com.fiap.techchallenge02.pedido.domain.ProdutoPedido;
 import br.com.fiap.techchallenge02.pedido.domain.StatusPedidoEnum;
 import br.com.fiap.techchallenge02.produto.application.usecase.BuscarProdutoUseCase;
 import br.com.fiap.techchallenge02.produto.domain.Produto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -22,23 +20,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@Service
 public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
 
-    private final PedidoGateway pedidoOutputPort;
+    private final PedidoGateway pedidoGateway;
     private final ConsultarClienteUseCase consultarClienteUseCase;
     private final BuscarProdutoUseCase buscarProdutoUseCase;
     private final SalvarPagamentoUseCase salvarPagamentoUseCase;
+    private final CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase;
 
-    @Autowired
-    public SalvarPedidoUseCaseImpl(PedidoGateway pedidoOutputPort,
+    public SalvarPedidoUseCaseImpl(PedidoGateway pedidoGateway,
                                    BuscarProdutoUseCase buscarProdutoUseCase,
                                    ConsultarClienteUseCase consultarClienteUseCase,
-                                   @Lazy SalvarPagamentoUseCase salvarPagamentoUseCase) {
-        this.pedidoOutputPort = pedidoOutputPort;
+                                   SalvarPagamentoUseCase salvarPagamentoUseCase,
+                                   CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase
+    ) {
+        this.pedidoGateway = pedidoGateway;
         this.buscarProdutoUseCase = buscarProdutoUseCase;
         this.consultarClienteUseCase = consultarClienteUseCase;
         this.salvarPagamentoUseCase = salvarPagamentoUseCase;
+        this.criarPedidoMercadoPagoUseCase = criarPedidoMercadoPagoUseCase;
     }
 
     @Override
@@ -46,9 +46,11 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
     public Pedido criarPedido(Pedido pedido) {
 
         montarPedido(pedido);
-        Pedido pedidoCriado = pedidoOutputPort.criarPedido(pedido);
+        Pedido pedidoCriado = pedidoGateway.criarPedido(pedido);
 
-        salvarPagamentoUseCase.salvarPagamentoDoPedido(pedidoCriado);
+        boolean criouPedidoMercadoPago = criarPedidoMercadoPagoUseCase.criarPedidoMercadoPago(pedidoCriado);
+
+        salvarPagamentoUseCase.criarPagamentoPendenteParaOPedido(pedidoCriado, criouPedidoMercadoPago);
 
         return pedidoCriado;
     }
@@ -56,7 +58,7 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
     @Override
     @Transactional
     public Pedido atualizarPedido(Pedido pedido) {
-        Pedido pedidoEncontrado = pedidoOutputPort.buscarPedidoPorId(pedido.getId());
+        Pedido pedidoEncontrado = pedidoGateway.buscarPedidoPorId(pedido.getId());
 
         if (pedidoEncontrado == null) {
             throw new PedidoNaoEncontradoException(pedido.getId());
@@ -64,7 +66,7 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
 
         pedidoEncontrado.setStatus(pedido.getStatus());
         pedidoEncontrado.setCodigoPagamento(pedido.getCodigoPagamento());
-        return pedidoOutputPort.salvarPedido(pedidoEncontrado);
+        return pedidoGateway.salvarPedido(pedidoEncontrado);
     }
 
     @Override

@@ -14,19 +14,19 @@ import java.util.function.Function;
 @Service
 @AllArgsConstructor
 public class SalvarClienteUseCaseImpl implements SalvarClienteUseCase {
-    private ClienteGateway clienteOutputPort;
+    private ClienteGateway clienteGateway;
 
     @Override
     public Cliente salvarCliente(Cliente cliente) {
         this.validarClienteExistente(cliente);
-        return clienteOutputPort.salvarCliente(cliente);
+        return clienteGateway.salvarCliente(cliente);
     }
 
     private void validarClienteExistente(Cliente cliente) {
         List<String> erros = new ArrayList<>();
 
-        validarDuplicidade(cliente.getCpf(), clienteOutputPort::buscarClientePorCpf, "Já existe um cliente cadastrado com o CPF informado.", erros);
-        validarDuplicidade(cliente.getEmail(), clienteOutputPort::buscarClientePorEmail, "Já existe um cliente cadastrado com o e-mail informado.", erros);
+        validarDuplicidade(cliente.getCpf(), clienteGateway::buscarClientePorCpf, "Já existe um cliente cadastrado com o CPF informado.", erros);
+        validarDuplicidade(cliente.getEmail(), clienteGateway::buscarClientePorEmail, "Já existe um cliente cadastrado com o e-mail informado.", erros);
 
         if (!erros.isEmpty()) {
             throw new ClienteValidacaoException(String.join(", ", erros));

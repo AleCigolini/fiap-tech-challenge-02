@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.request;
+package br.com.fiap.techchallenge02.pedido.infrastructure.client.mercadopago.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;

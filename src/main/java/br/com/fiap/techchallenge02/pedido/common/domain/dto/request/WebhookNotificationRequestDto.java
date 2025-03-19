@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge02.pagamento.common.domain.dto.request;
+package br.com.fiap.techchallenge02.pedido.common.domain.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
