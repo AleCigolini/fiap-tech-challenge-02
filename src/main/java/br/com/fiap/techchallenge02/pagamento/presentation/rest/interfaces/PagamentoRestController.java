@@ -56,7 +56,6 @@ public interface PagamentoRestController {
      * Recebe e processa notificações relacionadas ao pagamento dos pedidos
      *
      * @param notificacao Objeto com os dados da notificação
-     * @param assinatura  Assinatura para validação do client
      */
     @Operation(summary = "Buscar todos os pagamentos pelo id do pedido",
             responses = {
@@ -71,5 +70,5 @@ public interface PagamentoRestController {
                             content = @Content(schema = @Schema(ref = "Problema"))
                     )
             })
-    void webhook(@RequestBody WebhookNotificationRequestDto notificacao, @RequestHeader("X-MercadoPago-Signature") String assinatura);
+    void webhook(@RequestBody WebhookNotificationRequestDto notificacao);
 }

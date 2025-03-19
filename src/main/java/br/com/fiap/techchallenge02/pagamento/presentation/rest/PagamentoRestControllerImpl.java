@@ -37,23 +37,7 @@ public class PagamentoRestControllerImpl implements PagamentoRestController {
     @Override
     @PostMapping("/webhook")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void webhook(@RequestBody WebhookNotificationRequestDto notificacao,
-                        @RequestHeader("X-MercadoPago-Signature") String assinatura) {
-        // TODO: O Mercado Pago envia o "notification" com os detalhes da transação.
-        //  A string "notificacao" pode ser um JSON que você precisa parsear
-        //  para identificar o status do pagamento.
-        System.out.println("Recebido Webhook: " + notificacao);
-        if (isSignatureValid(notificacao, assinatura)) {
-            System.out.println("Pagamento " + notificacao.getAction() + " para ID: " + notificacao.getData().getId());
-
-            pagamentoController.processarNotificacao(notificacao);
-        } else {
-            System.out.println("Assinatura inválida");
-        }
-    }
-
-    private boolean isSignatureValid(WebhookNotificationRequestDto notificacao, String assinatura) {
-        // TODO: Verificar assinatura com o segredo compartilhado
-        return true;
+    public void webhook(@RequestBody WebhookNotificationRequestDto notificacao) {
+        pagamentoController.processarNotificacao(notificacao);
     }
 }

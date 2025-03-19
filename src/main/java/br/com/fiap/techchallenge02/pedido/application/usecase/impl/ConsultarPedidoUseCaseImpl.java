@@ -21,4 +21,9 @@ public class ConsultarPedidoUseCaseImpl implements ConsultarPedidoUseCase {
     public List<Pedido> buscarPedidos(List<StatusPedidoEnum> statusPedidoEnums) {
         return pedidoOutputPort.buscarPedidos(statusPedidoEnums);
     }
+
+    @Override
+    public Pedido buscarPedidoPorId(String id) {
+        return pedidoOutputPort.buscarPedidoPorId(id);
+    }
 }
