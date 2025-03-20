@@ -1,6 +1,6 @@
-package br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago;
+package br.com.fiap.techchallenge02.pedido.infrastructure.client.mercadopago;
 
-import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.request.MercadoPagoOrderRequest;
+import br.com.fiap.techchallenge02.pedido.infrastructure.client.mercadopago.request.MercadoPagoOrderRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

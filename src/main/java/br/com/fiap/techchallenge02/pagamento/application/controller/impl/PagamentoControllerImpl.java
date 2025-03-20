@@ -1,24 +1,42 @@
 package br.com.fiap.techchallenge02.pagamento.application.controller.impl;
 
+import br.com.fiap.techchallenge02.core.config.properties.MercadoPagoProperties;
 import br.com.fiap.techchallenge02.pagamento.application.controller.PagamentoController;
+import br.com.fiap.techchallenge02.pagamento.application.gateway.PagamentoGateway;
+import br.com.fiap.techchallenge02.pagamento.application.gateway.impl.PagamentoGatewayImpl;
+import br.com.fiap.techchallenge02.pagamento.application.mapper.DatabasePagamentoMapper;
 import br.com.fiap.techchallenge02.pagamento.application.presenter.PagamentoPresenter;
 import br.com.fiap.techchallenge02.pagamento.application.usecase.ConsultarPagamentoUseCase;
-import br.com.fiap.techchallenge02.pagamento.application.usecase.SalvarPagamentoUseCase;
-import br.com.fiap.techchallenge02.pagamento.common.domain.dto.request.WebhookNotificationRequestDto;
+import br.com.fiap.techchallenge02.pagamento.application.usecase.ConsultarQrCodePagamentoUseCase;
+import br.com.fiap.techchallenge02.pagamento.application.usecase.impl.ConsultarPagamentoUseCaseImpl;
+import br.com.fiap.techchallenge02.pagamento.application.usecase.impl.ConsultarQrCodePagamentoUseCaseImpl;
 import br.com.fiap.techchallenge02.pagamento.common.domain.dto.response.PagamentoResponseDto;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
+import br.com.fiap.techchallenge02.pagamento.common.interfaces.PagamentoDatabase;
+import br.com.fiap.techchallenge02.pedido.infrastructure.client.mercadopago.MercadoPagoPosClient;
+import org.springframework.stereotype.Component;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-@Controller
-@AllArgsConstructor
+@Component
 public class PagamentoControllerImpl implements PagamentoController {
 
     private final ConsultarPagamentoUseCase consultarPagamentoUseCase;
-    private final SalvarPagamentoUseCase salvarPagamentoUseCase;
+    private final ConsultarQrCodePagamentoUseCase consultarQrCodePagamentoUseCase;
     private final PagamentoPresenter pagamentoPresenter;
+
+    public PagamentoControllerImpl(
+            PagamentoPresenter pagamentoPresenter,
+            PagamentoDatabase pagamentoDatabase,
+            DatabasePagamentoMapper databasePagamentoMapper,
+            MercadoPagoPosClient mercadoPagoPosClient,
+            MercadoPagoProperties mercadoPagoProperties
+    ) {
+        final PagamentoGateway pagamentoGateway = new PagamentoGatewayImpl(pagamentoDatabase, databasePagamentoMapper);
+        this.consultarPagamentoUseCase = new ConsultarPagamentoUseCaseImpl(pagamentoGateway);
+        this.consultarQrCodePagamentoUseCase = new ConsultarQrCodePagamentoUseCaseImpl(mercadoPagoPosClient, mercadoPagoProperties);
+        this.pagamentoPresenter = pagamentoPresenter;
+    }
 
     @Override
     public List<PagamentoResponseDto> buscarPagamentosPorPedidoId(String pedidoId) {
@@ -27,12 +45,7 @@ public class PagamentoControllerImpl implements PagamentoController {
     }
 
     @Override
-    public void processarNotificacao(WebhookNotificationRequestDto notificacao) {
-        salvarPagamentoUseCase.processarNotificacao(notificacao);
-    }
-
-    @Override
     public BufferedImage gerarImagemCodigoQRCaixa() {
-        return salvarPagamentoUseCase.gerarImagemCodigoQRCaixa();
+        return consultarQrCodePagamentoUseCase.gerarImagemCodigoQRCaixa();
     }
 }

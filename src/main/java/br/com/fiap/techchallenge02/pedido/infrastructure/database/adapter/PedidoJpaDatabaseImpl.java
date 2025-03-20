@@ -6,7 +6,6 @@ import br.com.fiap.techchallenge02.pedido.common.interfaces.PedidoDatabase;
 import br.com.fiap.techchallenge02.pedido.domain.StatusPedidoEnum;
 import br.com.fiap.techchallenge02.pedido.infrastructure.database.repository.JpaPedidoRepository;
 import br.com.fiap.techchallenge02.pedido.infrastructure.database.repository.JpaProdutoPedidoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,14 +13,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class PedidoJdbcAdapter implements PedidoDatabase {
+public class PedidoJpaDatabaseImpl implements PedidoDatabase {
 
     private final JpaPedidoRepository jpaPedidoRepository;
     private final JpaProdutoPedidoRepository jpaProdutoPedidoRepository;
 
-    @Autowired
-    public PedidoJdbcAdapter(JpaPedidoRepository jpaPedidoRepository,
-                             JpaProdutoPedidoRepository jpaProdutoPedidoRepository) {
+    public PedidoJpaDatabaseImpl(JpaPedidoRepository jpaPedidoRepository,
+                                 JpaProdutoPedidoRepository jpaProdutoPedidoRepository) {
         this.jpaPedidoRepository = jpaPedidoRepository;
         this.jpaProdutoPedidoRepository = jpaProdutoPedidoRepository;
     }

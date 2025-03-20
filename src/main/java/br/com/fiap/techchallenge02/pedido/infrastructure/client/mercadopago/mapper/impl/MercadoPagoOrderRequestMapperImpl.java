@@ -1,9 +1,9 @@
-package br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.mapper.impl;
+package br.com.fiap.techchallenge02.pedido.infrastructure.client.mercadopago.mapper.impl;
 
 import br.com.fiap.techchallenge02.pedido.domain.Pedido;
-import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.request.MercadoPagoOrderItemRequest;
-import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.request.MercadoPagoOrderRequest;
-import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.mapper.MercadoPagoOrderRequestMapper;
+import br.com.fiap.techchallenge02.pedido.infrastructure.client.mercadopago.request.MercadoPagoOrderItemRequest;
+import br.com.fiap.techchallenge02.pedido.infrastructure.client.mercadopago.request.MercadoPagoOrderRequest;
+import br.com.fiap.techchallenge02.pedido.infrastructure.client.mercadopago.mapper.MercadoPagoOrderRequestMapper;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
