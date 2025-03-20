@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge02.pedido.application.usecase.impl;
 
 import br.com.fiap.techchallenge02.core.config.properties.MercadoPagoProperties;
+import br.com.fiap.techchallenge02.pagamento.application.usecase.SalvarPagamentoUseCase;
 import br.com.fiap.techchallenge02.pagamento.domain.Pagamento;
 import br.com.fiap.techchallenge02.pagamento.domain.StatusPagamentoEnum;
 import br.com.fiap.techchallenge02.pedido.application.usecase.ConsultarPedidoUseCase;
@@ -17,17 +18,19 @@ import java.util.LinkedHashMap;
 
 public class ProcessarPedidoMercadoPagoUseCaseImpl implements ProcessarPedidoUseCase {
 
+    private final SalvarPagamentoUseCase salvarPagamentoUseCase;
     private final ConsultarPedidoUseCase consultarPedidoUseCase;
     private final SalvarPedidoUseCase salvarPedidoUseCase;
     private final MercadoPagoMerchantOrdersClient mercadoPagoMerchantOrdersClient;
     private final MercadoPagoProperties mercadoPagoProperties;
 
     public ProcessarPedidoMercadoPagoUseCaseImpl(
-            ConsultarPedidoUseCase consultarPedidoUseCase,
+            SalvarPagamentoUseCase salvarPagamentoUseCase, ConsultarPedidoUseCase consultarPedidoUseCase,
             SalvarPedidoUseCase salvarPedidoUseCase,
             MercadoPagoMerchantOrdersClient mercadoPagoMerchantOrdersClient,
             MercadoPagoProperties mercadoPagoProperties
     ) {
+        this.salvarPagamentoUseCase = salvarPagamentoUseCase;
         this.consultarPedidoUseCase = consultarPedidoUseCase;
         this.salvarPedidoUseCase = salvarPedidoUseCase;
         this.mercadoPagoMerchantOrdersClient = mercadoPagoMerchantOrdersClient;
@@ -68,6 +71,7 @@ public class ProcessarPedidoMercadoPagoUseCaseImpl implements ProcessarPedidoUse
                     pagamento.setPreco(pedido.getPreco());
                     pagamento.setCodigoPedido(pedido.getId());
                     pagamento.setStatus(StatusPagamentoEnum.APROVADO.toString());
+                    salvarPagamentoUseCase.salvarPagamento(pagamento);
 
                     pedido.setStatus(StatusPedidoEnum.RECEBIDO.toString());
                     pedido.setCodigoPagamento(orderResponse.getId().toString());
