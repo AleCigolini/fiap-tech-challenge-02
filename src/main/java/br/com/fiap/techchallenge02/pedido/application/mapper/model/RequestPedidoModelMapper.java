@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class RequestRequestPedidoModelMapper implements RequestPedidoMapper {
+public class RequestPedidoModelMapper implements RequestPedidoMapper {
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     public Pedido pedidoRequestDtoParaPedido(PedidoRequestDto pedidoRequestDto) {
         try {

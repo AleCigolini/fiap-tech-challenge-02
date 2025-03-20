@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class RequestRequestClienteModelMapper implements RequestClienteMapper {
+public class RequestClienteModelMapper implements RequestClienteMapper {
     private ModelMapper modelMapper;
 
     public Cliente requestDtoToDomain(ClienteRequestDto clienteRequestDto) {

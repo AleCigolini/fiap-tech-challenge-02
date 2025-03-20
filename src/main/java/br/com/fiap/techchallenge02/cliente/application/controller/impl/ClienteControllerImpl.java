@@ -15,7 +15,6 @@ import br.com.fiap.techchallenge02.cliente.common.domain.dto.response.ClienteRes
 import br.com.fiap.techchallenge02.cliente.common.interfaces.ClienteDatabase;
 import br.com.fiap.techchallenge02.core.utils.domain.Cpf;
 import br.com.fiap.techchallenge02.core.utils.domain.Email;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.UUID;
@@ -28,7 +27,6 @@ public class ClienteControllerImpl implements ClienteController {
     private final RequestClienteMapper requestClienteMapper;
     private final ClientePresenter clientePresenter;
 
-    @Autowired
     public ClienteControllerImpl(ClienteDatabase clienteDatabase, DatabaseClienteMapper mapper, RequestClienteMapper requestClienteMapper, ClientePresenter clientePresenter) {
         this.requestClienteMapper = requestClienteMapper;
         this.clientePresenter = clientePresenter;

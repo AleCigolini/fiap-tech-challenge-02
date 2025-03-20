@@ -4,6 +4,7 @@ import br.com.fiap.techchallenge02.cliente.application.usecase.ConsultarClienteU
 import br.com.fiap.techchallenge02.cliente.domain.Cliente;
 import br.com.fiap.techchallenge02.pagamento.application.usecase.SalvarPagamentoUseCase;
 import br.com.fiap.techchallenge02.pedido.application.gateway.PedidoGateway;
+import br.com.fiap.techchallenge02.pedido.application.usecase.CriarPedidoMercadoPagoUseCase;
 import br.com.fiap.techchallenge02.pedido.application.usecase.SalvarPedidoUseCase;
 import br.com.fiap.techchallenge02.pedido.common.domain.exception.PedidoNaoEncontradoException;
 import br.com.fiap.techchallenge02.pedido.domain.Pedido;
@@ -11,8 +12,6 @@ import br.com.fiap.techchallenge02.pedido.domain.ProdutoPedido;
 import br.com.fiap.techchallenge02.pedido.domain.StatusPedidoEnum;
 import br.com.fiap.techchallenge02.produto.application.usecase.BuscarProdutoUseCase;
 import br.com.fiap.techchallenge02.produto.domain.Produto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -21,23 +20,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@Service
 public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
 
-    private final PedidoGateway pedidoOutputPort;
+    private final PedidoGateway pedidoGateway;
     private final ConsultarClienteUseCase consultarClienteUseCase;
     private final BuscarProdutoUseCase buscarProdutoUseCase;
     private final SalvarPagamentoUseCase salvarPagamentoUseCase;
+    private final CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase;
 
-    @Autowired
-    public SalvarPedidoUseCaseImpl(PedidoGateway pedidoOutputPort,
+    public SalvarPedidoUseCaseImpl(PedidoGateway pedidoGateway,
                                    BuscarProdutoUseCase buscarProdutoUseCase,
                                    ConsultarClienteUseCase consultarClienteUseCase,
-                                   SalvarPagamentoUseCase salvarPagamentoUseCase) {
-        this.pedidoOutputPort = pedidoOutputPort;
+                                   SalvarPagamentoUseCase salvarPagamentoUseCase,
+                                   CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase
+    ) {
+        this.pedidoGateway = pedidoGateway;
         this.buscarProdutoUseCase = buscarProdutoUseCase;
         this.consultarClienteUseCase = consultarClienteUseCase;
         this.salvarPagamentoUseCase = salvarPagamentoUseCase;
+        this.criarPedidoMercadoPagoUseCase = criarPedidoMercadoPagoUseCase;
     }
 
     @Override
@@ -45,24 +46,36 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
     public Pedido criarPedido(Pedido pedido) {
 
         montarPedido(pedido);
-        Pedido pedidoCriado = pedidoOutputPort.criarPedido(pedido);
+        Pedido pedidoCriado = pedidoGateway.criarPedido(pedido);
 
-        salvarPagamentoUseCase.salvarPagamentoDoPedido(pedidoCriado);
+        boolean criouPedidoMercadoPago = criarPedidoMercadoPagoUseCase.criarPedidoMercadoPago(pedidoCriado);
+
+        salvarPagamentoUseCase.criarPagamentoPendenteParaOPedido(pedidoCriado, criouPedidoMercadoPago);
 
         return pedidoCriado;
     }
 
     @Override
     @Transactional
-    public Pedido atualizarStatusPedido(StatusPedidoEnum statusPedidoEnum, String id) {
-        Pedido pedidoEncontrado = pedidoOutputPort.buscarPedidoPorId(id);
+    public Pedido atualizarPedido(Pedido pedido) {
+        Pedido pedidoEncontrado = pedidoGateway.buscarPedidoPorId(pedido.getId());
 
         if (pedidoEncontrado == null) {
-            throw new PedidoNaoEncontradoException(id);
+            throw new PedidoNaoEncontradoException(pedido.getId());
         }
 
-        pedidoEncontrado.setStatus(statusPedidoEnum.toString());
-        return pedidoOutputPort.salvarPedido(pedidoEncontrado);
+        pedidoEncontrado.setStatus(pedido.getStatus());
+        pedidoEncontrado.setCodigoPagamento(pedido.getCodigoPagamento());
+        return pedidoGateway.salvarPedido(pedidoEncontrado);
+    }
+
+    @Override
+    @Transactional
+    public Pedido atualizarStatusPedido(StatusPedidoEnum statusPedidoEnum, String id) {
+        Pedido pedido = new Pedido();
+        pedido.setId(id);
+        pedido.setStatus(statusPedidoEnum.toString());
+        return atualizarPedido(pedido);
     }
 
     public void montarPedido(Pedido pedido) {

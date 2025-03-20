@@ -15,5 +15,4 @@ client:
     pos_id: 123456
     external_store_id: "X"
     external_pos_id: "X"
-    notification_url: "http://4.255.73.131:8080/pagamentos/webhook"
     auth_header: "Bearer TEST-X"

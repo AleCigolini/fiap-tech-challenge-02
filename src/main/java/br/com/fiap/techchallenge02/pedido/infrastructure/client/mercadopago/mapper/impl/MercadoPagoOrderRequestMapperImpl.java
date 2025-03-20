@@ -1,10 +1,9 @@
-package br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.mapper.impl;
+package br.com.fiap.techchallenge02.pedido.infrastructure.client.mercadopago.mapper.impl;
 
 import br.com.fiap.techchallenge02.pedido.domain.Pedido;
-import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.request.MercadoPagoOrderItemRequest;
-import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.request.MercadoPagoOrderRequest;
-import br.com.fiap.techchallenge02.pagamento.infrastructure.client.mercadopago.mapper.MercadoPagoOrderRequestMapper;
-import org.springframework.beans.factory.annotation.Value;
+import br.com.fiap.techchallenge02.pedido.infrastructure.client.mercadopago.request.MercadoPagoOrderItemRequest;
+import br.com.fiap.techchallenge02.pedido.infrastructure.client.mercadopago.request.MercadoPagoOrderRequest;
+import br.com.fiap.techchallenge02.pedido.infrastructure.client.mercadopago.mapper.MercadoPagoOrderRequestMapper;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -13,9 +12,6 @@ import java.util.List;
 
 @Component
 public class MercadoPagoOrderRequestMapperImpl implements MercadoPagoOrderRequestMapper {
-
-    @Value("${client.mercado-pago.notification_url}")
-    private String notificationUrl;
 
     @Override
     public MercadoPagoOrderRequest pedidoParaMercadoPagoOrderItemRequest(Pedido pedido) {
@@ -41,7 +37,6 @@ public class MercadoPagoOrderRequestMapperImpl implements MercadoPagoOrderReques
                 .externalReference(pedido.getId())
                 .title(pedido.getCodigo())
                 .description(pedido.getObservacao())
-                .notificationUrl(notificationUrl)
                 .totalAmount(pedido.getPreco())
                 .items(mercadoPagoOrderItemRequests)
                 .build();

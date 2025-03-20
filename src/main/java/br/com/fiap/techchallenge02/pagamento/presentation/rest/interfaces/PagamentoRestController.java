@@ -1,6 +1,5 @@
 package br.com.fiap.techchallenge02.pagamento.presentation.rest.interfaces;
 
-import br.com.fiap.techchallenge02.pagamento.common.domain.dto.request.WebhookNotificationRequestDto;
 import br.com.fiap.techchallenge02.pagamento.common.domain.dto.response.PagamentoResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -8,8 +7,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -51,25 +48,4 @@ public interface PagamentoRestController {
                     )
             })
     ResponseEntity<BufferedImage> gerarImagemCodigoQRCaixa();
-
-    /**
-     * Recebe e processa notificações relacionadas ao pagamento dos pedidos
-     *
-     * @param notificacao Objeto com os dados da notificação
-     * @param assinatura  Assinatura para validação do client
-     */
-    @Operation(summary = "Buscar todos os pagamentos pelo id do pedido",
-            responses = {
-                    @ApiResponse(responseCode = "202"),
-                    @ApiResponse(responseCode = "400", description = "Erros de validação",
-                            content = @Content(schema = @Schema(ref = "Problema"))
-                    ),
-                    @ApiResponse(responseCode = "404", description = "Pagamento ou pedido não encontrado",
-                            content = @Content(schema = @Schema(ref = "Problema"))
-                    ),
-                    @ApiResponse(responseCode = "500", description = "Erro no procesamento da notificação de pagamento",
-                            content = @Content(schema = @Schema(ref = "Problema"))
-                    )
-            })
-    void webhook(@RequestBody WebhookNotificationRequestDto notificacao, @RequestHeader("X-MercadoPago-Signature") String assinatura);
 }
