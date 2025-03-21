@@ -80,6 +80,4 @@ public interface PedidoRestController {
                     )
             })
     void webhookMercadoPago(@RequestBody WebhookNotificationRequestDto notificacao);
-
-    ResponseEntity<Object> webhookTeste(@RequestBody Object notificacao);
 }

@@ -53,11 +53,4 @@ public class PedidoRestControllerImpl implements PedidoRestController {
     public void webhookMercadoPago(@RequestBody WebhookNotificationRequestDto notificacao) {
         pedidoController.processarNotificacao(notificacao);
     }
-
-    @Override
-    @PostMapping("/webhook")
-    public ResponseEntity<Object> webhookTeste(@RequestBody Object notificacao) {
-        System.out.println(notificacao);
-        return ResponseEntity.ok(notificacao);
-    }
 }
