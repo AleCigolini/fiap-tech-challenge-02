@@ -29,7 +29,9 @@ services:
       - dev_network
 
   app:
-    image: alecigolini/fiap-techchallenge02
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: java_app
     depends_on:
       - postgres
