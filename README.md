@@ -12,9 +12,8 @@ Através da integração com o sistema de frente de loja, a aplicação garante 
 e à lanchonete, uma ferramenta poderosa para aumentar a eficiência operacional, reduzir custos e elevar a satisfação do consumidor.
 
 ## Arquitetura
-![Infra.jpg](./assets/images/Infra.jpg)
-
-![Pods_especificacoes.jpg](./assets/images/Pods_especificacoes.jpg)
+![image](https://github.com/user-attachments/assets/0211d2e7-9e7f-486a-8005-b8a32682a7fc)
+![image](https://github.com/user-attachments/assets/26923c74-d144-4001-88e0-a3d90be58a36)
 
 Utilizada a metodologia Clean Architecture.
 
