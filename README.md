@@ -241,3 +241,6 @@ http://localhost:8080/categorias-produto/e397f412-9c76-4fb5-b029-7c3a99b7e982
 ```
 http://localhost:8080/categorias-produto/e397f412-9c76-4fb5-b029-7c3a99b7e982
 ```
+![Infra.jpg](./assets/images/Infra.jpg)
+
+![Pods_especificacoes.jpg](./assets/images/Pods_especificacoes.jpg)
