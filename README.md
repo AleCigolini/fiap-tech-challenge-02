@@ -11,11 +11,19 @@ Responsável por administrar de forma eficiente e segura todas as operações, d
 Através da integração com o sistema de frente de loja, a aplicação garante a disponibilidade de informações precisas e atualizadas, proporcionando ao cliente autonomia na escolha e personalização dos pedidos, 
 e à lanchonete, uma ferramenta poderosa para aumentar a eficiência operacional, reduzir custos e elevar a satisfação do consumidor.
 
-## Arquitetura
+## Arquitetura utilizada
+Clean Archtecture.
+
+## Estruturação das pastas
+![image](https://github.com/user-attachments/assets/c8996715-f174-4611-ab40-7c1d5ba35877)
+Considerando o uso da clean archtecture foi pensada da seguinte maneira:
+- As camadas presentation/infrasctructre equivalem a Framework & Drivers, sendo a presentation responsável por capturar a entrada do usuário e a infrastrucutre pela comunicação com camadas externas.
+- A camada Application contempla as camadas Application Business Roles e Interface Adapters.
+- A camda de Entities representa a camada Domain.
+
+## Arquitetura Infraestrutura
 ![image](https://github.com/user-attachments/assets/0211d2e7-9e7f-486a-8005-b8a32682a7fc)
 ![image](https://github.com/user-attachments/assets/26923c74-d144-4001-88e0-a3d90be58a36)
-
-Utilizada a metodologia Clean Architecture.
 
 ## Execução em ambiente local
 ### Pré-requisitos
