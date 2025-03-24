@@ -46,7 +46,7 @@ O cluster techchallenge-k8s é configurado com dois namespaces principais, cada 
   - postgress: hospeda o banco de dados PostgreeSQL usado para o armazenamento de dados.
     - Stateful.
     - Volume: utilizado para o armazenamento dos dados.
-    - Cluster IP:  Endereço IP interno para comunicação com outros pods no cluster
+    - Cluster IP:  Endereço IP interno para comunicação com outros pods no cluster.
     - Secret: contém as credenciais do banco de dados.
 - ingress-basic: é responsável por gerenciar o tráfego externo e rotear as requisições para os serviços no namespace default.
   - ingress-nginx-controller: Executa o controlador NGINX Ingress, que atua como ponto de entrada para requisições externas e roteia o tráfego para os serviços apropriados no namespace default.
