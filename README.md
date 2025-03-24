@@ -22,10 +22,13 @@ Considerando o uso da clean archtecture foi pensada da seguinte maneira:
 - A camda de Entities representa a camada Domain.
 
 ## Arquitetura Infraestrutura
+
 ### Diagrama de Fluxo
 ![image](https://github.com/user-attachments/assets/0211d2e7-9e7f-486a-8005-b8a32682a7fc)
+- A aplicação está hospedada na Azure Kubernetes Service (AKS).
 ### Diagrama de Componente
 ![image](https://github.com/user-attachments/assets/26923c74-d144-4001-88e0-a3d90be58a36)
+- Os arquivos de configuração do Kubernetes (.yml) estão localizados no diretório 'kubernetes'.
 
 ## Execução em ambiente local
 ### Pré-requisitos
