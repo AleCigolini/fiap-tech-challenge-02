@@ -11,7 +11,7 @@ Responsável por administrar de forma eficiente e segura todas as operações, d
 Através da integração com o sistema de frente de loja, a aplicação garante a disponibilidade de informações precisas e atualizadas, proporcionando ao cliente autonomia na escolha e personalização dos pedidos, 
 e à lanchonete, uma ferramenta poderosa para aumentar a eficiência operacional, reduzir custos e elevar a satisfação do consumidor.
 
-## Arquitetura utilizada
+## Arquitetura
 Clean Archtecture.
 
 ## Estruturação das pastas
