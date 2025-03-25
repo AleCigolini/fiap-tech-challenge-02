@@ -90,16 +90,11 @@ Com a aplicação rodando, via navegador de sua preferência, acesse a URL:
 http://localhost:8080
 ```
 
-### Endpoints
+## Passo a passo integração Mercado Pago
 
-#### Pedido
+### Pedido
 
-- Retornar todos os pedidos - GET
-```
-http://localhost:8080/pedidos
-```
-
-- Criar pedido com fake check-out - POST
+1 - Crie o pedido - POST
 ```
 http://localhost:8080/pedidos
 ```
@@ -129,9 +124,111 @@ http://localhost:8080/pedidos
   ]
 } 
 ```
+
+2 - Listagem dos pedidos por situação - GET
+<br/>
+2.1 - Ao filtrar por "ABERTO", será possível verificar o pedido anteriormente criado.
+
+```
+http://localhost:8080/pedidos?status=ABERTO
+```
+
+#### Pagamento
+
+3 - Pagamentos relacionados ao pedido - GET.
+<br/>
+3.1 - Existirá um pagamento como pendente visto que o pedido ainda não foi pago.
+```
+http://localhost:8080/pagamentos/pedidos/{id_do_pedido_criado}
+```
 <br/>
 
-#### Produto
+### Mercado Pago
+
+4 - Acessar o aplicativo do mercado pago com as credenciais de teste:
+```
+Usuário: TESTUSER2078021759
+Senha: KzOb3GTTz0
+```
+
+### Pagamento
+
+5 - Gere o Qr-Code para pagamento - GET
+```
+http://localhost:8080/pagamentos/caixa/qr-code
+```
+
+6 - Com o aplicativo do mercado pago aberto, escaneie o Qr-Code e realize o pagamento.
+
+
+### Webhook fake
+
+7 - Acessar o webhook abaixo e copiar a mensagem de retorno da chamada POST contida nele. Esta chamada conterá informações da situação do pagamento e do pedido.
+
+```
+https://webhook.site/#!/view/39d56983-2c86-4872-9b7c-0506c044db68/281e9e2f-13e3-40f8-a5ae-c36160893b1e/1
+```
+
+### Webhook Pedido
+
+8 - Após copiar a mensagem de retorno do mercado pago na passo anterior, insira ela na requisição do webhook da aplicação - POST
+```
+http://localhost:8080/pedidos/webhook-mercado-pago
+```
+- O corpo da requisição será algo como:
+```
+{
+    "action": "create",
+    "application_id": "6626499642890434",
+    "data": {
+        "currency_id": "",
+        "marketplace": "NONE",
+        "status": "opened"
+    },
+    "date_created": "2025-03-17T16:28:28.296-04:00",
+    "id": "29622218613",
+    "live_mode": false,
+    "status": "opened",
+    "type": "topic_merchant_order_wh",
+    "user_id": 2307740945,
+    "version": 0
+}
+```
+
+
+### Listar pagamentos e pedidos
+
+#### Pagamento
+
+9 - Pagamentos relacionados ao pedido - GET
+<br/>
+9.1 - Terá um pagamento aprovado para o pedido.
+```
+http://localhost:8080/pagamentos/pedidos/{id_do_pedido_criado}
+```
+
+#### Pedidos
+10 - Listagem dos pedidos por situação - GET
+<br/>
+10.1 - Ao filtrar por "RECEBIDO", será possível verificar o pedido anteriormente criado.
+
+```
+http://localhost:8080/pedidos?status=RECEBIDO
+```
+
+**Assim, terá simulado a integração com o mercado pago para geração e pagamento de um pedido.**
+
+---
+## Lista de endpoints
+
+### Pedido
+
+- Retornar todos os pedidos - GET
+```
+http://localhost:8080/pedidos
+```
+
+### Produto
 
 - Retornar todos os produtos - GET
 ```
@@ -182,7 +279,7 @@ http://localhost:8080/produtos/categoria/d5b5a378-3862-4436-bdcc-29d8c8a2ee65
 ```
 <br/>
 
-#### Cliente
+### Cliente
 - Criar cliente - POST
 ```
 http://localhost:8080/clientes
@@ -249,7 +346,7 @@ Corpo da requisição:
 
 <br/>
 
-#### Categorias de Produto
+### Categorias de Produto
 
 - Buscar categorias de produto - GET
 ```
