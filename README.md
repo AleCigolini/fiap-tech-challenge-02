@@ -163,10 +163,12 @@ http://localhost:8080/pagamentos/caixa/qr-code
 
 ### Webhook fake
 
-7 - Acessar o webhook abaixo e copiar a mensagem de retorno da chamada POST contida nele. Esta chamada conterá informações da situação do pagamento e do pedido.
+7 - Acessar o webhook abaixo e copiar a mensagem de retorno da chamada POST contida nele.
+<br/>
+7.1 - A chamada conterá a situação do pedido como "closed".
 
 ```
-https://webhook.site/#!/view/39d56983-2c86-4872-9b7c-0506c044db68/281e9e2f-13e3-40f8-a5ae-c36160893b1e/1
+https://webhook.site/#!/view/812e902e-50fb-4f4d-8369-d08924575236
 ```
 
 ### Webhook Pedido
@@ -183,12 +185,12 @@ http://localhost:8080/pedidos/webhook-mercado-pago
     "data": {
         "currency_id": "",
         "marketplace": "NONE",
-        "status": "opened"
+        "status": "closed"
     },
     "date_created": "2025-03-17T16:28:28.296-04:00",
     "id": "29622218613",
     "live_mode": false,
-    "status": "opened",
+    "status": "closed",
     "type": "topic_merchant_order_wh",
     "user_id": 2307740945,
     "version": 0
@@ -200,23 +202,23 @@ http://localhost:8080/pedidos/webhook-mercado-pago
 
 #### Pagamento
 
-9 - Pagamentos relacionados ao pedido - GET
+8 - Pagamentos relacionados ao pedido - GET
 <br/>
-9.1 - Terá um pagamento aprovado para o pedido.
+8.1 - Terá um pagamento aprovado para o pedido.
 ```
 http://localhost:8080/pagamentos/pedidos/{id_do_pedido_criado}
 ```
 
 #### Pedidos
-10 - Listagem dos pedidos por situação - GET
+9 - Listagem dos pedidos por situação - GET
 <br/>
-10.1 - Ao filtrar por "RECEBIDO", será possível verificar o pedido anteriormente criado.
+9.1 - Ao filtrar por "RECEBIDO", será possível verificar o pedido anteriormente criado.
 
 ```
 http://localhost:8080/pedidos?status=RECEBIDO
 ```
 
-**Assim, terá simulado a integração com o mercado pago para geração e pagamento de um pedido.**
+### **Assim, terá simulado a integração com o mercado pago para geração e pagamento de um pedido.**
 
 ---
 ## Lista de endpoints
