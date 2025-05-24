@@ -2,6 +2,14 @@
 ALTER TABLE pagamento
     ADD status TEXT NULL;
 
+-- Alteração na tabela pagamento para alterar o campo cd_pedido para UUID
+ALTER TABLE pagamento
+    ALTER COLUMN cd_pedido TYPE uuid USING cd_pedido::uuid;
+
+-- Alteração na tabela pagamento para adicionar constraint FK cd_pedido na pedido id
+ALTER TABLE pagamento
+    ADD CONSTRAINT fk_pagamento_id_pedido FOREIGN KEY (cd_pedido) REFERENCES pedido(id);
+
 -- Inserção de pagamentos de pedidos na tabela pagamento
 INSERT INTO pagamento
 (id, cd_pedido, preco, status)

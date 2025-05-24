@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge02.pagamento.common.domain.entity;
 
+import br.com.fiap.techchallenge02.pedido.common.domain.entity.JpaPedidoEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,8 +25,9 @@ public class JpaPagamentoEntity {
     @Column(name = "preco")
     private BigDecimal preco;
 
-    @Column(name = "cdPedido")
-    private String codigoPedido;
+    @ManyToOne
+    @JoinColumn(name="cd_pedido", nullable=false)
+    private JpaPedidoEntity pedido;
 
     @Column(name = "status")
     private String status;
