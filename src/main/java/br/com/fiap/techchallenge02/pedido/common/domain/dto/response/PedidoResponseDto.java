@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge02.pedido.common.domain.dto.response;
 
 import br.com.fiap.techchallenge02.cliente.common.domain.dto.response.ClienteResponseDto;
+import br.com.fiap.techchallenge02.pagamento.common.domain.dto.response.PagamentoResponseDto;
 import br.com.fiap.techchallenge02.pedido.domain.StatusPedidoEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -35,4 +36,7 @@ public class PedidoResponseDto {
 
     @Schema(description = "Produtos do pedido")
     private List<ProdutoPedidoResponseDto> produtos;
+
+    @Schema(description = "Pagamentos do pedido")
+    private List<PagamentoResponseDto> pagamentos;
 }
